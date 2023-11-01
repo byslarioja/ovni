@@ -1,0 +1,11 @@
+{
+  "name": "ovni",
+  "version": "1.0.0",
+  "repository": "https://github.com/byslarioja/ovni.git",
+  "author": "juancho120 <juan07123@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ]
+}
