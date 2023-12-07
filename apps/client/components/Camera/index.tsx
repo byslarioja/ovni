@@ -2,6 +2,7 @@ import { Camera } from "expo-camera";
 import Slider from "@react-native-community/slider";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
+import Bottom from "./Components/Bottom";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -25,36 +26,47 @@ export default function CameraView() {
   }
 
   return (
-    <View style={styles.container}>
-      <Camera style={styles.camera} zoom={zoom}>
-        <View style={styles.buttonContainer}>
+    <Camera style={styles.camera} zoom={zoom}>
+      <View style={styles.container}>
+        <View style={styles.top}>
+          <Text></Text>
+        </View>
+        <View style={styles.center}>
           <Slider
             style={styles.slider}
             minimumValue={0}
             maximumValue={1}
-            minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#FFFFFF"
-            thumbTintColor="#FFFFFF"
+            minimumTrackTintColor="#F2F2F2"
+            maximumTrackTintColor="#F2F2F2"
+            thumbTintColor="#F2F2F2"
             onValueChange={setZoom}
           />
         </View>
-      </Camera>
-    </View>
+        <Bottom />
+      </View>
+    </Camera>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
   camera: {
+    height: "100%",
+    width: "100%",
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
     flex: 1,
   },
-  buttonContainer: {
-    flex: 1,
+  top: {
     flexDirection: "row",
     backgroundColor: "transparent",
+    flex: 0.5,
+  },
+  center: {
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    flex: 1,
   },
   slider: {
     width: 200,
