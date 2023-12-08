@@ -74,7 +74,9 @@ export default function Bottom() {
       </View>
       <View style={styles.bottomItem}>
         <MeasurerIcon color="#F2F2F2" size={20} />
-        <Text style={styles.itemColor}>{location?.coords.speed} m/s</Text>
+        <Text style={styles.itemColor}>
+          {location?.coords.speed.toFixed(2)} m/s
+        </Text>
       </View>
       <View style={styles.bottomItem}>
         <ThermometerIcon color="#F2F2F2" size={20} />
@@ -91,7 +93,7 @@ export default function Bottom() {
 const styles = StyleSheet.create({
   bottom: {
     flexDirection: "row",
-    paddingLeft: 50,
+    paddingLeft: 45,
     paddingRight: 50,
     paddingBottom: 20,
     justifyContent: "space-between",

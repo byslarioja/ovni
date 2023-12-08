@@ -4,6 +4,8 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import Bottom from "./Components/Bottom";
 
+import Top from "./Components/Top";
+
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [zoom, setZoom] = useState(0);
@@ -28,9 +30,7 @@ export default function CameraView() {
   return (
     <Camera style={styles.camera} zoom={zoom}>
       <View style={styles.container}>
-        <View style={styles.top}>
-          <Text></Text>
-        </View>
+        <Top />
         <View style={styles.center}>
           <Slider
             style={styles.slider}
@@ -58,14 +58,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
   },
-  top: {
-    flexDirection: "row",
-    backgroundColor: "transparent",
-    flex: 0.5,
-  },
+
   center: {
     flexDirection: "row",
-    backgroundColor: "transparent",
+    backgroundColor: "#000",
     flex: 1,
   },
   slider: {
