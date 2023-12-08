@@ -58,10 +58,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
   },
-
   center: {
     flexDirection: "row",
-    backgroundColor: "#000",
     flex: 1,
   },
   slider: {

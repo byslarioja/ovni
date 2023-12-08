@@ -9,12 +9,14 @@ import {
   ThermometerIcon,
   DropIcon,
 } from "../../../Icon";
+import useMagnetometer from "./useMagnetometer";
 
 export default function Bottom() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
+  const { angle } = useMagnetometer();
 
   useEffect(() => {
     (async () => {
@@ -50,6 +52,12 @@ export default function Bottom() {
           response.current.relative_humidity_2m +
             response.current_units.relative_humidity_2m
         );
+      })
+      .catch((error) => {
+        setTemperature("?");
+        setHumidity("?");
+
+        console.error(error);
       });
   }, []);
 
@@ -64,7 +72,7 @@ export default function Bottom() {
       </View>
       <View style={styles.bottomItem}>
         <CompasIcon color="#F2F2F2" size={20} />
-        <Text style={styles.itemColor}>Angulo</Text>
+        <Text style={styles.itemColor}>{angle}</Text>
       </View>
       <View style={styles.bottomItem}>
         <RulerIcon color="#F2F2F2" size={20} />
