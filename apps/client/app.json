@@ -1,13 +1,11 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "iseeyou",
+    "slug": "iseeyou",
     "version": "1.0.0",
     "orientation": "landscape",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,14 +13,16 @@
     "ios": {
       "supportsTablet": true
     },
+    "owner": "bysrioja",
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.iseeyou.ovni"
     },
     "plugins": [
       [
@@ -31,6 +31,11 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8370961a-a603-4bbd-bde6-a00d1e23b6a4"
+      }
+    }
   }
 }
