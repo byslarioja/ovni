@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   topBottom: {
-    // backgroundColor: "rgba(54, 54, 54, 0.5)",
+    backgroundColor: "rgba(54, 54, 54, 0.5)",
     borderRadius: 5,
     padding: 10,
   },

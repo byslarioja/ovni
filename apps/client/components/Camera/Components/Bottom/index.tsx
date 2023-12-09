@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import * as Location from "expo-location";
 import {
   LocationIcon,
   MeasurerIcon,
@@ -10,65 +9,26 @@ import {
   DropIcon,
 } from "../../../Icon";
 import useMagnetometer from "./useMagnetometer";
+import useLocation from "./useLocation";
+import useClimate from "./useClimate";
 
 export default function Bottom() {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [temperature, setTemperature] = useState(null);
-  const [humidity, setHumidity] = useState(null);
+  const { altitude, coords, speed } = useLocation();
   const { angle } = useMagnetometer();
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      await Location.watchPositionAsync(
-        {
-          accuracy: Location.Accuracy.High,
-          timeInterval: 1000,
-          distanceInterval: 50,
-        },
-        (location) => setLocation(location)
-      );
-    })();
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      "https://api.open-meteo.com/v1/forecast?latitude=-29.382672&longitude=-66.815095&current=temperature_2m,relative_humidity_2m"
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setTemperature(
-          response.current.temperature_2m +
-            " " +
-            response.current_units.temperature_2m
-        );
-        setHumidity(
-          response.current.relative_humidity_2m +
-            response.current_units.relative_humidity_2m
-        );
-      })
-      .catch((error) => {
-        setTemperature("?");
-        setHumidity("?");
-
-        console.error(error);
-      });
-  }, []);
+  const { temperature, humidity } = useClimate();
 
   return (
     <View style={styles.bottom}>
       <View style={styles.bottomItem}>
         <LocationIcon color="#F2F2F2" size={20} />
-        <Text style={styles.itemColor}>
-          {location?.coords.latitude} {"/  "}
-          {location?.coords.longitude}
-        </Text>
+        {coords ? (
+          <Text style={styles.itemColor}>
+            {coords.latitude} {"/  "}
+            {coords.longitude}
+          </Text>
+        ) : (
+          <Text>{"??"}</Text>
+        )}
       </View>
       <View style={styles.bottomItem}>
         <CompasIcon color="#F2F2F2" size={20} />
@@ -76,15 +36,19 @@ export default function Bottom() {
       </View>
       <View style={styles.bottomItem}>
         <RulerIcon color="#F2F2F2" size={20} />
-        <Text style={styles.itemColor}>
-          {location?.coords.altitude.toFixed(2)} msnm
-        </Text>
+        {altitude ? (
+          <Text style={styles.itemColor}>{altitude.toFixed(2)} msnm</Text>
+        ) : (
+          <Text>{"??"}</Text>
+        )}
       </View>
       <View style={styles.bottomItem}>
         <MeasurerIcon color="#F2F2F2" size={20} />
-        <Text style={styles.itemColor}>
-          {location?.coords.speed.toFixed(2)} m/s
-        </Text>
+        {speed ? (
+          <Text style={styles.itemColor}>{speed.toFixed(2)} m/s</Text>
+        ) : (
+          <Text>{"??"}</Text>
+        )}
       </View>
       <View style={styles.bottomItem}>
         <ThermometerIcon color="#F2F2F2" size={20} />

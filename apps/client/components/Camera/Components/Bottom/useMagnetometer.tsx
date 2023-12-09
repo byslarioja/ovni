@@ -46,16 +46,16 @@ export default function useMagnetometer() {
     return angle;
   };
 
-  return { angle: degToDMS(magnetometer) };
-}
+  const degToDMS = (deg, dplaces = 0) => {
+    var d = Math.floor(deg); // make degrees
+    var m = Math.floor((deg - d) * 60); // make minutes
+    var s =
+      Math.round(((deg - d) * 60 - m) * 60 * Math.pow(10, dplaces)) /
+      Math.pow(10, dplaces); // Make sec rounded
+    s == 60 && (m++, (s = 0)); // if seconds rounds to 60 then increment minutes, reset seconds
+    m == 60 && (d++, (m = 0)); // if minutes rounds to 60 then increment degress, reset minutes
+    return d + "° " + m + "' " + s + '"'; // create output DMS string
+  };
 
-function degToDMS(deg, dplaces = 0) {
-  var d = Math.floor(deg); // make degrees
-  var m = Math.floor((deg - d) * 60); // make minutes
-  var s =
-    Math.round(((deg - d) * 60 - m) * 60 * Math.pow(10, dplaces)) /
-    Math.pow(10, dplaces); // Make sec rounded
-  s == 60 && (m++, (s = 0)); // if seconds rounds to 60 then increment minutes, reset seconds
-  m == 60 && (d++, (m = 0)); // if minutes rounds to 60 then increment degress, reset minutes
-  return d + "° " + m + "' " + s + '"'; // create output DMS string
+  return { angle: degToDMS(magnetometer) };
 }
