@@ -1,7 +1,7 @@
 import { Camera } from "expo-camera";
 import Slider from "@react-native-community/slider";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
 import Bottom from "./Components/Bottom";
 
 import Top from "./Components/Top";
@@ -9,6 +9,15 @@ import Top from "./Components/Top";
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [zoom, setZoom] = useState(0);
+  const [rec, setRec] = useState(false);
+  const [clock, setClock] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setClock(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -41,6 +50,32 @@ export default function CameraView() {
             thumbTintColor="#F2F2F2"
             onValueChange={setZoom}
           />
+          <View style={styles.rightSide}>
+            <View>
+              <Text style={styles.text}>
+                {clock.toLocaleDateString()} {clock.toLocaleTimeString()}
+              </Text>
+              <Text style={styles.text}>v1.0.0</Text>
+            </View>
+            {rec ? (
+              <TouchableOpacity
+                style={styles.recOnButton}
+                onPress={() => setRec(!rec)}
+              >
+                <View style={styles.recOnCenterButton} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.recOffButton}
+                onPress={() => setRec(!rec)}
+              />
+            )}
+            <View>
+              <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
+              <Text style={styles.text}>Inclinación vertial: ??</Text>
+              <Text style={styles.text}>Inclinación horizontal: ??</Text>
+            </View>
+          </View>
         </View>
         <Bottom />
       </View>
@@ -61,6 +96,8 @@ const styles = StyleSheet.create({
   center: {
     flexDirection: "row",
     flex: 1,
+    justifyContent: "space-between",
+    paddingRight: 40,
   },
   slider: {
     width: 200,
@@ -69,5 +106,37 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     marginBottom: "auto",
     transform: [{ rotate: "270deg" }],
+  },
+  rightSide: {
+    justifyContent: "space-between",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  recOffButton: {
+    height: 75,
+    width: 75,
+    borderColor: "#f2f2f2",
+    borderRadius: 100,
+    borderWidth: 5,
+    marginLeft: "auto",
+  },
+  recOnButton: {
+    height: 75,
+    width: 75,
+    backgroundColor: "#f2f2f2",
+    borderRadius: 100,
+    marginLeft: "auto",
+    justifyContent: "center",
+  },
+  recOnCenterButton: {
+    height: 20,
+    width: 20,
+    backgroundColor: "#E83F3F",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  text: {
+    color: "#F2F2F2",
+    textAlign: "right",
   },
 });

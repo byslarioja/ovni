@@ -27,7 +27,7 @@ export default function Bottom() {
             {coords.longitude}
           </Text>
         ) : (
-          <Text>{"??"}</Text>
+          <Text style={styles.itemColor}>{"??"}</Text>
         )}
       </View>
       <View style={styles.bottomItem}>
@@ -39,7 +39,7 @@ export default function Bottom() {
         {altitude ? (
           <Text style={styles.itemColor}>{altitude.toFixed(2)} msnm</Text>
         ) : (
-          <Text>{"??"}</Text>
+          <Text style={styles.itemColor}>{"??"}</Text>
         )}
       </View>
       <View style={styles.bottomItem}>
@@ -47,7 +47,7 @@ export default function Bottom() {
         {speed ? (
           <Text style={styles.itemColor}>{speed.toFixed(2)} m/s</Text>
         ) : (
-          <Text>{"??"}</Text>
+          <Text style={styles.itemColor}>{"??"}</Text>
         )}
       </View>
       <View style={styles.bottomItem}>

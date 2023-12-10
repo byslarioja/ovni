@@ -6,3 +6,5 @@ export { MeasurerIcon } from "./Components/MeasurerIcon";
 export { RulerIcon } from "./Components/RulerIcon";
 export { ThermometerIcon } from "./Components/ThermometerIcon";
 export { CompasIcon } from "./Components/CompasIcon";
+export { GaleryIcon } from "./Components/GaleryIcon";
+export { LogoutIcon } from "./Components/LogoutIcon";
