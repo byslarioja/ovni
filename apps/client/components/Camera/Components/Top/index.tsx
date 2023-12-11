@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     paddingLeft: 35,
     paddingRight: 35,
-    paddingTop: Constants.statusBarHeight + 5,
     paddingBottom: 3,
     justifyContent: "space-between",
   },

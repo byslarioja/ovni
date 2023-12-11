@@ -9,9 +9,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMotionUsageDescription": "Allow $(PRODUCT_NAME) to access your device motion."
+      }
     },
     "owner": "bysrioja",
     "android": {
@@ -42,6 +47,12 @@
       "eas": {
         "projectId": "8370961a-a603-4bbd-bde6-a00d1e23b6a4"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8370961a-a603-4bbd-bde6-a00d1e23b6a4"
     }
   }
 }
