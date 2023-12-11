@@ -74,8 +74,12 @@ export default function CameraView() {
             )}
             <View>
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
-              <Text style={styles.text}>Inclinación vertical: {x}</Text>
-              <Text style={styles.text}>Inclinación horizontal: {y}</Text>
+              <Text style={styles.text}>
+                Inclinación vertical: {x !== 0 && y !== 0 ? x : "?"}
+              </Text>
+              <Text style={styles.text}>
+                Inclinación horizontal: {y !== 0 && x !== 0 ? y : "?"}
+              </Text>
             </View>
           </View>
         </View>

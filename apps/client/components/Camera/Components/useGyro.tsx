@@ -15,6 +15,9 @@ export default function useGyro() {
   const _subscribe = () => {
     setSubscription(
       DeviceMotion.addListener((a) => {
+        if (!a.rotation) {
+          return;
+        }
         setData({
           z: (a.rotation.alpha / Math.PI) * 360,
           x: (a.rotation.beta / Math.PI) * 360,
@@ -35,8 +38,8 @@ export default function useGyro() {
   }, []);
 
   return {
-    x: Math.floor(x) + "°",
-    y: Math.floor(y) + "°",
-    z: Math.floor(z) + "°",
+    x: Math.floor(x),
+    y: Math.floor(y),
+    z: Math.floor(z),
   };
 }
