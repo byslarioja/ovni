@@ -12,7 +12,7 @@ export default function CameraView() {
   const [zoom, setZoom] = useState(0);
   const [rec, setRec] = useState(false);
   const [clock, setClock] = useState(new Date());
-  const { x, y, z } = useGyro();
+  const { x, y } = useGyro();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +37,7 @@ export default function CameraView() {
       </View>
     );
   }
-  console.log({ x, y, z });
+
   return (
     <Camera style={styles.camera} zoom={zoom}>
       <View style={styles.container}>
@@ -74,8 +74,8 @@ export default function CameraView() {
             )}
             <View>
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
-              <Text style={styles.text}>Inclinación vertical: ??</Text>
-              <Text style={styles.text}>Inclinación horizontal: ??</Text>
+              <Text style={styles.text}>Inclinación vertical: {x}</Text>
+              <Text style={styles.text}>Inclinación horizontal: {y}</Text>
             </View>
           </View>
         </View>
