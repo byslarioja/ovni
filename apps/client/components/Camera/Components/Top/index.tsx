@@ -1,5 +1,4 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
 import { AlertIcon, GaleryIcon, LogoutIcon, MenuIcon } from "../../../Icon";
 import Constants from "expo-constants";
 import { useState } from "react";
@@ -46,6 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     paddingLeft: 35,
     paddingRight: 35,
+    paddingTop: Constants.statusBarHeight + 5,
     paddingBottom: 3,
     justifyContent: "space-between",
   },

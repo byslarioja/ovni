@@ -9,9 +9,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -28,6 +26,9 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.iseeyou.ovni"
+    },
+    "androidStatusBar": {
+      "translucent": true
     },
     "plugins": [
       [

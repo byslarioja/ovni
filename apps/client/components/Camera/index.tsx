@@ -3,9 +3,10 @@ import Slider from "@react-native-community/slider";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
 import Bottom from "./Components/Bottom";
-
+import { StatusBar } from "expo-status-bar";
 import Top from "./Components/Top";
 import useGyro from "./Components/useGyro";
+import Constants from "expo-constants";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -34,6 +35,7 @@ export default function CameraView() {
           We need your permission to show the camera
         </Text>
         <Button onPress={requestPermission} title="grant permission" />
+        <StatusBar style="dark" />
       </View>
     );
   }
@@ -85,6 +87,7 @@ export default function CameraView() {
         </View>
         <Bottom />
       </View>
+      <StatusBar style="light" />
     </Camera>
   );
 }
@@ -95,6 +98,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   container: {
+    paddingTop: Constants.statusBarHeight,
     display: "flex",
     flexDirection: "column",
     flex: 1,
