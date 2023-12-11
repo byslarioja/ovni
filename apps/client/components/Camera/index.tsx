@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import Bottom from "./Components/Bottom";
 
 import Top from "./Components/Top";
+import useGyro from "./Components/useGyro";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [zoom, setZoom] = useState(0);
   const [rec, setRec] = useState(false);
   const [clock, setClock] = useState(new Date());
+  const { x, y, z } = useGyro();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,7 +37,7 @@ export default function CameraView() {
       </View>
     );
   }
-
+  console.log({ x, y, z });
   return (
     <Camera style={styles.camera} zoom={zoom}>
       <View style={styles.container}>
@@ -72,7 +74,7 @@ export default function CameraView() {
             )}
             <View>
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
-              <Text style={styles.text}>Inclinación vertial: ??</Text>
+              <Text style={styles.text}>Inclinación vertical: ??</Text>
               <Text style={styles.text}>Inclinación horizontal: ??</Text>
             </View>
           </View>
@@ -108,6 +110,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "270deg" }],
   },
   rightSide: {
+    backgroundColor: "transparent",
     justifyContent: "space-between",
     marginTop: 20,
     marginBottom: 20,

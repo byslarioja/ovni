@@ -9,16 +9,16 @@ export default function Top() {
 
   return (
     <View style={styles.top}>
-      <TouchableOpacity style={[styles.topButtom, styles.centerItem]}>
+      <TouchableOpacity style={[styles.topButton, styles.centerItem]}>
         <AlertIcon size={20} color="#f2f2f2" />
       </TouchableOpacity>
       <View style={styles.rec}>
         <View style={[styles.recDot, styles.centerItem]} />
         <Text style={[styles.itemColor, styles.centerItem]}>00:01:24:01</Text>
       </View>
-      <View style={[styles.topButtom, styles.topMenu]}>
+      <View style={[styles.topButton, styles.topMenu]}>
         {menu ? (
-          <View style={[styles.menuButtom, styles.centerItem]}>
+          <View style={[styles.menuButton, styles.centerItem]}>
             <TouchableOpacity>
               <GaleryIcon size={24} color="#f2f2f2" />
             </TouchableOpacity>
@@ -30,7 +30,7 @@ export default function Top() {
           <></>
         )}
         <TouchableOpacity
-          style={styles.topButtom}
+          style={styles.topButton}
           onPress={() => setMenu(!menu)}
         >
           <MenuIcon size={20} color="#f2f2f2" />
@@ -50,9 +50,9 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
     justifyContent: "space-between",
   },
-  topButtom: {
+  topButton: {
     backgroundColor: "rgba(54, 54, 54, 0.5)",
-    borderColor: "#f2f2f2",
+    borderColor: "rgba(242, 242, 242, .25)",
     borderWidth: 0.5,
     borderRadius: 5,
     padding: 10,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 0,
   },
-  menuButtom: {
+  menuButton: {
     marginLeft: 10,
     marginRight: 10,
     gap: 10,
