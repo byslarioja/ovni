@@ -2,10 +2,10 @@ import { Camera } from "expo-camera";
 import Slider from "@react-native-community/slider";
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
-import BottomBar from "./Components/BottomBar";
+import BottomBar from "./components/BottomBar";
 import { StatusBar } from "expo-status-bar";
-import TopBar from "./Components/TopBar";
-import useGyro from "./Components/useGyro";
+import TopBar from "./components/TopBar";
+import useGyro from "./components/useGyro";
 import { styles } from "./styles";
 
 export default function CameraView() {
