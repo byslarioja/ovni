@@ -7,6 +7,8 @@ import { StatusBar } from "expo-status-bar";
 import TopBar from "./components/TopBar";
 import useGyro from "./components/useGyro";
 import { styles } from "./styles";
+import { translate } from "../../shared/utils/translate";
+import { translation } from "./translation";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -14,6 +16,7 @@ export default function CameraView() {
   const [rec, setRec] = useState(false);
   const [clock, setClock] = useState(new Date());
   const { x, y } = useGyro();
+  const lang = translate(translation);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -77,10 +80,12 @@ export default function CameraView() {
             <View>
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
               <Text style={styles.text}>
-                Inclinación vertical: {x !== 0 && y !== 0 ? x : "?"}
+                {lang.t("CAMERA.VERTICAL_INCLINATION")}:{" "}
+                {x !== 0 && y !== 0 ? x : "?"}
               </Text>
               <Text style={styles.text}>
-                Inclinación horizontal: {y !== 0 && x !== 0 ? y : "?"}
+                {lang.t("CAMERA.HORIZONTAL_INCLINATION")}:{" "}
+                {y !== 0 && x !== 0 ? y : "?"}
               </Text>
             </View>
           </View>
