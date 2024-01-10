@@ -1,12 +1,12 @@
 import { Camera } from "expo-camera";
 import Slider from "@react-native-community/slider";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, Text, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
-import Bottom from "./Components/Bottom";
+import BottomBar from "./components/BottomBar";
 import { StatusBar } from "expo-status-bar";
-import Top from "./Components/Top";
-import useGyro from "./Components/useGyro";
-import Constants from "expo-constants";
+import TopBar from "./components/TopBar";
+import useGyro from "./components/useGyro";
+import { styles } from "./styles";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -43,7 +43,7 @@ export default function CameraView() {
   return (
     <Camera style={styles.camera} zoom={zoom}>
       <View style={styles.container}>
-        <Top />
+        <TopBar />
         <View style={styles.center}>
           <Slider
             style={styles.slider}
@@ -85,69 +85,9 @@ export default function CameraView() {
             </View>
           </View>
         </View>
-        <Bottom />
+        <BottomBar />
       </View>
       <StatusBar style="light" />
     </Camera>
   );
 }
-
-const styles = StyleSheet.create({
-  camera: {
-    height: "100%",
-    width: "100%",
-  },
-  container: {
-    paddingTop: Constants.statusBarHeight,
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-  },
-  center: {
-    flexDirection: "row",
-    flex: 1,
-    justifyContent: "space-between",
-    paddingRight: 40,
-  },
-  slider: {
-    width: 200,
-    height: 200,
-    marginLeft: -50,
-    marginTop: "auto",
-    marginBottom: "auto",
-    transform: [{ rotate: "270deg" }],
-  },
-  rightSide: {
-    backgroundColor: "transparent",
-    justifyContent: "space-between",
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  recOffButton: {
-    height: 75,
-    width: 75,
-    borderColor: "#f2f2f2",
-    borderRadius: 100,
-    borderWidth: 5,
-    marginLeft: "auto",
-  },
-  recOnButton: {
-    height: 75,
-    width: 75,
-    backgroundColor: "#f2f2f2",
-    borderRadius: 100,
-    marginLeft: "auto",
-    justifyContent: "center",
-  },
-  recOnCenterButton: {
-    height: 20,
-    width: 20,
-    backgroundColor: "#E83F3F",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-  text: {
-    color: "#F2F2F2",
-    textAlign: "right",
-  },
-});

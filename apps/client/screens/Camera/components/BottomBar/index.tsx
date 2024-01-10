@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { styles } from "./styles";
 import {
   LocationIcon,
   MeasurerIcon,
@@ -7,20 +8,21 @@ import {
   CompasIcon,
   ThermometerIcon,
   DropIcon,
-} from "../../../Icon";
+} from "../../../../components/Icon";
 import useMagnetometer from "./useMagnetometer";
 import useLocation from "./useLocation";
 import useClimate from "./useClimate";
 
-export default function Bottom() {
+export default function BottomBar() {
   const { altitude, coords, speed } = useLocation();
   const { angle } = useMagnetometer();
   const { temperature, humidity } = useClimate();
+  const iconColor = "#F2F2F2";
 
   return (
     <View style={styles.bottom}>
       <View style={styles.bottomItem}>
-        <LocationIcon color="#F2F2F2" size={20} />
+        <LocationIcon color={iconColor} size={20} />
         {coords ? (
           <Text style={styles.itemColor}>
             {coords.latitude} {"/  "}
@@ -31,11 +33,11 @@ export default function Bottom() {
         )}
       </View>
       <View style={styles.bottomItem}>
-        <CompasIcon color="#F2F2F2" size={20} />
+        <CompasIcon color={iconColor} size={20} />
         <Text style={styles.itemColor}>{angle}</Text>
       </View>
       <View style={styles.bottomItem}>
-        <RulerIcon color="#F2F2F2" size={20} />
+        <RulerIcon color={iconColor} size={20} />
         {altitude ? (
           <Text style={styles.itemColor}>{altitude.toFixed(2)} msnm</Text>
         ) : (
@@ -43,7 +45,7 @@ export default function Bottom() {
         )}
       </View>
       <View style={styles.bottomItem}>
-        <MeasurerIcon color="#F2F2F2" size={20} />
+        <MeasurerIcon color={iconColor} size={20} />
         {speed ? (
           <Text style={styles.itemColor}>{speed.toFixed(2)} m/s</Text>
         ) : (
@@ -51,29 +53,13 @@ export default function Bottom() {
         )}
       </View>
       <View style={styles.bottomItem}>
-        <ThermometerIcon color="#F2F2F2" size={20} />
+        <ThermometerIcon color={iconColor} size={20} />
         <Text style={styles.itemColor}>{temperature}</Text>
       </View>
       <View style={styles.bottomItem}>
-        <DropIcon color="#F2F2F2" size={20} />
+        <DropIcon color={iconColor} size={20} />
         <Text style={styles.itemColor}>{humidity}</Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  bottom: {
-    flexDirection: "row",
-    paddingLeft: 45,
-    paddingRight: 50,
-    paddingBottom: 20,
-    justifyContent: "space-between",
-  },
-  bottomItem: {
-    flexDirection: "row",
-  },
-  itemColor: {
-    color: "#F2F2F2",
-  },
-});
