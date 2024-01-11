@@ -36,14 +36,15 @@ export const styles = StyleSheet.create({
   recButton: {
     height: 75,
     width: 75,
-    borderColor: Theme.color.button.neutral,
     borderRadius: 100,
   },
   recOffButton: {
+    borderColor: Theme.color.button.neutral,
     borderWidth: 5,
     marginLeft: "auto",
   },
   recOnButton: {
+    backgroundColor: Theme.color.button.neutral,
     marginLeft: "auto",
     justifyContent: "center",
   },
