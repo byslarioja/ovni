@@ -9,6 +9,7 @@ import useGyro from "./components/useGyro";
 import { styles } from "./styles";
 import { translate } from "../../shared/utils/translate";
 import { translation } from "./translation";
+import Theme from "../../shared/theme";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -52,9 +53,9 @@ export default function CameraView() {
             style={styles.slider}
             minimumValue={0}
             maximumValue={1}
-            minimumTrackTintColor="#F2F2F2"
-            maximumTrackTintColor="#F2F2F2"
-            thumbTintColor="#F2F2F2"
+            minimumTrackTintColor={Theme.color.text.light}
+            maximumTrackTintColor={Theme.color.text.light}
+            thumbTintColor={Theme.color.text.light}
             onValueChange={setZoom}
           />
           <View style={styles.rightSide}>
@@ -66,14 +67,14 @@ export default function CameraView() {
             </View>
             {rec ? (
               <TouchableOpacity
-                style={styles.recOnButton}
+                style={[styles.recButton, styles.recOnButton]}
                 onPress={() => setRec(!rec)}
               >
                 <View style={styles.recOnCenterButton} />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                style={styles.recOffButton}
+                style={[styles.recButton, styles.recOffButton]}
                 onPress={() => setRec(!rec)}
               />
             )}

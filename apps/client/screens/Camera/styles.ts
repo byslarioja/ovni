@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
+import Theme from "../../shared/theme";
 
 export const styles = StyleSheet.create({
   camera: {
@@ -32,19 +33,17 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
-  recOffButton: {
+  recButton: {
     height: 75,
     width: 75,
-    borderColor: "#f2f2f2",
+    borderColor: Theme.color.button.neutral,
     borderRadius: 100,
+  },
+  recOffButton: {
     borderWidth: 5,
     marginLeft: "auto",
   },
   recOnButton: {
-    height: 75,
-    width: 75,
-    backgroundColor: "#f2f2f2",
-    borderRadius: 100,
     marginLeft: "auto",
     justifyContent: "center",
   },
@@ -56,7 +55,7 @@ export const styles = StyleSheet.create({
     marginRight: "auto",
   },
   text: {
-    color: "#F2F2F2",
+    color: Theme.color.text.light,
     textAlign: "right",
   },
 });

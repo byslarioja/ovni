@@ -12,17 +12,17 @@ import {
 import useMagnetometer from "./useMagnetometer";
 import useLocation from "./useLocation";
 import useClimate from "./useClimate";
+import Theme from "../../../../shared/theme";
 
 export default function BottomBar() {
   const { altitude, coords, speed } = useLocation();
   const { angle } = useMagnetometer();
   const { temperature, humidity } = useClimate();
-  const iconColor = "#F2F2F2";
 
   return (
     <View style={styles.bottom}>
       <View style={styles.bottomItem}>
-        <LocationIcon color={iconColor} size={20} />
+        <LocationIcon color={Theme.color.button.neutral} size={20} />
         {coords ? (
           <Text style={styles.itemColor}>
             {coords.latitude} {"/  "}
@@ -33,11 +33,11 @@ export default function BottomBar() {
         )}
       </View>
       <View style={styles.bottomItem}>
-        <CompasIcon color={iconColor} size={20} />
+        <CompasIcon color={Theme.color.button.neutral} size={20} />
         <Text style={styles.itemColor}>{angle}</Text>
       </View>
       <View style={styles.bottomItem}>
-        <RulerIcon color={iconColor} size={20} />
+        <RulerIcon color={Theme.color.button.neutral} size={20} />
         {altitude ? (
           <Text style={styles.itemColor}>{altitude.toFixed(2)} msnm</Text>
         ) : (
@@ -45,7 +45,7 @@ export default function BottomBar() {
         )}
       </View>
       <View style={styles.bottomItem}>
-        <MeasurerIcon color={iconColor} size={20} />
+        <MeasurerIcon color={Theme.color.button.neutral} size={20} />
         {speed ? (
           <Text style={styles.itemColor}>{speed.toFixed(2)} m/s</Text>
         ) : (
@@ -53,11 +53,11 @@ export default function BottomBar() {
         )}
       </View>
       <View style={styles.bottomItem}>
-        <ThermometerIcon color={iconColor} size={20} />
+        <ThermometerIcon color={Theme.color.button.neutral} size={20} />
         <Text style={styles.itemColor}>{temperature}</Text>
       </View>
       <View style={styles.bottomItem}>
-        <DropIcon color={iconColor} size={20} />
+        <DropIcon color={Theme.color.button.neutral} size={20} />
         <Text style={styles.itemColor}>{humidity}</Text>
       </View>
     </View>

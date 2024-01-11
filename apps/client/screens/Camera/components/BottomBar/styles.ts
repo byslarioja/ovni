@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import Theme from "../../../../shared/theme";
 
 export const styles = StyleSheet.create({
   bottom: {
@@ -12,6 +13,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
   },
   itemColor: {
-    color: "#F2F2F2",
+    color: Theme.color.button.neutral,
   },
 });
