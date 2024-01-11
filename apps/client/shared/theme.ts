@@ -1,5 +1,3 @@
-import Constants from "expo-constants";
-
 const Theme = {
   color: {
     neutral: {
