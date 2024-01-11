@@ -20,11 +20,11 @@ export default function useLocation() {
         },
         (location) => {
           setCoords({
-            latitude: location?.coords.latitude,
-            longitude: location?.coords.longitude,
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
           }),
-            setSpeed(location?.coords.speed),
-            setAltitude(location?.coords.altitude);
+            setSpeed(location.coords.speed),
+            setAltitude(location.coords.altitude);
         }
       );
     })();
