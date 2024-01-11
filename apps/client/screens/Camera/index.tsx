@@ -1,7 +1,6 @@
 import { Camera } from "expo-camera";
 import Slider from "@react-native-community/slider";
-import { Button, Text, TouchableOpacity, View } from "react-native";
-import { useEffect, useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import { StatusBar } from "expo-status-bar";
 import TopBar from "./components/TopBar";
@@ -10,21 +9,14 @@ import { styles } from "./styles";
 import { translate } from "../../shared/utils/translate";
 import { translation } from "./translation";
 import Theme from "../../shared/theme";
+import { useCamera } from "./useCamera";
+import RequestPermission from "../../components/RequestPermission";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const [zoom, setZoom] = useState(0);
-  const [rec, setRec] = useState(false);
-  const [clock, setClock] = useState(new Date());
   const { x, y } = useGyro();
   const lang = translate(translation);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setClock(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const { zoom, setZoom, rec, setRec, clock } = useCamera();
 
   if (!permission) {
     // Camera permissions are still loading
@@ -33,15 +25,10 @@ export default function CameraView() {
 
   if (!permission.granted) {
     // Camera permissions are not granted yet
-    return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: "center" }}>
-          We need your permission to show the camera
-        </Text>
-        <Button onPress={requestPermission} title="grant permission" />
-        <StatusBar style="dark" />
-      </View>
-    );
+    <RequestPermission
+      title={lang.t("CAMERA.PERMISSIONS")}
+      requestPermission={requestPermission}
+    />;
   }
 
   return (

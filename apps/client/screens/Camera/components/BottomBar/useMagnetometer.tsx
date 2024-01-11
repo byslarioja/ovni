@@ -33,7 +33,7 @@ export default function useMagnetometer() {
     setSubscription(null);
   };
 
-  const _angle = (magnetometer) => {
+  const _angle = (magnetometer: { x: number; y: number; z: number }) => {
     let angle = 0;
     if (magnetometer) {
       let { x, y, z } = magnetometer;
@@ -46,7 +46,7 @@ export default function useMagnetometer() {
     return angle;
   };
 
-  const degToDMS = (deg, dplaces = 0) => {
+  const degToDMS = (deg: number, dplaces = 0) => {
     var d = Math.floor(deg); // make degrees
     var m = Math.floor((deg - d) * 60); // make minutes
     var s =
