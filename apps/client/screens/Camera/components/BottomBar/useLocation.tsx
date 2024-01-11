@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import * as Location from "expo-location";
 
 export default function useLocation() {
-  const [location, setLocation] = useState(null);
+  const [coords, setCoords] = useState<Coords | null>(null);
+  const [speed, setSpeed] = useState<number | null>(null);
+  const [altitude, setAltitude] = useState<number | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -16,14 +18,26 @@ export default function useLocation() {
         {
           accuracy: Location.Accuracy.High,
         },
-        (location) => setLocation(location)
+        (location) => {
+          setCoords({
+            latitude: location?.coords.latitude,
+            longitude: location?.coords.longitude,
+          }),
+            setSpeed(location?.coords.speed),
+            setAltitude(location?.coords.altitude);
+        }
       );
     })();
   }, []);
 
   return {
-    coords: location?.coords,
-    speed: location?.coords.speed,
-    altitude: location?.coords.altitude,
+    coords,
+    speed,
+    altitude,
   };
 }
+
+type Coords = {
+  latitude: number;
+  longitude: number;
+};
