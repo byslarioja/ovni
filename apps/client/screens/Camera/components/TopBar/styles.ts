@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
+import Theme from "../../../../shared/theme";
 
 export const styles = StyleSheet.create({
   top: {
@@ -42,5 +43,5 @@ export const styles = StyleSheet.create({
     marginTop: "auto",
     marginBottom: "auto",
   },
-  itemColor: { color: "#f2f2f2" },
+  itemColor: { color: Theme.color.button.neutral },
 });
