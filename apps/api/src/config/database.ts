@@ -10,6 +10,6 @@ export const AppDataSource = new DataSource({
   database: "ovni",
   synchronize: false,
   logging: false,
-  entities: ["src/entities/*.ts"],
+  entities: ["src/app/entities/*.ts"],
   migrations: ["src/database/migrations/*.ts"],
 });
