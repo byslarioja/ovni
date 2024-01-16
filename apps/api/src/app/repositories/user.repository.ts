@@ -17,8 +17,11 @@ export const createUser = async (userData) => {
 
   const createdUser = await userRepository.save(user);
 
-  //TODO: find a less verbose way to hide the password
-  delete createdUser.password;
-
   return createdUser;
+};
+
+export const findByEmail = async (email: string) => {
+  const userRepository = AppDataSource.getRepository(User);
+
+  return await userRepository.findOne({ where: { email } });
 };
