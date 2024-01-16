@@ -3,6 +3,7 @@ const Theme = {
     neutral: {
       background: "#202224",
       overlay: "rgba(0, 0, 0, 0.75)",
+      border: "#B3B3B3",
     },
     text: {
       dark: "#CCCCCC",
