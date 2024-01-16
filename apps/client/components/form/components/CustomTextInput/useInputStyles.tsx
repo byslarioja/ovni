@@ -13,7 +13,7 @@ export default function useInputStyles(rightIcon: ReactNode) {
 
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);
-  const handleBlur = (onBlur: Noop) => {
+  const handleBlur = (onBlur: () => void) => {
     onBlur();
     setIsFocused(false);
   };
