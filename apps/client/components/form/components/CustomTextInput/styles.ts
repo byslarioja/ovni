@@ -9,13 +9,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  textareaSection: {
-    height: 125,
-  },
-  textarea: {
-    height: 120,
-    textAlignVertical: "top",
-  },
   input: {
     width: "100%",
     paddingVertical: 10,
@@ -37,16 +30,6 @@ export const styles = StyleSheet.create({
     position: "absolute",
     textAlign: "right",
     right: 10,
-  },
-  invalid: {
-    backgroundColor: Theme.color.states.danger.normal,
-    borderColor: Theme.color.states.danger.normal,
-    color: Theme.color.text.light,
-  },
-  disabled: {
-    backgroundColor: Theme.color.neutral.background,
-    borderColor: Theme.color.neutral.border,
-    color: Theme.color.text.disabled,
   },
   container: {
     justifyContent: "flex-start",
