@@ -6,9 +6,5 @@ export type CustomTextInputProps = {
   placeholder: string;
   label?: string;
   keyboardType?: KeyboardType;
-  lines?: number;
-  isDisabled?: boolean;
   rightIcon?: ReactNode;
-  isEditable?: boolean;
-  focus?: boolean;
 };
