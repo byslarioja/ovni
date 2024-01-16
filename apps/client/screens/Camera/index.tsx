@@ -6,11 +6,11 @@ import { StatusBar } from "expo-status-bar";
 import TopBar from "./components/TopBar";
 import useGyro from "./components/useGyro";
 import { styles } from "./styles";
-import { translate } from "../../shared/utils/translate";
-import { translation } from "./translation";
-import Theme from "../../shared/theme";
+import RequestPermission from "Components/RequestPermission";
 import { useCamera } from "./useCamera";
-import RequestPermission from "../../components/RequestPermission";
+import Theme from "Shared/theme";
+import { translation } from "./translation";
+import { translate } from "Shared/utils/translate";
 
 export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
