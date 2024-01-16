@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import Theme from "../../shared/theme";
+import Theme from "Shared/theme";
 
 export const styles = StyleSheet.create({
   camera: {

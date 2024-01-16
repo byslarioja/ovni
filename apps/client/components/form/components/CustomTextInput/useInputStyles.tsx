@@ -1,8 +1,7 @@
 import { ReactNode, useState } from "react";
 import { styles } from "./styles";
 import { ViewStyle } from "react-native";
-import { Noop } from "react-hook-form";
-import Theme from "../../../../shared/theme";
+import Theme from "Shared/theme";
 
 export default function useInputStyles(rightIcon: ReactNode) {
   let stylesInput: Array<ViewStyle> = [styles.input];

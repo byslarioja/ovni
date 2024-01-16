@@ -1,5 +1,5 @@
+import Theme from "Shared/theme";
 import { StyleSheet } from "react-native";
-import Theme from "../../../../shared/theme";
 
 export const styles = StyleSheet.create({
   label: {
