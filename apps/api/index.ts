@@ -1,7 +1,10 @@
-import { AppDataSource } from "./config/database";
+import { AppDataSource } from "./src/config/database";
 import express from "express";
 import routes from "@routes/api";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 AppDataSource.initialize().catch((error) => console.log(error));
 
