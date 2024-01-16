@@ -12,8 +12,7 @@ export class User {
   @Column()
   email: string;
 
-  //TODO: make select:false work. Check user.repository's createUser method
-  @Column({ select: false })
+  @Column()
   password: string;
 
   @Column({ nullable: true })
