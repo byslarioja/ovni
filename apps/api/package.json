@@ -1,11 +1,11 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "scripts": {
     "build": "npx tsc",
-    "start": "ts-node src/index.ts",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn ./src/index.ts",
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn ./index.ts",
     "db:create": "typeorm-ts-node-commonjs migration:create",
     "db:run": "typeorm-ts-node-commonjs migration:run -d src/config/database.ts",
     "db:revert": "typeorm-ts-node-commonjs migration:revert -d src/config/database.ts"
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.14.1",
