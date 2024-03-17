@@ -18,7 +18,7 @@ export const auth = async (
     }
 
     const decoded = jwt.verify(token, "SECRET_KEY");
-    req.token = decoded;
+    req.body.token = decoded;
 
     next();
   } catch (err) {

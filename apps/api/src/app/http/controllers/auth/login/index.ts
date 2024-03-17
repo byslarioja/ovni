@@ -25,7 +25,7 @@ export const login = async (req: LoginUserRequest, res: Response) => {
     }
 
     const token = sign(
-      { id: foundUser.id, name: foundUser.email },
+      { id: foundUser.id, email: foundUser.email },
       "SECRET_KEY",
       {
         expiresIn: "30 days",

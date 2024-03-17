@@ -7,6 +7,10 @@ import { login } from "./login";
 import { ForgotPasswordSchema } from "./forgot-password/schema";
 import { forgotPassword } from "./forgot-password";
 import { auth } from "@app/http/middlewares/auth";
+import {
+  changePasswordController,
+  ChangePasswordSchema,
+} from "./change-password";
 
 const authRouter = Router();
 
@@ -16,6 +20,11 @@ authRouter.post(
   "/forgot-password",
   validate(ForgotPasswordSchema),
   forgotPassword
+);
+authRouter.post(
+  "/change-password",
+  [auth, validate(ChangePasswordSchema)],
+  changePasswordController
 );
 
 export default authRouter;
