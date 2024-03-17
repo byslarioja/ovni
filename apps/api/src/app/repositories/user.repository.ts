@@ -25,3 +25,12 @@ export const findByEmail = async (email: string) => {
 
   return await userRepository.findOne({ where: { email } });
 };
+
+export const updateUser = async (newEncryptedPassword: string, id: string) => {
+  const userRepository = AppDataSource.getRepository(User);
+
+  return await userRepository.update(
+    { id },
+    { password: newEncryptedPassword }
+  );
+};
