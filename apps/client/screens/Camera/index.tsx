@@ -80,7 +80,6 @@ export default function CameraView() {
         </View>
         <BottomBar />
       </View>
-      <StatusBar style="light" />
     </Camera>
   );
 }

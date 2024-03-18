@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import Constants from "expo-constants";
 import Theme from "Shared/theme";
 
 export const styles = StyleSheet.create({
@@ -8,7 +7,6 @@ export const styles = StyleSheet.create({
     width: "100%",
   },
   container: {
-    paddingTop: Constants.statusBarHeight,
     display: "flex",
     flexDirection: "column",
     flex: 1,
