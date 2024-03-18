@@ -1,6 +1,7 @@
-import { useCallback, useState } from "react";
-import { attemptLogin } from "./auth.service";
+import { useCallback, useEffect, useState } from "react";
+import { attemptLogin, verifyToken } from "./auth.service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 export default function useAuth() {
   const [, setToken] = useState();
@@ -10,22 +11,41 @@ export default function useAuth() {
     logged: false,
   });
 
-  const checkAuth = useCallback(async () => {
+  useEffect(() => {
+    checkAuth().then((isAuthenticated) => {
+      setState((prev) => ({
+        ...prev,
+        logged: isAuthenticated,
+      }));
+    });
+  }, [state]);
+
+  const checkAuth = async () => {
     const jwt = await AsyncStorage.getItem("token");
 
-    //should call a check auth api endpoint to ensure that the token is valid
+    if (!jwt) return false;
 
-    return !!jwt;
-  }, [AsyncStorage.getItem]);
+    const tokenIsValid = await verifyToken(jwt);
+
+    return tokenIsValid;
+  };
+
+  const logout = async () => {
+    await AsyncStorage.removeItem("token");
+    router.replace("auth/login");
+    setState((prev) => ({ ...prev, logged: false }));
+    setToken(null);
+  };
 
   const login = useCallback(
     async ({ email, password }) => {
-      if (checkAuth()) {
+      const isAuthenticated = await checkAuth();
+
+      if (isAuthenticated) {
         setState((prev) => ({
           ...prev,
           logged: true,
         }));
-
         return;
       }
 
@@ -33,30 +53,30 @@ export default function useAuth() {
         ...prev,
         loading: true,
       }));
-      attemptLogin({ email, password })
-        .then(async (jwt) => {
-          await AsyncStorage.setItem("token", jwt);
-          setToken(jwt);
-          setState({
-            loading: false,
-            error: false,
-            logged: true,
-          });
-        })
-        .catch((error) => {
-          setState({
-            loading: false,
-            error: true,
-            logged: false,
-          });
+
+      try {
+        const jwt = await attemptLogin({ email, password });
+        await AsyncStorage.setItem("token", jwt);
+        setToken(jwt);
+        setState({
+          loading: false,
+          error: false,
+          logged: true,
         });
+      } catch (error) {
+        setState({
+          loading: false,
+          error: true,
+          logged: false,
+        });
+      }
     },
     [setToken]
   );
 
   return {
-    checkAuth,
     login,
+    logout,
     isLoading: state.loading,
     loginHasErrors: state.error,
     isLogged: state.logged,

@@ -1,4 +1,4 @@
-const BASE_URI = "https://ovni.onrender.com/api/auth";
+const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}/auth`;
 
 export async function attemptLogin(credentials: {
   email: string;
@@ -21,6 +21,28 @@ export async function attemptLogin(credentials: {
     const { token } = response;
 
     return token;
+  } catch (error) {
+    console.error({ error });
+  }
+}
+
+export async function verifyToken(token: string) {
+  try {
+    const res = await fetch(`${BASE_URI}/check-auth`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Something went wrong");
+    }
+    const status = res.status;
+
+    return status === 200;
   } catch (error) {
     console.error({ error });
   }

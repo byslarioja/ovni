@@ -3,11 +3,10 @@ import { UserIcon, PasswordIcon } from "Components/Icon";
 import { Title } from "Components/Typography";
 import { CustomTextInput } from "Components/form";
 import { Controller, useForm } from "react-hook-form";
-import { Image, View } from "react-native";
+import { ActivityIndicator, Image, View } from "react-native";
 import useAuth from "../useAuth";
 import { LoaderButton } from "Components/Button/LoaderButton";
-import { router } from "expo-router";
-import { useEffect } from "react";
+import { Redirect } from "expo-router";
 
 type FormData = {
   email: string;
@@ -19,7 +18,7 @@ const INPUT_RULES = {
 };
 
 export default function Login() {
-  const { checkAuth, isLoading, isLogged, login } = useAuth();
+  const { isLoading, isLogged, login } = useAuth();
   const {
     control,
     handleSubmit,
@@ -35,11 +34,17 @@ export default function Login() {
     login(data);
   };
 
-  useEffect(() => {
-    if (isLogged || checkAuth()) {
-      router.replace("camera");
-    }
-  }, [isLogged, checkAuth]);
+  if (isLoading) {
+    return (
+      <View style={{ height: "100%", justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} />
+      </View>
+    );
+  }
+
+  if (isLogged) {
+    return <Redirect href={"/camera"} />;
+  }
 
   return (
     <>
