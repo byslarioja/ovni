@@ -13,6 +13,7 @@ import {
   changePasswordController,
   ChangePasswordSchema,
 } from "./change-password";
+import { checkAuthController } from "./check-auth";
 
 const authRouter = Router();
 
@@ -35,5 +36,7 @@ authRouter.post(
   [auth, validate(ChangePasswordSchema)],
   changePasswordController
 );
+
+authRouter.get("/check-auth", auth, checkAuthController);
 
 export default authRouter;
