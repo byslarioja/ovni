@@ -2,9 +2,6 @@ import Theme from "Shared/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  label: {
-    color: Theme.color.text.light,
-  },
   inputSection: {
     flexDirection: "row",
     alignItems: "center",
