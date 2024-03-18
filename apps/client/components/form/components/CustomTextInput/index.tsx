@@ -1,14 +1,21 @@
-import { TextInput, View, Text } from "react-native";
+import { TextInput, View } from "react-native";
 import React from "react";
 import useInputStyles from "./useInputStyles";
 import { CustomTextInputProps } from "./types";
 import { styles } from "./styles";
+import { Hint, Label } from "Components/Typography";
+import Theme from "Shared/theme";
 
 export function CustomTextInput({
   placeholder,
   label,
   keyboardType,
   rightIcon,
+  isPassword,
+  onBlur,
+  onChangeText,
+  value,
+  error,
 }: CustomTextInputProps) {
   const {
     stylesInput,
@@ -21,24 +28,44 @@ export function CustomTextInput({
 
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && <Label>{label}</Label>}
       <View style={stylesInputSection}>
         <TextInput
           placeholder={isFocused ? "" : placeholder}
-          placeholderTextColor={colorText}
+          placeholderTextColor={error ? Theme.color.text.light : colorText}
           keyboardType={keyboardType}
           onFocus={handleFocus}
-          style={stylesInput}
+          style={[
+            stylesInput,
+            error && {
+              borderColor: Theme.color.states.danger.normal,
+              backgroundColor: Theme.color.states.danger.normal,
+            },
+          ]}
+          secureTextEntry={isPassword}
+          onBlur={onBlur}
+          onChangeText={onChangeText}
+          value={value}
         />
         {rightIcon && (
           <View style={stylesIconRight}>
             {rightIcon &&
               React.cloneElement(rightIcon as React.ReactElement, {
-                color: colorText,
+                color: error ? Theme.color.text.light : colorText,
               })}
           </View>
         )}
       </View>
+      {error && (
+        <Hint
+          customStyle={{
+            marginTop: 5,
+            color: Theme.color.states.danger.normal,
+          }}
+        >
+          {error}
+        </Hint>
+      )}
     </View>
   );
 }

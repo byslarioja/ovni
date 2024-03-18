@@ -8,3 +8,5 @@ export { ThermometerIcon } from "./components/ThermometerIcon";
 export { CompasIcon } from "./components/CompasIcon";
 export { GaleryIcon } from "./components/GaleryIcon";
 export { LogoutIcon } from "./components/LogoutIcon";
+export { UserIcon } from "./components/UserIcon";
+export { PasswordIcon } from "./components/PasswordIcon";

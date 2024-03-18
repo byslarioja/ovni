@@ -2,8 +2,8 @@
   "expo": {
     "name": "iseeyou",
     "slug": "iseeyou",
+    "scheme": "iseeyou-scheme",
     "version": "1.0.0",
-    "orientation": "landscape",
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",
@@ -45,7 +45,15 @@
           "motionPermission": "Allow $(PRODUCT_NAME) to access your device motion."
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-router",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ],
+      "expo-font"
     ],
     "extra": {
       "eas": {
