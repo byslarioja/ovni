@@ -3,7 +3,7 @@
     "lib": ["es5", "es6"],
     "target": "es2016",
     "module": "commonjs",
-    "rootDir": "./src",
+    "rootDir": "./",
     "moduleResolution": "node",
     "outDir": "./dist",
     "esModuleInterop": true,
@@ -20,6 +20,6 @@
     },
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": ["index.ts", "src/**/*"],
   "exclude": ["node_modules"]
 }

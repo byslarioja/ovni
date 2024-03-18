@@ -2,6 +2,7 @@ import { Response } from "express";
 import { LoginUserRequest } from "./schema";
 import { findByEmail } from "@app/repositories/user.repository";
 import { sign } from "jsonwebtoken";
+import "dotenv/config";
 
 export const forgotPasswordController = async (
   req: LoginUserRequest,
@@ -18,7 +19,7 @@ export const forgotPasswordController = async (
 
     const token = sign(
       { id: foundUser.id, name: foundUser.email },
-      "SECRET_KEY",
+      process.env.APP_KEY,
       {
         expiresIn: "1h",
       }
@@ -32,6 +33,6 @@ export const forgotPasswordController = async (
     });
   } catch (error) {
     console.error(error);
-    return res.status(404).send({ message: "1412 went wrong", error });
+    return res.status(404).send({ message: "Something went wrong", error });
   }
 };

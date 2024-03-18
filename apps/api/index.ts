@@ -14,4 +14,5 @@ app.use(bodyParser.json());
 
 app.use("/api", routes);
 
-app.listen(8000, () => console.log("initialized on 8000"));
+const PORT = process.env.APP_PORT;
+app.listen(PORT || 8000, () => console.log("initialized on 8000"));
