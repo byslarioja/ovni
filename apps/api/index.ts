@@ -1,6 +1,6 @@
 import { AppDataSource } from "./src/config/database";
 import express from "express";
-import routes from "@routes/api";
+import routes from "./src/routes/api";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
