@@ -2,16 +2,14 @@
   "expo": {
     "name": "iseeyou",
     "slug": "iseeyou",
+    "scheme": "iseeyou-scheme",
     "version": "1.0.0",
-    "orientation": "landscape",
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -46,7 +44,13 @@
         }
       ],
       "expo-localization",
-      "expo-router"
+      "expo-router",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
     ],
     "extra": {
       "eas": {

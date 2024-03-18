@@ -4539,6 +4539,7 @@ __metadata:
     expo-localization: "npm:~14.8.3"
     expo-location: "npm:~16.5.5"
     expo-router: "npm:~3.4.8"
+    expo-screen-orientation: "npm:~6.4.1"
     expo-sensors: "npm:~12.9.1"
     expo-status-bar: "npm:~1.11.1"
     expo-updates: "npm:~0.24.12"
@@ -5698,6 +5699,15 @@ __metadata:
     react-native-reanimated:
       optional: true
   checksum: 10c0/d516f53c3c3b647c78bd83bba1678e50492cad8956dbe781bed0c2ff6bd35413422ebf48a5484bc024daa8d879249ebe6b952d852880b2506677ea8ac8f5db53
+  languageName: node
+  linkType: hard
+
+"expo-screen-orientation@npm:~6.4.1":
+  version: 6.4.1
+  resolution: "expo-screen-orientation@npm:6.4.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/d9e56944278b76a98098f808aa17a3db62fafe949091d450f7d1903752f2a60e70c41c87ec9c0ee3c827f70ff2a5c27b246013805c2d1753d86e53915daa5cb7
   languageName: node
   linkType: hard
 
