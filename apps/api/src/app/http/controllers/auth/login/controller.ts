@@ -4,6 +4,7 @@ import { findByEmail } from "@app/repositories/user.repository";
 import bcrypt from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { UserResource } from "@app/http/resources/user.resource";
+import "dotenv/config";
 
 export const loginController = async (req: LoginUserRequest, res: Response) => {
   const validated = req.body;
@@ -26,7 +27,7 @@ export const loginController = async (req: LoginUserRequest, res: Response) => {
 
     const token = sign(
       { id: foundUser.id, email: foundUser.email },
-      "SECRET_KEY",
+      process.env.APP_KEY,
       {
         expiresIn: "30 days",
       }
@@ -36,6 +37,6 @@ export const loginController = async (req: LoginUserRequest, res: Response) => {
       .status(200)
       .json({ user: new UserResource(foundUser).toJson(), token });
   } catch (error) {
-    return res.status(500).send({ message: "Something went wrong", error });
+    return res.status(500).send({ message: "Something went wrong" });
   }
 };

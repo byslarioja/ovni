@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { Secret, JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import "dotenv/config";
 
 export interface CustomRequest extends Request {
   token: string | JwtPayload;
@@ -17,7 +18,7 @@ export const auth = async (
       throw new Error();
     }
 
-    const decoded = jwt.verify(token, "SECRET_KEY");
+    const decoded = jwt.verify(token, process.env.APP_KEY);
     req.body.token = decoded;
 
     next();
