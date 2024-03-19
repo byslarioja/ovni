@@ -1,6 +1,6 @@
 import { Camera } from "expo-camera";
 import Slider from "@react-native-community/slider";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
 import useGyro from "./components/useGyro";
@@ -10,28 +10,74 @@ import { useCamera } from "./useCamera";
 import Theme from "Shared/theme";
 import { translation } from "./translation";
 import { translate } from "Shared/utils/translate";
+import { useRef } from "react";
 
 export default function CameraView() {
-  const [permission, requestPermission] = Camera.useCameraPermissions();
   const { x, y } = useGyro();
   const lang = translate(translation);
-  const { zoom, setZoom, rec, setRec, clock } = useCamera();
+  const {
+    zoom,
+    setZoom,
+    rec,
+    setRec,
+    clock,
+    cameraStatus,
+    requestCameraPermission,
+    microphoneStatus,
+    requestMicrophonePermission,
+    mediaLibraryStatus,
+    requestMediaLibraryPermission,
+    saveVideo,
+  } = useCamera();
 
-  if (!permission) {
+  const cameraRef = useRef(null);
+
+  const handleRecord = async () => {
+    try {
+      if (rec) {
+        setRec(false);
+        cameraRef.current.stopRecording();
+      } else {
+        setRec(true);
+        const video = await cameraRef.current.recordAsync();
+        saveVideo(video.uri);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (!cameraStatus || !microphoneStatus || !mediaLibraryStatus) {
     // Camera permissions are still loading
-    return <View />;
+    return <ActivityIndicator size="large" />;
   }
 
-  if (!permission.granted) {
+  if (!cameraStatus.granted) {
     // Camera permissions are not granted yet
     <RequestPermission
-      title={lang.t("CAMERA.PERMISSIONS")}
-      requestPermission={requestPermission}
+      title={lang.t("CAMERA.PERMISSIONS.CAMERA")}
+      requestPermission={requestCameraPermission}
+    />;
+  }
+
+  if (!microphoneStatus.granted) {
+    // Microphone permissions are not granted yet
+    <RequestPermission
+      title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
+      requestPermission={requestMicrophonePermission}
+    />;
+  }
+
+  if (!mediaLibraryStatus.granted) {
+    // Microphone permissions are not granted yet
+    <RequestPermission
+      title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
+      requestPermission={requestMediaLibraryPermission}
     />;
   }
 
   return (
-    <Camera style={styles.camera} zoom={zoom}>
+    <Camera style={styles.camera} zoom={zoom} ref={cameraRef}>
       <View style={styles.container}>
         <TopBar />
         <View style={styles.center}>
@@ -54,14 +100,14 @@ export default function CameraView() {
             {rec ? (
               <TouchableOpacity
                 style={[styles.recButton, styles.recOnButton]}
-                onPress={() => setRec(!rec)}
+                onPress={handleRecord}
               >
                 <View style={styles.recOnCenterButton} />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
                 style={[styles.recButton, styles.recOffButton]}
-                onPress={() => setRec(!rec)}
+                onPress={handleRecord}
               />
             )}
             <View>

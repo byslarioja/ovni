@@ -6,7 +6,7 @@ const Theme = {
       border: "#B3B3B3",
     },
     text: {
-      dark: "#CCCCCC",
+      dark: "#323232",
       light: "#F2F2F2",
       placeholder: "rgba(32, 34, 36, 0.35)",
       disabled: "#CACACA",

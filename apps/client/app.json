@@ -9,13 +9,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSMotionUsageDescription": "Allow $(PRODUCT_NAME) to access your device motion."
+        "NSMotionUsageDescription": "Allow $(PRODUCT_NAME) to access your device motion.",
+        "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+        "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone"
       }
     },
     "owner": "bysrioja",
@@ -36,7 +36,17 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your videos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save videos.",
+          "isAccessMediaLocationEnabled": true
         }
       ],
       [

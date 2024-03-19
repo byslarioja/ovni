@@ -4,6 +4,7 @@ import { useState } from "react";
 import { styles } from "./styles";
 import Theme from "Shared/theme";
 import useAuth from "Screens/Auth/useAuth";
+import { router } from "expo-router";
 
 export default function TopBar() {
   const [menu, setMenu] = useState(false);
@@ -21,7 +22,7 @@ export default function TopBar() {
       <View style={[styles.topButton, styles.topMenu]}>
         {menu ? (
           <View style={[styles.menuButton, styles.centerItem]}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/")}>
               <GaleryIcon size={24} color={Theme.color.button.neutral} />
             </TouchableOpacity>
             <TouchableOpacity onPress={logout}>

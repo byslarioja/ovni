@@ -4552,11 +4552,13 @@ __metadata:
     expo-linking: "npm:~6.2.2"
     expo-localization: "npm:~14.8.3"
     expo-location: "npm:~16.5.5"
+    expo-media-library: "npm:~15.9.1"
     expo-router: "npm:~3.4.8"
     expo-screen-orientation: "npm:~6.4.1"
     expo-sensors: "npm:~12.9.1"
     expo-status-bar: "npm:~1.11.1"
     expo-updates: "npm:~0.24.12"
+    expo-video-thumbnails: "npm:~7.9.0"
     i18n-js: "npm:^4.3.2"
     react: "npm:18.2.0"
     react-hook-form: "npm:^7.49.3"
@@ -5665,6 +5667,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-media-library@npm:~15.9.1":
+  version: 15.9.1
+  resolution: "expo-media-library@npm:15.9.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/7cbd0002bdde56bab125af02ed0c735527aca630b92d160c12312b3a8158e1186569cd7642935a5a0fc4a3b50d7dbd6bbd1a73b01b5d1d81cb51c8ea82df3560
+  languageName: node
+  linkType: hard
+
 "expo-modules-autolinking@npm:1.10.3":
   version: 1.10.3
   resolution: "expo-modules-autolinking@npm:1.10.3"
@@ -5797,6 +5808,15 @@ __metadata:
   bin:
     expo-updates: bin/cli.js
   checksum: 10c0/7bca8638a95ff8908aeeab687aced3776c7e1330d404fca4289110fd4923362bc2124d9e11f6d9d6f449f12fb0fdb6b0ec1ed129754d626e945c39bee8a91cbc
+  languageName: node
+  linkType: hard
+
+"expo-video-thumbnails@npm:~7.9.0":
+  version: 7.9.0
+  resolution: "expo-video-thumbnails@npm:7.9.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/1109dc64b0a4941c35419fe088e17ed41aacf0dfe33cb4c29ce489e4ac15d47b07352c87307acecc4b5cb5f2e5bd3bcfbd7517cab9da424eb1f9b35f920f4a69
   languageName: node
   linkType: hard
 

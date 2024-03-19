@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     paddingLeft: 35,
     paddingRight: 35,
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight / 3,
     paddingBottom: 3,
     justifyContent: "space-between",
   },
