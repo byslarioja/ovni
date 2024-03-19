@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const VideoInfoSchema = z.object({
   body: z.object({
-    hash: z.string().regex(/^[^-]+-[^-]+-[^-]+-[^-]+-[^-]+$/),
+    hash: z.string(),
     asset: z.object({
       id: z.string(),
       filename: z.string(),

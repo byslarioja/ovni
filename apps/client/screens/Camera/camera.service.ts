@@ -3,7 +3,7 @@ import { Asset } from "expo-media-library";
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}`;
 
 type VideoInfo = {
-  hash: `${string}-${string}-${string}-${string}-${string}`;
+  hash: string;
   asset: Asset;
 };
 
