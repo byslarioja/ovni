@@ -3,9 +3,11 @@ import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { uploadVideoInfo } from "./camera.service";
-import * as Random from "expo-random";
+import * as Crypto from "expo-crypto";
+import useAuth from "Screens/Auth/useAuth";
 
 export function useCamera() {
+  const { token } = useAuth();
   const [zoom, setZoom] = useState(0);
   const [rec, setRec] = useState(false);
   const [clock, setClock] = useState(new Date());
@@ -36,16 +38,13 @@ export function useCamera() {
       const asset = await MediaLibrary.createAssetAsync(uri);
 
       // Create a hash based on asset.id and asset.creationTime
-      const randomBytes = await Random.getRandomBytesAsync(16);
-      const hash = [...randomBytes]
-        .map((byte) => byte.toString(16).padStart(2, "0"))
-        .join("");
+      const hash = Crypto.randomUUID();
 
       // Save asset to local storage
       await AsyncStorage.setItem(hash, JSON.stringify(asset));
 
       // Send a POST request to your backend with the asset
-      await uploadVideoInfo({ hash, asset });
+      await uploadVideoInfo({ hash, asset }, token);
     } catch (error) {
       console.error(error);
     }

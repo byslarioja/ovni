@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 export default function useAuth() {
-  const [, setToken] = useState();
+  const [token, setToken] = useState<string>();
   const [state, setState] = useState({
     loading: false,
     error: false,
@@ -26,6 +26,10 @@ export default function useAuth() {
     if (!jwt) return false;
 
     const tokenIsValid = await verifyToken(jwt);
+
+    if (tokenIsValid) {
+      setToken(jwt);
+    }
 
     return tokenIsValid;
   };
@@ -80,5 +84,6 @@ export default function useAuth() {
     isLoading: state.loading,
     loginHasErrors: state.error,
     isLogged: state.logged,
+    token,
   };
 }

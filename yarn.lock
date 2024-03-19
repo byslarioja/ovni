@@ -4548,12 +4548,12 @@ __metadata:
     expo: "npm:^50.0.13"
     expo-camera: "npm:~14.1.1"
     expo-constants: "npm:~15.4.5"
+    expo-crypto: "npm:~12.8.1"
     expo-font: "npm:~11.10.3"
     expo-linking: "npm:~6.2.2"
     expo-localization: "npm:~14.8.3"
     expo-location: "npm:~16.5.5"
     expo-media-library: "npm:~15.9.1"
-    expo-random: "npm:~13.6.0"
     expo-router: "npm:~3.4.8"
     expo-screen-orientation: "npm:~6.4.1"
     expo-sensors: "npm:~12.9.1"
@@ -5583,6 +5583,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-crypto@npm:~12.8.1":
+  version: 12.8.1
+  resolution: "expo-crypto@npm:12.8.1"
+  dependencies:
+    base64-js: "npm:^1.3.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/6beadc4e6a68fa3c5c82d229eb110c2b92d560abab5d5a567e73e2e2f0d6907ad95673ae84f8b083490f2f2e44e840b527ed8a32c65256b368ef0029762b266d
+  languageName: node
+  linkType: hard
+
 "expo-eas-client@npm:~0.11.0":
   version: 0.11.2
   resolution: "expo-eas-client@npm:0.11.2"
@@ -5699,17 +5710,6 @@ __metadata:
   dependencies:
     invariant: "npm:^2.2.4"
   checksum: 10c0/7c2a37f9856a476252b904f3e71b90cb1a555ffd6947428d2d855e4340d46743b59dd4074e4bb89634661f237f47022f10cc64b1508aa8b312c5c1ecdea47599
-  languageName: node
-  linkType: hard
-
-"expo-random@npm:~13.6.0":
-  version: 13.6.0
-  resolution: "expo-random@npm:13.6.0"
-  dependencies:
-    base64-js: "npm:^1.3.0"
-  peerDependencies:
-    expo: "*"
-  checksum: 10c0/d1322e8d41bb51498f2de33d9da89af9db1618e3344b522617c00185819b09515f0a2eb92e4990d647abc1d5cebd1354fa5114b1ac0ee7e177c6164df681b726
   languageName: node
   linkType: hard
 
