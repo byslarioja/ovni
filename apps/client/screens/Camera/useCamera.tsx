@@ -1,6 +1,8 @@
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { uploadVideoInfo } from "./camera.service";
 
 export function useCamera() {
   const [zoom, setZoom] = useState(0);
@@ -29,10 +31,20 @@ export function useCamera() {
   }, []);
 
   const saveVideo = async (uri: string) => {
-    const asset = await MediaLibrary.createAssetAsync(uri);
+    try {
+      const asset = await MediaLibrary.createAssetAsync(uri);
 
-    //TODO: send asset's info to api to prevent trickery
-    console.log(asset);
+      // Create a hash based on asset.id and asset.creationTime
+      const hash = crypto.randomUUID();
+
+      // Save asset to local storage
+      await AsyncStorage.setItem(hash, JSON.stringify(asset));
+
+      // Send a POST request to your backend with the asset
+      await uploadVideoInfo({ hash, asset });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return {
