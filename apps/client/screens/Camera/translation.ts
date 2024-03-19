@@ -8,6 +8,9 @@ export const translation = {
         MICROPHONE: "We need permission to use your microphone",
       },
     },
+    CAMERA_SERVICE: {
+      ERROR: "Server responded with status",
+    },
   },
   es: {
     CAMERA: {
@@ -19,6 +22,9 @@ export const translation = {
         MICROPHONE:
           "Se necesitan permisos para acceder al micrófono del dispositivo",
       },
+    },
+    CAMERA_SERVICE: {
+      ERROR: "El servidor respondió con un código",
     },
   },
 };
