@@ -1,4 +1,9 @@
+import { translate } from "Shared/utils/translate";
+import { translation } from "./translation";
+
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}/auth`;
+
+const lang = translate(translation);
 
 export async function attemptLogin(credentials: {
   email: string;
@@ -15,7 +20,7 @@ export async function attemptLogin(credentials: {
     });
 
     if (!res.ok) {
-      throw new Error("Something went wrong");
+      throw new Error(lang.t("AUTH_SERVICE.ERROR"));
     }
     const response = await res.json();
     const { token } = response;
@@ -38,7 +43,7 @@ export async function verifyToken(token: string) {
     });
 
     if (!res.ok) {
-      throw new Error("Something went wrong");
+      throw new Error(lang.t("AUTH_SERVICE.ERROR"));
     }
     const status = res.status;
 
