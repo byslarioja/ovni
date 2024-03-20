@@ -14,6 +14,7 @@ export const videoInfoController = async (
 
     return res.status(201).json(videoInfo);
   } catch (error) {
+    console.error(error);
     return res.status(500).send({ message: "Something went wrong" });
   }
 };
