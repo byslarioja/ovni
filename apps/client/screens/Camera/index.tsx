@@ -11,6 +11,7 @@ import Theme from "Shared/theme";
 import { translation } from "./translation";
 import { translate } from "Shared/utils/translate";
 import { useRef } from "react";
+import appConfig from "../../app.json";
 
 export default function CameraView() {
   const { x, y } = useGyro();
@@ -21,6 +22,7 @@ export default function CameraView() {
     rec,
     setRec,
     clock,
+    elapsedTime,
     cameraStatus,
     requestCameraPermission,
     microphoneStatus,
@@ -79,7 +81,7 @@ export default function CameraView() {
   return (
     <Camera style={styles.camera} zoom={zoom} ref={cameraRef}>
       <View style={styles.container}>
-        <TopBar />
+        <TopBar elapsedTime={elapsedTime} />
         <View style={styles.center}>
           <Slider
             style={styles.slider}
@@ -92,10 +94,8 @@ export default function CameraView() {
           />
           <View style={styles.rightSide}>
             <View>
-              <Text style={styles.text}>
-                {clock.toLocaleDateString()} {clock.toLocaleTimeString()}
-              </Text>
-              <Text style={styles.text}>v1.0.0</Text>
+              <Text style={styles.text}>{clock}</Text>
+              <Text style={styles.text}>v{appConfig.expo.version}</Text>
             </View>
             {rec ? (
               <TouchableOpacity
@@ -114,11 +114,11 @@ export default function CameraView() {
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
               <Text style={styles.text}>
                 {lang.t("CAMERA.VERTICAL_INCLINATION")}:{" "}
-                {x !== 0 && y !== 0 ? x : "?"}
+                {x || <ActivityIndicator size={14} />}
               </Text>
               <Text style={styles.text}>
                 {lang.t("CAMERA.HORIZONTAL_INCLINATION")}:{" "}
-                {y !== 0 && x !== 0 ? y : "?"}
+                {y || <ActivityIndicator size={14} />}
               </Text>
             </View>
           </View>

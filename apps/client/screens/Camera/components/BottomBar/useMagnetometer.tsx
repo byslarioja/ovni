@@ -1,41 +1,22 @@
 import { useEffect, useState } from "react";
-import { Magnetometer } from "expo-sensors";
+import { Magnetometer, MagnetometerMeasurement } from "expo-sensors";
 
 export default function useMagnetometer() {
-  const [subscription, setSubscription] = useState(null);
-  const [magnetometer, setMagnetometer] = useState(0);
+  const [data, setData] = useState<number>(null);
 
   useEffect(() => {
     Magnetometer.setUpdateInterval(1000);
 
-    _toggle();
+    const subscription = Magnetometer.addListener((data) => {
+      setData(_angle(data));
+    });
+
     return () => {
-      _unsubscribe();
+      subscription && subscription.remove();
     };
   }, []);
 
-  const _toggle = () => {
-    if (subscription) {
-      _unsubscribe();
-    } else {
-      _subscribe();
-    }
-  };
-
-  const _subscribe = () => {
-    setSubscription(
-      Magnetometer.addListener((data) => {
-        setMagnetometer(_angle(data));
-      })
-    );
-  };
-
-  const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
-  };
-
-  const _angle = (magnetometer: { x: number; y: number; z: number }) => {
+  const _angle = (magnetometer: MagnetometerMeasurement) => {
     let angle = 0;
     if (magnetometer) {
       let { x, y, z } = magnetometer;
@@ -49,15 +30,15 @@ export default function useMagnetometer() {
   };
 
   const degToDMS = (deg: number, dplaces = 0) => {
-    var d = Math.floor(deg); // make degrees
-    var m = Math.floor((deg - d) * 60); // make minutes
+    var d = Math.floor(deg);
+    var m = Math.floor((deg - d) * 60);
     var s =
       Math.round(((deg - d) * 60 - m) * 60 * Math.pow(10, dplaces)) /
-      Math.pow(10, dplaces); // Make sec rounded
-    s == 60 && (m++, (s = 0)); // if seconds rounds to 60 then increment minutes, reset seconds
-    m == 60 && (d++, (m = 0)); // if minutes rounds to 60 then increment degress, reset minutes
-    return d + "° " + m + "' " + s + '"'; // create output DMS string
+      Math.pow(10, dplaces);
+    s == 60 && (m++, (s = 0));
+    m == 60 && (d++, (m = 0));
+    return d + "° " + m + "' " + s + '"';
   };
 
-  return { angle: degToDMS(magnetometer) };
+  return { angle: degToDMS(data) };
 }

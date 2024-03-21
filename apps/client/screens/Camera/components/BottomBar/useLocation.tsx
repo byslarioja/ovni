@@ -2,42 +2,55 @@ import { useEffect, useState } from "react";
 import * as Location from "expo-location";
 
 export default function useLocation() {
-  const [coords, setCoords] = useState<Coords | null>(null);
-  const [speed, setSpeed] = useState<number | null>(null);
-  const [altitude, setAltitude] = useState<number | null>(null);
+  const [locationData, setLocationData] = useState<LocationData>({
+    coords: null,
+    speed: null,
+    altitude: null,
+  });
 
   useEffect(() => {
+    let subscription: Location.LocationSubscription;
+
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        console.error("er");
+        console.error("Permission not granted");
         return;
       }
 
-      await Location.watchPositionAsync(
+      subscription = await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.High,
+          timeInterval: 5000,
         },
         (location) => {
-          setCoords({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }),
-            setSpeed(location.coords.speed),
-            setAltitude(location.coords.altitude);
+          setLocationData({
+            coords: {
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            },
+            speed: location.coords.speed,
+            altitude: location.coords.altitude,
+          });
         }
       );
     })();
+
+    if (subscription) {
+      subscription.remove();
+    }
   }, []);
 
-  return {
-    coords,
-    speed,
-    altitude,
-  };
+  return locationData;
 }
 
 type Coords = {
   latitude: number;
   longitude: number;
+};
+
+type LocationData = {
+  coords: Coords;
+  speed: number;
+  altitude: number;
 };

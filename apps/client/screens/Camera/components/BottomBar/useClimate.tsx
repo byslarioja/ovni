@@ -4,42 +4,54 @@ import useLocation from "./useLocation";
 const API_URL_PREFIX = "https://api.open-meteo.com/v1/forecast";
 const API_PARAMS = "current=temperature_2m,relative_humidity_2m";
 
+const fetchData = async ({
+  latitude,
+  longitude,
+}: {
+  latitude: number;
+  longitude: number;
+}): Promise<Response> => {
+  const URI = `${API_URL_PREFIX}?latitude=${latitude}&longitude=${longitude}&${API_PARAMS}`;
+
+  try {
+    const response = await fetch(URI);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export default function useClimate() {
-  const [temperature, setTemperature] = useState<string | null>(null);
-  const [humidity, setHumidity] = useState<string | null>(null);
   const { coords } = useLocation();
+  const [climateData, setClimateData] = useState<ClimateData>({
+    temperature: null,
+    humidity: null,
+  });
 
   useEffect(() => {
-    if (coords) {
-      const LONG = coords.longitude;
-      const LAT = coords.latitude;
+    if (!coords) return;
 
-      fetch(`${API_URL_PREFIX}?latitude=${LAT}&longitude=${LONG}&${API_PARAMS}`)
-        .then((response) => response.json())
-        .then((response: Response) => {
-          setTemperature(
-            response.current.temperature_2m +
-              " " +
-              response.current_units.temperature_2m
-          );
-          setHumidity(
-            response.current.relative_humidity_2m +
-              response.current_units.relative_humidity_2m
-          );
-        })
-        .catch((error) => {
-          setTemperature("?");
-          setHumidity("?");
+    const fetchAndSetData = async () => {
+      const { current, current_units } = await fetchData(coords);
 
-          console.error(error);
-        });
-    }
+      setClimateData({
+        temperature: current.temperature_2m + current_units.temperature_2m,
+        humidity:
+          current.relative_humidity_2m + current_units.relative_humidity_2m,
+      });
+    };
+
+    fetchAndSetData(); // Fetch data immediately on component mount
+
+    const intervalId = setInterval(fetchAndSetData, 10000); // Then fetch data every 10 seconds
+
+    // Clear interval on component unmount
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [coords]);
 
-  return {
-    temperature,
-    humidity,
-  };
+  return climateData;
 }
 
 type Response = {
@@ -51,4 +63,9 @@ type Response = {
     temperature_2m: string;
     relative_humidity_2m: string;
   };
+};
+
+type ClimateData = {
+  temperature: string | null;
+  humidity: string | null;
 };

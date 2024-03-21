@@ -6,7 +6,7 @@ import Theme from "Shared/theme";
 import useAuth from "Screens/Auth/useAuth";
 import { router } from "expo-router";
 
-export default function TopBar() {
+export default function TopBar({ elapsedTime }: { elapsedTime: string }) {
   const [menu, setMenu] = useState(false);
   const { logout } = useAuth();
 
@@ -17,7 +17,7 @@ export default function TopBar() {
       </TouchableOpacity>
       <View style={styles.rec}>
         <View style={[styles.recDot, styles.centerItem]} />
-        <Text style={[styles.itemColor, styles.centerItem]}>00:01:24:01</Text>
+        <Text style={[styles.itemColor, styles.centerItem]}>{elapsedTime}</Text>
       </View>
       <View style={[styles.topButton, styles.topMenu]}>
         {menu ? (

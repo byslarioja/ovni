@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { styles } from "./styles";
 import {
   LocationIcon,
@@ -29,7 +29,7 @@ export default function BottomBar() {
             {coords.longitude}
           </Text>
         ) : (
-          <Text style={styles.itemColor}>{"??"}</Text>
+          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
         )}
       </View>
       <View style={styles.bottomItem}>
@@ -41,7 +41,7 @@ export default function BottomBar() {
         {altitude ? (
           <Text style={styles.itemColor}>{altitude.toFixed(2)} msnm</Text>
         ) : (
-          <Text style={styles.itemColor}>{"??"}</Text>
+          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
         )}
       </View>
       <View style={styles.bottomItem}>
@@ -49,16 +49,24 @@ export default function BottomBar() {
         {speed ? (
           <Text style={styles.itemColor}>{speed.toFixed(2)} m/s</Text>
         ) : (
-          <Text style={styles.itemColor}>{"??"}</Text>
+          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
         )}
       </View>
       <View style={styles.bottomItem}>
         <ThermometerIcon color={Theme.color.button.neutral} size={20} />
-        <Text style={styles.itemColor}>{temperature}</Text>
+        {temperature ? (
+          <Text style={styles.itemColor}>{temperature}</Text>
+        ) : (
+          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
+        )}
       </View>
       <View style={styles.bottomItem}>
         <DropIcon color={Theme.color.button.neutral} size={20} />
-        <Text style={styles.itemColor}>{humidity}</Text>
+        {humidity ? (
+          <Text style={styles.itemColor}>{humidity}</Text>
+        ) : (
+          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
+        )}
       </View>
     </View>
   );

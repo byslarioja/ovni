@@ -1,6 +1,6 @@
+import { useCallback, useEffect, useState } from "react";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { uploadVideoInfo } from "./camera.service";
 import * as Crypto from "expo-crypto";
@@ -12,6 +12,8 @@ export function useCamera() {
   const [rec, setRec] = useState(false);
   const [clock, setClock] = useState(new Date());
 
+  const [elapsedTime, setElapsedTime] = useState("00:00:00");
+
   const [mediaLibraryStatus, requestMediaLibraryPermission] =
     MediaLibrary.usePermissions();
   const [cameraStatus, requestCameraPermission] = Camera.useCameraPermissions();
@@ -20,42 +22,72 @@ export function useCamera() {
 
   useEffect(() => {
     (async () => {
-      await Camera.requestMicrophonePermissionsAsync();
-      await Camera.requestCameraPermissionsAsync();
-      await MediaLibrary.requestPermissionsAsync();
+      if (!microphoneStatus?.granted) {
+        await Camera.requestMicrophonePermissionsAsync();
+      }
+      if (!cameraStatus?.granted) {
+        await Camera.requestCameraPermissionsAsync();
+      }
+      if (!mediaLibraryStatus?.granted) {
+        await MediaLibrary.requestPermissionsAsync();
+      }
     })();
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setClock(new Date());
-    }, 1000);
+    }, 60000);
     return () => clearInterval(interval);
   }, []);
 
-  const saveVideo = async (uri: string) => {
-    try {
-      const asset = await MediaLibrary.createAssetAsync(uri);
+  useEffect(() => {
+    let interval = null;
+    if (rec) {
+      const start = Date.now();
+      interval = setInterval(() => {
+        const totalSeconds = Math.floor((Date.now() - start) / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
 
-      // Create a hash based on asset.id and asset.creationTime
-      const hash = Crypto.randomUUID();
-
-      // Save asset to local storage
-      await AsyncStorage.setItem(hash, JSON.stringify(asset));
-
-      // Send a POST request to your backend with the asset
-      await uploadVideoInfo({ hash, asset }, token);
-    } catch (error) {
-      console.error(error);
+        setElapsedTime(
+          `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+        );
+      }, 1000);
+    } else {
+      clearInterval(interval);
+      setElapsedTime("00:00:00");
     }
-  };
+    return () => clearInterval(interval);
+  }, [rec]);
+
+  const saveVideo = useCallback(
+    async (uri: string) => {
+      try {
+        const asset = await MediaLibrary.createAssetAsync(uri);
+        const hash = Crypto.randomUUID();
+        await AsyncStorage.setItem(hash, JSON.stringify(asset));
+        await uploadVideoInfo({ hash, asset }, token);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [token]
+  );
 
   return {
     zoom,
     setZoom,
     rec,
     setRec,
-    clock,
+    elapsedTime,
+    clock:
+      clock.toLocaleDateString() +
+      " " +
+      clock.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     cameraStatus,
     requestCameraPermission,
     microphoneStatus,
