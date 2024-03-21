@@ -11,11 +11,12 @@ type VideoInfo = {
 
 const lang = translate(translation);
 
-export async function uploadVideoInfo(videoInfo: VideoInfo, token) {
-  const response = await fetch(`${BASE_URI}/upload-video-info`, {
+export async function uploadVideoInfo(videoInfo: VideoInfo, token: string) {
+  const response = await fetch(`${BASE_URI}/video/video-info`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(videoInfo),
   });
