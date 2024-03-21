@@ -3,7 +3,7 @@ import Slider from "@react-native-community/slider";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
-import useGyro from "./components/useGyro";
+import useGyro from "./useGyro";
 import { styles } from "./styles";
 import RequestPermission from "Components/RequestPermission";
 import { useCamera } from "./useCamera";
