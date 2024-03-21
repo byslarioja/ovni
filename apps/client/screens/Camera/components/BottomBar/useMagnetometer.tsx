@@ -6,6 +6,8 @@ export default function useMagnetometer() {
   const [magnetometer, setMagnetometer] = useState(0);
 
   useEffect(() => {
+    Magnetometer.setUpdateInterval(1000);
+
     _toggle();
     return () => {
       _unsubscribe();
