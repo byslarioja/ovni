@@ -8,11 +8,11 @@ import {
   CompasIcon,
   ThermometerIcon,
   DropIcon,
-} from "../../../../components/Icon";
+} from "Components/Icon";
 import useMagnetometer from "./useMagnetometer";
 import useLocation from "./useLocation";
 import useClimate from "./useClimate";
-import Theme from "../../../../shared/theme";
+import Theme from "Shared/theme";
 
 export default function BottomBar() {
   const { altitude, coords, speed } = useLocation();
