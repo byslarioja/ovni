@@ -16,10 +16,6 @@ export async function banUser(id: string) {
   }
 }
 
-/**
- * TODO: invalidateQueries doesn't work.
- * Mutation remains pending even after making changes in the server.
- */
 export const useBanUser = () => {
   const { isPending, mutate } = useMutation({
     mutationFn: banUser,
