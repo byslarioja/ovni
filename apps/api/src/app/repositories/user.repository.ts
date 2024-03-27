@@ -40,3 +40,13 @@ export const getAllUsers = async () => {
 
   return await userRepository.find();
 };
+
+export const deleteUser = async (id: string) => {
+  const userRepository = AppDataSource.getRepository(User);
+
+  return await userRepository
+    .createQueryBuilder()
+    .softDelete()
+    .where("id = :id", { id })
+    .execute();
+};
