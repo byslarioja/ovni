@@ -19,6 +19,22 @@ export class VideosInfo1710889786038 implements MigrationInterface {
           { name: "width", type: "int" },
           { name: "height", type: "int" },
           { name: "duration", type: "float" },
+          {
+            name: "created_at",
+            type: "timestamp",
+            default: "now()",
+          },
+          {
+            name: "updated_at",
+            type: "timestamp",
+            default: "now()",
+            onUpdate: "CURRENT_TIMESTAMP",
+          },
+          {
+            name: "deleted_at",
+            type: "timestamp",
+            isNullable: true,
+          },
         ],
       }),
       true

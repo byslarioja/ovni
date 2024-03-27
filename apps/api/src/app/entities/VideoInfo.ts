@@ -1,5 +1,12 @@
 import { randomUUID } from "crypto";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from "typeorm";
 
 @Entity("videos_info")
 export class VideoInfo {
@@ -23,4 +30,13 @@ export class VideoInfo {
 
   @Column({ nullable: true })
   duration: number;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 }

@@ -5,7 +5,7 @@ export class UserResource {
     this.user = user;
   }
 
-  public toJson(): Omit<User, "password"> {
+  public toJson(): Omit<User, "password" | "deleted_at"> {
     return {
       id: this.user.id,
       name: this.user.name,
@@ -15,6 +15,8 @@ export class UserResource {
       city: this.user.city,
       zip_code: this.user.zip_code,
       youtube_channel: this.user.youtube_channel,
+      created_at: this.user.created_at,
+      updated_at: this.user.updated_at,
     };
   }
 }
