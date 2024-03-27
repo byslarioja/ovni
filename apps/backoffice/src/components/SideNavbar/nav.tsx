@@ -21,7 +21,6 @@ export function Nav({ links, isCollapsed }: NavProps) {
     location: { pathname },
   } = useRouterState();
 
-  console.log(pathname);
   return (
     <div
       data-collapsed={isCollapsed}
