@@ -34,3 +34,9 @@ export const updateUser = async (newEncryptedPassword: string, id: string) => {
     { password: newEncryptedPassword }
   );
 };
+
+export const getAllUsers = async () => {
+  const userRepository = AppDataSource.getRepository(User);
+
+  return await userRepository.find();
+};
