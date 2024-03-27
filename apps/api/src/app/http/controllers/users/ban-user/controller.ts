@@ -8,7 +8,7 @@ export const banUserController = async (req: Request, res: Response) => {
 
     await deleteUser(userId);
 
-    return res.status(204).json({ message: "User deleted." });
+    return res.status(204);
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Something went wrong" });
