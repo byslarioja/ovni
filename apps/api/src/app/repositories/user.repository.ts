@@ -38,13 +38,13 @@ export const updateUser = async (newEncryptedPassword: string, id: string) => {
 export const getAllUsers = async () => {
   const userRepository = AppDataSource.getRepository(User);
 
-  return await userRepository.find();
+  return await userRepository.find({ where: { deleted_at: null } });
 };
 
 export const deleteUser = async (id: string) => {
   const userRepository = AppDataSource.getRepository(User);
 
-  return await userRepository
+  await userRepository
     .createQueryBuilder()
     .softDelete()
     .where("id = :id", { id })

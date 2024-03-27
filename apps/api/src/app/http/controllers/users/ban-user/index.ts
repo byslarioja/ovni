@@ -1,0 +1,1 @@
+export { banUserController } from "./controller";

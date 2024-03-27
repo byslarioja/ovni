@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { getUsersController } from "./get-users";
-import { banUserController } from "./ban-user/controller";
+import { banUserController } from "./ban-user";
 
 const userRouter = Router();
 
