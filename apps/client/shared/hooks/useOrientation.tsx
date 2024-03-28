@@ -1,16 +1,17 @@
-import { useEffect } from "react";
-import { OrientationLock, lockAsync } from "expo-screen-orientation";
+import {
+  OrientationLock,
+  lockAsync,
+  unlockAsync,
+} from "expo-screen-orientation";
 
 export function useOrientation() {
-  const lockOrientation = (orientation: OrientationLock) => {
-    useEffect(() => {
-      async function changeScreenOrientation() {
-        await lockAsync(orientation);
-      }
-
-      changeScreenOrientation();
-    }, []);
+  const lockOrientation = async (orientation: OrientationLock) => {
+    await lockAsync(orientation);
   };
 
-  return { lockOrientation };
+  const unLockOrientation = async () => {
+    await unlockAsync();
+  };
+
+  return { lockOrientation, unLockOrientation };
 }

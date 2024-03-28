@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorImage } from "Components/ErrorImage";
 import { useOrientation } from "Shared/hooks/useOrientation";
 import Theme from "Shared/theme";
@@ -5,18 +6,23 @@ import { translate } from "Shared/utils/translate";
 import { ErrorBoundaryProps, Slot } from "expo-router";
 import { OrientationLock } from "expo-screen-orientation";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function AuthLayout() {
+const queryClient = new QueryClient();
+
+export default function CameraLayout() {
   const { lockOrientation } = useOrientation();
 
-  lockOrientation(OrientationLock.LANDSCAPE);
+  useEffect(() => {
+    lockOrientation(OrientationLock.LANDSCAPE);
+  }, []);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <StatusBar hidden />
       <Slot />
-    </>
+    </QueryClientProvider>
   );
 }
 
