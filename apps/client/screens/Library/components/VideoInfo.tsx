@@ -2,6 +2,7 @@ import { Hint, Label, Title } from "Components/Typography";
 import Theme from "Shared/theme";
 import { translate } from "Shared/utils/translate";
 import { translation } from "../translation";
+import { formatDate } from "Shared/utils/time";
 
 export function VideoInfo({ asset }) {
   const lang = translate(translation);
@@ -14,11 +15,11 @@ export function VideoInfo({ asset }) {
       <Attribute label={lang.t("VIDEO_INFO.DURATION")} value={asset.duration} />
       <Attribute
         label={lang.t("VIDEO_INFO.CREATION_TIME")}
-        value={asset.creationTime}
+        value={formatDate(asset.creationTime)}
       />
       <Attribute
         label={lang.t("VIDEO_INFO.MODIFICATION_TIME")}
-        value={asset.modificationTime}
+        value={formatDate(asset.modificationTime)}
       />
     </>
   );

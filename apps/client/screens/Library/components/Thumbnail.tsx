@@ -1,4 +1,9 @@
-import { Dimensions, Image, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import * as VideoThumbnails from "expo-video-thumbnails";
 import { useEffect, useState } from "react";
 import { ThumbnailLoader } from "./ThumbnailLoader";
@@ -6,13 +11,14 @@ import { ModalInfo } from "Components/Modal";
 import { Button } from "Components/Button";
 import { VideoInfo } from "./VideoInfo";
 
-const { width } = Dimensions.get("screen");
-const thumbnailWidth = width / 3 - 20;
-
 export function Thumbnail({ asset }) {
+  const { width, height } = useWindowDimensions();
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const col_number = width > height ? 5 : 3;
+  const thumbnailWidth = width / col_number - 20;
 
   useEffect(() => {
     (async () => {

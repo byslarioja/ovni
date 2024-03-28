@@ -1,4 +1,3 @@
-import Theme from "Shared/theme";
 import { ActivityIndicator, View } from "react-native";
 
 export function ThumbnailLoader({ thumbnailWidth }) {
@@ -7,12 +6,12 @@ export function ThumbnailLoader({ thumbnailWidth }) {
       style={{
         height: thumbnailWidth * 0.75,
         width: thumbnailWidth,
-        backgroundColor: Theme.color.states.info.normal,
+        backgroundColor: "rgba(54, 54, 54, .5)",
         justifyContent: "center",
         borderRadius: 5,
       }}
     >
-      <ActivityIndicator />
+      <ActivityIndicator color="white" />
     </View>
   );
 }
