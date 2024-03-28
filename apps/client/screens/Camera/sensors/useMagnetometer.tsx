@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { Magnetometer, MagnetometerMeasurement } from "expo-sensors";
 
+const MAGNETOMETER_UPDATE_INTERVAL = Number(
+  process.env.EXPO_PUBLIC_MAGNETOMETER_INTERVAL
+);
+
 export default function useMagnetometer() {
   const [data, setData] = useState<number>(null);
 
   useEffect(() => {
-    Magnetometer.setUpdateInterval(1000);
+    Magnetometer.setUpdateInterval(MAGNETOMETER_UPDATE_INTERVAL);
 
     const subscription = Magnetometer.addListener((data) => {
       setData(_angle(data));

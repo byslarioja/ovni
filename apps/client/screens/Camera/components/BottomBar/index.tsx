@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { View } from "react-native";
 import { styles } from "./styles";
 import {
   LocationIcon,
@@ -9,65 +9,60 @@ import {
   ThermometerIcon,
   DropIcon,
 } from "Components/Icon";
-import useMagnetometer from "./useMagnetometer";
-import useLocation from "./useLocation";
-import useClimate from "./useClimate";
-import Theme from "Shared/theme";
+import useMagnetometer from "../../sensors/useMagnetometer";
+import { SensorValue } from "../SensorValue";
+import useLocation from "../../sensors/useLocation";
+import useClimate from "../../sensors/useClimate";
 
 export default function BottomBar() {
-  const { altitude, coords, speed } = useLocation();
+  const location = useLocation();
+  const climate = useClimate();
+
   const { angle } = useMagnetometer();
-  const { temperature, humidity } = useClimate();
 
   return (
     <View style={styles.bottom}>
-      <View style={styles.bottomItem}>
-        <LocationIcon color={Theme.color.button.neutral} size={20} />
-        {coords ? (
-          <Text style={styles.itemColor}>
-            {coords.latitude} {"/  "}
-            {coords.longitude}
-          </Text>
-        ) : (
-          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
-        )}
-      </View>
-      <View style={styles.bottomItem}>
-        <CompasIcon color={Theme.color.button.neutral} size={20} />
-        <Text style={styles.itemColor}>{angle}</Text>
-      </View>
-      <View style={styles.bottomItem}>
-        <RulerIcon color={Theme.color.button.neutral} size={20} />
-        {altitude ? (
-          <Text style={styles.itemColor}>{altitude.toFixed(2)} msnm</Text>
-        ) : (
-          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
-        )}
-      </View>
-      <View style={styles.bottomItem}>
-        <MeasurerIcon color={Theme.color.button.neutral} size={20} />
-        {speed ? (
-          <Text style={styles.itemColor}>{speed.toFixed(2)} m/s</Text>
-        ) : (
-          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
-        )}
-      </View>
-      <View style={styles.bottomItem}>
-        <ThermometerIcon color={Theme.color.button.neutral} size={20} />
-        {temperature ? (
-          <Text style={styles.itemColor}>{temperature}</Text>
-        ) : (
-          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
-        )}
-      </View>
-      <View style={styles.bottomItem}>
-        <DropIcon color={Theme.color.button.neutral} size={20} />
-        {humidity ? (
-          <Text style={styles.itemColor}>{humidity}</Text>
-        ) : (
-          <ActivityIndicator size="small" color={Theme.color.button.neutral} />
-        )}
-      </View>
+      <SensorValue
+        value={`${location?.coords?.latitude}/${location?.coords?.longitude}`}
+        isPending={!location || location?.isPending}
+        isError={location?.isError}
+        icon={<LocationIcon />}
+      />
+
+      <SensorValue
+        value={angle}
+        isPending={!angle}
+        isError={false}
+        icon={<CompasIcon />}
+      />
+
+      <SensorValue
+        value={`${location?.altitude?.toFixed(2)}msnm`}
+        isPending={!location || location?.isPending}
+        isError={location?.isError}
+        icon={<RulerIcon />}
+      />
+
+      <SensorValue
+        value={`${location?.speed?.toFixed(2)} m/s`}
+        isPending={!location || location?.isPending}
+        isError={location?.isError}
+        icon={<MeasurerIcon />}
+      />
+
+      <SensorValue
+        value={climate.temperature}
+        isPending={climate.isPending}
+        isError={climate.isError}
+        icon={<ThermometerIcon />}
+      />
+
+      <SensorValue
+        value={climate.humidity}
+        isPending={climate.isPending}
+        isError={climate.isError}
+        icon={<DropIcon />}
+      />
     </View>
   );
 }

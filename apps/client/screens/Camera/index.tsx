@@ -3,7 +3,7 @@ import Slider from "@react-native-community/slider";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
-import useGyro from "./useGyro";
+import useGyro from "./sensors/useGyro";
 import { styles } from "./styles";
 import RequestPermission from "Components/RequestPermission";
 import { useCamera } from "./useCamera";
@@ -12,15 +12,16 @@ import { translation } from "./translation";
 import { translate } from "Shared/utils/translate";
 import { useRef } from "react";
 import appConfig from "../../app.json";
+import { recordingAtom, useRecording } from "./useRecording";
+import { useAtomValue } from "jotai";
 
 export default function CameraView() {
   const { x, y } = useGyro();
   const lang = translate(translation);
+  const isRecording = useAtomValue(recordingAtom);
   const {
     zoom,
     setZoom,
-    rec,
-    setRec,
     clock,
     elapsedTime,
     cameraStatus,
@@ -29,25 +30,10 @@ export default function CameraView() {
     requestMicrophonePermission,
     mediaLibraryStatus,
     requestMediaLibraryPermission,
-    saveVideo,
   } = useCamera();
 
   const cameraRef = useRef(null);
-
-  const handleRecord = async () => {
-    try {
-      if (rec) {
-        setRec(false);
-        cameraRef.current.stopRecording();
-      } else {
-        setRec(true);
-        const video = await cameraRef.current.recordAsync();
-        saveVideo(video.uri);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { handleRecord } = useRecording(cameraRef);
 
   if (!cameraStatus || !microphoneStatus || !mediaLibraryStatus) {
     // Camera permissions are still loading
@@ -56,26 +42,32 @@ export default function CameraView() {
 
   if (!cameraStatus.granted) {
     // Camera permissions are not granted yet
-    <RequestPermission
-      title={lang.t("CAMERA.PERMISSIONS.CAMERA")}
-      requestPermission={requestCameraPermission}
-    />;
+    return (
+      <RequestPermission
+        title={lang.t("CAMERA.PERMISSIONS.CAMERA")}
+        requestPermission={requestCameraPermission}
+      />
+    );
   }
 
   if (!microphoneStatus.granted) {
     // Microphone permissions are not granted yet
-    <RequestPermission
-      title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
-      requestPermission={requestMicrophonePermission}
-    />;
+    return (
+      <RequestPermission
+        title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
+        requestPermission={requestMicrophonePermission}
+      />
+    );
   }
 
   if (!mediaLibraryStatus.granted) {
     // Microphone permissions are not granted yet
-    <RequestPermission
-      title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
-      requestPermission={requestMediaLibraryPermission}
-    />;
+    return (
+      <RequestPermission
+        title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
+        requestPermission={requestMediaLibraryPermission}
+      />
+    );
   }
 
   return (
@@ -97,7 +89,7 @@ export default function CameraView() {
               <Text style={styles.text}>{clock}</Text>
               <Text style={styles.text}>v{appConfig.expo.version}</Text>
             </View>
-            {rec ? (
+            {isRecording ? (
               <TouchableOpacity
                 style={[styles.recButton, styles.recOnButton]}
                 onPress={handleRecord}
@@ -114,11 +106,11 @@ export default function CameraView() {
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
               <Text style={styles.text}>
                 {lang.t("CAMERA.VERTICAL_INCLINATION")}:{" "}
-                {x || <ActivityIndicator size={14} />}
+                {x.toFixed(2) + "°" || <ActivityIndicator size={14} />}
               </Text>
               <Text style={styles.text}>
                 {lang.t("CAMERA.HORIZONTAL_INCLINATION")}:{" "}
-                {y || <ActivityIndicator size={14} />}
+                {y.toFixed(2) + "°" || <ActivityIndicator size={14} />}
               </Text>
             </View>
           </View>

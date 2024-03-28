@@ -1,17 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { uploadVideoInfo } from "./camera.service";
-import * as Crypto from "expo-crypto";
 import useAuth from "Screens/Auth/useAuth";
+import { useAtomValue } from "jotai";
+import { recordingAtom } from "./useRecording";
+import { formatDate } from "Shared/utils/time";
 
 export function useCamera() {
-  const { token } = useAuth();
   const [zoom, setZoom] = useState(0);
-  const [rec, setRec] = useState(false);
   const [clock, setClock] = useState(new Date());
-
+  const isRecording = useAtomValue(recordingAtom);
   const [elapsedTime, setElapsedTime] = useState("00:00:00");
 
   const [mediaLibraryStatus, requestMediaLibraryPermission] =
@@ -43,7 +41,7 @@ export function useCamera() {
 
   useEffect(() => {
     let interval = null;
-    if (rec) {
+    if (isRecording) {
       const start = Date.now();
       interval = setInterval(() => {
         const totalSeconds = Math.floor((Date.now() - start) / 1000);
@@ -62,38 +60,18 @@ export function useCamera() {
       setElapsedTime("00:00:00");
     }
     return () => clearInterval(interval);
-  }, [rec]);
-
-  const saveVideo = useCallback(
-    async (uri: string) => {
-      try {
-        const asset = await MediaLibrary.createAssetAsync(uri);
-        const hash = Crypto.randomUUID();
-        await AsyncStorage.setItem(hash, JSON.stringify(asset));
-        await uploadVideoInfo({ hash, asset }, token);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [token]
-  );
+  }, [isRecording]);
 
   return {
     zoom,
     setZoom,
-    rec,
-    setRec,
     elapsedTime,
-    clock:
-      clock.toLocaleDateString() +
-      " " +
-      clock.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    clock: formatDate(clock),
     cameraStatus,
     requestCameraPermission,
     microphoneStatus,
     requestMicrophonePermission,
     mediaLibraryStatus,
     requestMediaLibraryPermission,
-    saveVideo,
   };
 }
