@@ -14,6 +14,7 @@ import { useRef } from "react";
 import appConfig from "../../app.json";
 import { recordingAtom, useRecording } from "./useRecording";
 import { useAtomValue } from "jotai";
+import { Loader } from "./components/Loader";
 
 export default function CameraView() {
   useGyro();
@@ -38,7 +39,7 @@ export default function CameraView() {
 
   if (!cameraStatus || !microphoneStatus || !mediaLibraryStatus) {
     // Camera permissions are still loading
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   }
 
   if (!cameraStatus.granted) {
