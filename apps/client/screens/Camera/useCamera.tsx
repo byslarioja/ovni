@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import useAuth from "Screens/Auth/useAuth";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { recordingAtom } from "./useRecording";
 import { formatDate } from "Shared/utils/time";
+import { elapsedTimeAtom } from "./sensors/useElapsedTime";
 
 export function useCamera() {
   const [zoom, setZoom] = useState(0);
   const [clock, setClock] = useState(new Date());
   const isRecording = useAtomValue(recordingAtom);
-  const [elapsedTime, setElapsedTime] = useState("00:00:00");
+  const setElapsedTime = useSetAtom(elapsedTimeAtom);
 
   const [mediaLibraryStatus, requestMediaLibraryPermission] =
     MediaLibrary.usePermissions();
@@ -65,7 +65,6 @@ export function useCamera() {
   return {
     zoom,
     setZoom,
-    elapsedTime,
     clock: formatDate(clock),
     cameraStatus,
     requestCameraPermission,

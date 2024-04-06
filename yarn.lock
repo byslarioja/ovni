@@ -4045,6 +4045,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:^5.29.0":
+  version: 5.29.0
+  resolution: "@tanstack/query-core@npm:5.29.0"
+  checksum: 10c0/ec90801c7234a551e347656b02c6e4dcc448722c466cc42eaf03bb69ac535c2e26a74f7189c21cf836cacf41851f30d17beae0f9478017b6220b612e1803eddb
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-devtools@npm:5.28.10":
   version: 5.28.10
   resolution: "@tanstack/query-devtools@npm:5.28.10"
@@ -5738,6 +5745,7 @@ __metadata:
     "@expo-google-fonts/poppins": "npm:^0.2.3"
     "@react-native-async-storage/async-storage": "npm:1.21.0"
     "@react-native-community/slider": "npm:4.4.2"
+    "@tanstack/query-core": "npm:^5.29.0"
     "@tanstack/react-query": "npm:^5.28.6"
     "@types/react": "npm:~18.2.45"
     expo: "npm:50.0.13"
@@ -5758,6 +5766,7 @@ __metadata:
     i18n-js: "npm:^4.3.2"
     jotai: "npm:^2.7.1"
     jotai-effect: "npm:^0.6.0"
+    jotai-tanstack-query: "npm:^0.8.5"
     react: "npm:18.2.0"
     react-hook-form: "npm:^7.49.3"
     react-native: "npm:0.73.6"
@@ -5766,6 +5775,7 @@ __metadata:
     react-native-svg: "npm:14.1.0"
     react-native-toast-message: "npm:^2.2.0"
     typescript: "npm:^5.3.0"
+    wonka: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
 
@@ -8797,6 +8807,17 @@ __metadata:
   peerDependencies:
     jotai: ">=2.5.0"
   checksum: 10c0/2a304a2b2ce5cd244fc16fb546ebd9f36645d3decad3ca249e1dce571c740a6c3bc0986e011ff332ce19721e5819de722c5bd035356d176b3cea3d2c399d0f4b
+  languageName: node
+  linkType: hard
+
+"jotai-tanstack-query@npm:^0.8.5":
+  version: 0.8.5
+  resolution: "jotai-tanstack-query@npm:0.8.5"
+  peerDependencies:
+    "@tanstack/query-core": "*"
+    jotai: ">=2.0.0"
+    wonka: ^6.3.4
+  checksum: 10c0/761a9ed4b98b7c7899b11ffd94d29e1f3d8844b15f8c4175743e30a3ab99bd1ab672983c6b8b490c51fa166688c8f8575e9a9bf7b69be78c1a6dbc1907f1934a
   languageName: node
   linkType: hard
 
@@ -13649,7 +13670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wonka@npm:^6.3.2":
+"wonka@npm:^6.3.2, wonka@npm:^6.3.4":
   version: 6.3.4
   resolution: "wonka@npm:6.3.4"
   checksum: 10c0/77329eea673da07717476e1b8f1a22f1e1a4f261bb9a58fa446c03d3da13dbd5b254664f8aded5928d953f33ee5b399a17a4f70336e8b236e478209c0e78cda4

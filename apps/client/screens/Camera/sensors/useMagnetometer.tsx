@@ -1,18 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Magnetometer, MagnetometerMeasurement } from "expo-sensors";
+import { PrimitiveAtom, atom, useAtom } from "jotai";
 
 const MAGNETOMETER_UPDATE_INTERVAL = Number(
   process.env.EXPO_PUBLIC_MAGNETOMETER_INTERVAL
 );
 
+//TODO: fix this chanchada
+export const magnetometerAtom = atom<string | null>(null) as PrimitiveAtom<
+  string | null
+>;
+
+//This logic should be whitin magnetometerAtom
 export default function useMagnetometer() {
-  const [data, setData] = useState<number>(null);
+  const [, setMagnetometer] = useAtom(magnetometerAtom);
 
   useEffect(() => {
     Magnetometer.setUpdateInterval(MAGNETOMETER_UPDATE_INTERVAL);
 
     const subscription = Magnetometer.addListener((data) => {
-      setData(_angle(data));
+      setMagnetometer(degToDMS(_angle(data)));
     });
 
     return () => {
@@ -43,6 +50,4 @@ export default function useMagnetometer() {
     m == 60 && (d++, (m = 0));
     return d + "° " + m + "' " + s + '"';
   };
-
-  return { angle: degToDMS(data) };
 }

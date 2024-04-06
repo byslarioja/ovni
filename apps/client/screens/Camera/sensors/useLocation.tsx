@@ -1,5 +1,6 @@
 import * as Location from "expo-location";
 import { useQuery } from "@tanstack/react-query";
+import { atomWithQuery } from "jotai-tanstack-query";
 
 const GPS_REFETCH_INTERVAL = Number(process.env.EXPO_PUBLIC_GPS_INTERVAL);
 
@@ -15,6 +16,20 @@ const getLocation = async () => {
 
   return location;
 };
+
+export const gpsAtom = atomWithQuery(() => ({
+  queryKey: ["location"],
+  queryFn: getLocation,
+  refetchInterval: GPS_REFETCH_INTERVAL,
+  select: (data) => ({
+    coords: {
+      latitude: data?.coords.latitude,
+      longitude: data?.coords.longitude,
+    },
+    speed: data?.coords.speed,
+    altitude: data?.coords.altitude,
+  }),
+}));
 
 export default function useGPS() {
   const { data, isPending, isError } = useQuery({

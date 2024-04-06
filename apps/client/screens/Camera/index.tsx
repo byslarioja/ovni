@@ -3,7 +3,7 @@ import Slider from "@react-native-community/slider";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
-import useGyro from "./sensors/useGyro";
+import useGyro, { gyroAtom } from "./sensors/useGyro";
 import { styles } from "./styles";
 import RequestPermission from "Components/RequestPermission";
 import { useCamera } from "./useCamera";
@@ -16,14 +16,15 @@ import { recordingAtom, useRecording } from "./useRecording";
 import { useAtomValue } from "jotai";
 
 export default function CameraView() {
-  const { x, y } = useGyro();
+  useGyro();
+  const { x, y } = useAtomValue(gyroAtom);
   const lang = translate(translation);
   const isRecording = useAtomValue(recordingAtom);
+
   const {
     zoom,
     setZoom,
     clock,
-    elapsedTime,
     cameraStatus,
     requestCameraPermission,
     microphoneStatus,
@@ -73,7 +74,7 @@ export default function CameraView() {
   return (
     <Camera style={styles.camera} zoom={zoom} ref={cameraRef}>
       <View style={styles.container}>
-        <TopBar elapsedTime={elapsedTime} />
+        <TopBar />
         <View style={styles.center}>
           <Slider
             style={styles.slider}
@@ -106,11 +107,11 @@ export default function CameraView() {
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
               <Text style={styles.text}>
                 {lang.t("CAMERA.VERTICAL_INCLINATION")}:{" "}
-                {x.toFixed(2) + "°" || <ActivityIndicator size={14} />}
+                {x || <ActivityIndicator size={14} />}
               </Text>
               <Text style={styles.text}>
                 {lang.t("CAMERA.HORIZONTAL_INCLINATION")}:{" "}
-                {y.toFixed(2) + "°" || <ActivityIndicator size={14} />}
+                {y || <ActivityIndicator size={14} />}
               </Text>
             </View>
           </View>
