@@ -11,6 +11,9 @@ export const translation = {
     CAMERA_SERVICE: {
       ERROR: "Server responded with status",
     },
+    MESSAGES: {
+      SAVED: "Video saved successfully.",
+    },
   },
   es: {
     CAMERA: {
@@ -25,6 +28,9 @@ export const translation = {
     },
     CAMERA_SERVICE: {
       ERROR: "El servidor respondió con un código",
+    },
+    MESSAGES: {
+      SAVED: "Vídeo guardado con éxito.",
     },
   },
 };

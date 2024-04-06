@@ -8,6 +8,9 @@ import useAuth from "Screens/Auth/useAuth";
 import { MutableRefObject, useCallback } from "react";
 import { atom, useAtom } from "jotai";
 import { Camera } from "expo-camera";
+import { useMutation } from "@tanstack/react-query";
+import { router } from "expo-router";
+import Toast from "react-native-toast-message";
 
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}`;
 const lang = translate(translation);
@@ -18,6 +21,16 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const { token } = useAuth();
   const [isRecording, setIsRecording] = useAtom(recordingAtom);
 
+  const { mutate } = useMutation({
+    mutationFn: ({
+      videoInfo,
+      token,
+    }: {
+      videoInfo: VideoInfo;
+      token: string;
+    }) => uploadVideoInfo(videoInfo, token),
+  });
+
   const saveVideo = useCallback(
     async (uri: string) => {
       try {
@@ -25,7 +38,13 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
         const hash = Crypto.randomUUID(); //TODO: this needs to be created from video's content
 
         await AsyncStorage.setItem(hash, JSON.stringify(asset));
-        await uploadVideoInfo({ hash, asset }, token);
+        mutate({ videoInfo: { hash, asset }, token });
+
+        router.navigate("/");
+        Toast.show({
+          type: "success",
+          text2: lang.t("MESSAGES.SAVED"),
+        });
       } catch (error) {
         console.error(error);
       }
@@ -64,7 +83,6 @@ async function uploadVideoInfo(videoInfo: VideoInfo, token: string) {
   if (!response.ok) {
     throw new Error(`${lang.t("CAMERA_SERVICE.ERROR")} ${response.status}`);
   }
-  return await response.json();
 }
 
 type VideoInfo = {
