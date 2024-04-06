@@ -43,7 +43,7 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
         router.navigate("/");
         Toast.show({
           type: "success",
-          text2: lang.t("MESSAGES.SAVED"),
+          text1: lang.t("MESSAGES.SAVED"),
         });
       } catch (error) {
         console.error(error);
