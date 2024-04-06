@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import useLocation from "./useLocation";
 import { useQuery } from "@tanstack/react-query";
 
