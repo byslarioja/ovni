@@ -38,7 +38,10 @@ export default function Library() {
         {!isLoading ? (
           <FlatList
             key={width}
-            contentContainerStyle={{ gap: 10 }}
+            contentContainerStyle={{
+              gap: 10,
+              paddingBottom: (width / 5 - 20) * 0.75, //extra empty row at the bottom
+            }}
             columnWrapperStyle={{ gap: 10 }}
             data={assets}
             numColumns={width > height ? 5 : 3}
