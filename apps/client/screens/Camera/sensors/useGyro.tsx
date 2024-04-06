@@ -13,16 +13,15 @@ const accelerometerAtom = atom({
 export const gyroAtom = atom((get) => {
   const { x, y, z } = get(accelerometerAtom);
 
+  const format = (h: number, c1: number, c2: number) => {
+    const RAD = 180 / Math.PI;
+    return Math.atan2(h, Math.sqrt(c1 * c1 + c2 * c2)) * RAD;
+  };
+
   return {
-    x:
-      (Math.atan2(x, Math.sqrt(y * y + z * z)) * (180 / Math.PI)).toFixed(2) +
-      "°",
-    y:
-      (Math.atan2(y, Math.sqrt(x * x + z * z)) * (180 / Math.PI)).toFixed(2) +
-      "°",
-    z:
-      (Math.atan2(z, Math.sqrt(x * x + y * y)) * (180 / Math.PI)).toFixed(2) +
-      "°",
+    x: format(x, y, z).toFixed(2) + "°",
+    y: format(y, x, z).toFixed(2) + "°",
+    z: format(z, x, y).toFixed(2) + "°",
   };
 });
 
