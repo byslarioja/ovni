@@ -3,7 +3,7 @@ import Slider from "@react-native-community/slider";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
-import useGyro, { gyroAtom } from "./sensors/useGyro";
+import useDeviceRotation from "./sensors/useDeviceRotation";
 import { styles } from "./styles";
 import RequestPermission from "Components/RequestPermission";
 import { useCamera } from "./useCamera";
@@ -17,8 +17,7 @@ import { useAtomValue } from "jotai";
 import { Loader } from "./components/Loader";
 
 export default function CameraView() {
-  useGyro();
-  const { x, y } = useAtomValue(gyroAtom);
+  const { x, y } = useDeviceRotation();
   const lang = translate(translation);
   const isRecording = useAtomValue(recordingAtom);
 

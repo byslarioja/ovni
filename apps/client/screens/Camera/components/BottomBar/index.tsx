@@ -9,25 +9,20 @@ import {
   ThermometerIcon,
   DropIcon,
 } from "Components/Icon";
-import useMagnetometer, {
-  magnetometerAtom,
-} from "../../sensors/useMagnetometer";
+import useMagnetometer from "../../sensors/useMagnetometer";
 import { SensorValue } from "../SensorValue";
-import { gpsAtom } from "../../sensors/useLocation";
-import { climateAtom } from "../../sensors/useClimate";
-import { useAtomValue } from "jotai";
+import useClimateReadings from "../../sensors/useClimate";
+import useGPSReadings from "Screens/Camera/sensors/useLocation";
 
 export default function BottomBar() {
-  const climate = useAtomValue(climateAtom);
-  const location = useAtomValue(gpsAtom);
-
-  useMagnetometer(); //needed to subscribe to magnetometer changes
-  const angle = useAtomValue(magnetometerAtom);
+  const climate = useClimateReadings();
+  const { angle } = useMagnetometer();
+  const location = useGPSReadings();
 
   return (
     <View style={styles.bottom}>
       <SensorValue
-        value={`${location.data?.coords?.latitude}/${location.data?.coords?.longitude}`}
+        value={`${location.gps?.coords?.latitude}/${location.gps?.coords?.longitude}`}
         isPending={!location || location?.isPending}
         isError={location?.isError}
         icon={<LocationIcon />}
@@ -41,28 +36,28 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={`${location.data?.altitude?.toFixed(2)}msnm`}
+        value={`${location.gps?.altitude?.toFixed(2)}msnm`}
         isPending={!location || location?.isPending}
         isError={location?.isError}
         icon={<RulerIcon />}
       />
 
       <SensorValue
-        value={`${location.data?.speed?.toFixed(2)} m/s`}
+        value={`${location.gps?.speed?.toFixed(2)} m/s`}
         isPending={!location || location?.isPending}
         isError={location?.isError}
         icon={<MeasurerIcon />}
       />
 
       <SensorValue
-        value={climate.data?.temperature}
+        value={climate.temperature}
         isPending={climate.isPending}
         isError={climate.isError}
         icon={<ThermometerIcon />}
       />
 
       <SensorValue
-        value={climate.data?.humidity}
+        value={climate.humidity}
         isPending={climate.isPending}
         isError={climate.isError}
         icon={<DropIcon />}

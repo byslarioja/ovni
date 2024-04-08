@@ -1,8 +1,14 @@
-import { atomWithQuery } from "jotai-tanstack-query";
-import { gpsAtom } from "./useLocation";
+import { lastAvailableGPSReadingAtom } from "./useGPS";
+import { useQuery } from "@tanstack/react-query";
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { useEffect } from "react";
+import { ClimateReadings, ClimateResponse } from "./types";
 
 const API_URL_PREFIX = "https://api.open-meteo.com/v1/forecast";
 const API_PARAMS = "current=temperature_2m,relative_humidity_2m";
+const CLIMATE_REFETCH_INTERVAL = Number(
+  process.env.EXPO_PUBLIC_CLIMATE_INTERVAL
+);
 
 const getClimate = async ({
   latitude,
@@ -21,42 +27,46 @@ const getClimate = async ({
   }
 };
 
-export const climateAtom = atomWithQuery<ClimateResponse, Error, Climate>(
-  (get) => ({
-    queryKey: ["climate", get(gpsAtom)?.data?.coords],
-    queryFn: () => getClimate(get(gpsAtom)?.data?.coords),
-    select: (data) => {
-      let temperature: string, humidity: string;
+export const climateReadingsAtom = atom<ClimateReadings[]>([]);
 
-      if (data) {
-        const { current, current_units: unit } = data;
-        temperature = current.temperature_2m
-          ? current.temperature_2m + unit.temperature_2m
-          : null;
-        humidity = current.relative_humidity_2m
-          ? current.relative_humidity_2m + unit.relative_humidity_2m
-          : null;
-      }
-      return {
-        temperature,
-        humidity,
-      };
-    },
-  })
-);
+export const lastAvailableClimateAtom = atom((get) => {
+  const gpsReadings = get(climateReadingsAtom);
 
-type ClimateResponse = {
-  current: {
-    temperature_2m: string;
-    relative_humidity_2m: string;
+  return gpsReadings.at(-1)?.value;
+});
+
+export default function useClimateReadings() {
+  const lastAvailableClimate = useAtomValue(lastAvailableClimateAtom);
+  const lastAvailableCoords = useAtomValue(lastAvailableGPSReadingAtom);
+  const setClimateReadings = useSetAtom(climateReadingsAtom);
+
+  const { isPending, isLoading, isError, data } = useQuery({
+    queryKey: ["climate", lastAvailableCoords],
+    queryFn: () => getClimate(lastAvailableCoords.coords),
+    refetchInterval: CLIMATE_REFETCH_INTERVAL,
+  });
+
+  useEffect(() => {
+    if (data) {
+      const { current, current_units: unit } = data;
+
+      setClimateReadings((prev) => [
+        ...prev,
+        {
+          value: {
+            temperature: current.temperature_2m + unit.temperature_2m,
+            humidity: current.relative_humidity_2m + unit.relative_humidity_2m,
+          },
+          timestamp: Date.now(),
+        },
+      ]);
+    }
+  }, [data]);
+
+  return {
+    isPending,
+    isLoading,
+    isError,
+    ...lastAvailableClimate,
   };
-  current_units: {
-    temperature_2m: string;
-    relative_humidity_2m: string;
-  };
-};
-
-type Climate = {
-  temperature: string;
-  humidity: string;
-};
+}
