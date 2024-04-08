@@ -54,8 +54,9 @@ export default function useClimateReadings() {
         ...prev,
         {
           value: {
-            temperature: current.temperature_2m + unit.temperature_2m,
-            humidity: current.relative_humidity_2m + unit.relative_humidity_2m,
+            temperature: current?.temperature_2m + unit?.temperature_2m,
+            humidity:
+              current?.relative_humidity_2m + unit?.relative_humidity_2m,
           },
           timestamp: Date.now(),
         },
