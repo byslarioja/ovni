@@ -35,7 +35,7 @@ export const loginController = async (req: LoginUserRequest, res: Response) => {
 
     return res
       .status(200)
-      .json({ user: new UserResource(foundUser).toJson(), token });
+      .json({ user: UserResource.toJson(foundUser), token });
   } catch (error) {
     return res.status(500).send({ message: "Something went wrong" });
   }

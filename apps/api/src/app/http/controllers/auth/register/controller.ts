@@ -11,5 +11,5 @@ export const registerController = async (
 
   const user = await createUser(validated);
 
-  return res.status(201).json(new UserResource(user).toJson());
+  return res.status(201).json(UserResource.toJson(user));
 };

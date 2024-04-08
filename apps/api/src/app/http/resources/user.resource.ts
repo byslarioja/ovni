@@ -1,22 +1,21 @@
 import { User } from "@app/entities/User";
 
 export class UserResource {
-  constructor(private user: User) {
-    this.user = user;
-  }
-
-  public toJson(): Omit<User, "password" | "deleted_at" | "videos"> {
+  //TODO: add videos
+  public static toJson(user: User): SerializableUser {
     return {
-      id: this.user.id,
-      name: this.user.name,
-      email: this.user.email,
-      phone: this.user.phone,
-      country: this.user.country,
-      city: this.user.city,
-      zip_code: this.user.zip_code,
-      youtube_channel: this.user.youtube_channel,
-      created_at: this.user.created_at,
-      updated_at: this.user.updated_at,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      country: user.country,
+      city: user.city,
+      zip_code: user.zip_code,
+      youtube_channel: user.youtube_channel,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
     };
   }
 }
+
+export type SerializableUser = Omit<User, "password" | "deleted_at" | "videos">;
