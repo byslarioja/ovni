@@ -1,7 +1,12 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from "typeorm";
 
 export class VideosInfo1710889786038 implements MigrationInterface {
-  private tableName = "videos_info";
+  private tableName = "videos";
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -13,12 +18,18 @@ export class VideosInfo1710889786038 implements MigrationInterface {
             type: "varchar",
             isPrimary: true,
           },
-          { name: "hash", type: "varchar" },
+          { name: "integrity_string", type: "varchar" },
           { name: "id_from_video", type: "varchar" },
           { name: "device_uri", type: "varchar" },
           { name: "width", type: "int" },
           { name: "height", type: "int" },
           { name: "duration", type: "float" },
+          { name: "uploaded_by", type: "varchar" },
+
+          { name: "start_time", type: "varchar" },
+          { name: "end_time", type: "varchar" },
+          { name: "uri", type: "varchar", isNullable: true },
+
           {
             name: "created_at",
             type: "timestamp",
@@ -39,7 +50,21 @@ export class VideosInfo1710889786038 implements MigrationInterface {
       }),
       true
     );
+
+    await queryRunner.createForeignKey(
+      "videos",
+      new TableForeignKey({
+        columnNames: ["uploaded_by"],
+        referencedColumnNames: ["id"],
+        referencedTableName: "users",
+        onDelete: "CASCADE",
+      })
+    );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey("videos", "uploaded_by");
+
+    await queryRunner.dropTable("videos");
+  }
 }

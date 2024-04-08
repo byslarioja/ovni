@@ -1,21 +1,27 @@
-import { VideoInfo } from "@app/entities/VideoInfo";
-import { VideoInfoRequest } from "@app/http/controllers/video/video-info/schema";
+import { User } from "@app/entities/User";
+import { Video } from "@app/entities/Video";
+import { VideoRequest } from "@app/http/controllers/video/create-video/schema";
 import { AppDataSource } from "@config/database";
 
-export const createVideoInfo = async (
-  newVideoInfo: VideoInfoRequest["body"]
-) => {
-  const videoInfo = new VideoInfo();
-  const videoInfoRepository = AppDataSource.getRepository(VideoInfo);
+export const createVideo = async (newVideo: VideoRequest["body"]) => {
+  const video = new Video();
+  const videoRepository = AppDataSource.getRepository(Video);
+  const userRepository = AppDataSource.getRepository(User);
 
-  videoInfo.hash = newVideoInfo.hash;
-  videoInfo.id_from_video = newVideoInfo.asset.id;
-  videoInfo.device_uri = newVideoInfo.asset.uri;
-  videoInfo.width = newVideoInfo.asset.width;
-  videoInfo.height = newVideoInfo.asset.height;
-  videoInfo.duration = newVideoInfo.asset.duration;
+  video.integrity_string = newVideo.hash;
+  video.id_from_video = newVideo.asset.id;
+  video.device_uri = newVideo.asset.uri;
+  video.width = newVideo.asset.width;
+  video.height = newVideo.asset.height;
+  video.duration = newVideo.asset.duration;
+  video.start_time = newVideo.start;
+  video.end_time = newVideo.end;
 
-  const craetedVideoInfo = await videoInfoRepository.save(videoInfo);
+  video.user = await userRepository.findOne({
+    where: { id: newVideo.token.id },
+  });
 
-  return craetedVideoInfo;
+  const createdVideo = await videoRepository.save(video);
+
+  return createdVideo;
 };

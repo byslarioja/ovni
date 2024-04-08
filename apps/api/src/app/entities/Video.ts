@@ -6,15 +6,17 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
 } from "typeorm";
+import { User } from "./User";
 
-@Entity("videos_info")
-export class VideoInfo {
+@Entity("videos")
+export class Video {
   @PrimaryGeneratedColumn("increment")
   id: string = randomUUID();
 
   @Column()
-  hash: string;
+  integrity_string: string;
 
   @Column()
   id_from_video: string;
@@ -30,6 +32,18 @@ export class VideoInfo {
 
   @Column({ nullable: true })
   duration: number;
+
+  @Column()
+  start_time: string;
+
+  @Column()
+  end_time: string;
+
+  @Column({ nullable: true })
+  uri: string;
+
+  @ManyToOne(() => User, (user) => user.videos)
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;

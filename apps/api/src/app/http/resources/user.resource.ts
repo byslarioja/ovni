@@ -5,7 +5,7 @@ export class UserResource {
     this.user = user;
   }
 
-  public toJson(): Omit<User, "password" | "deleted_at"> {
+  public toJson(): Omit<User, "password" | "deleted_at" | "videos"> {
     return {
       id: this.user.id,
       name: this.user.name,
