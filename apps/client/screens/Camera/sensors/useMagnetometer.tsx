@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Magnetometer, MagnetometerMeasurement } from "expo-sensors";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { SensorReading } from "./types";
+import { MagnetometerReading } from "./types";
 
 const MAGNETOMETER_UPDATE_INTERVAL = Number(
   process.env.EXPO_PUBLIC_MAGNETOMETER_INTERVAL
@@ -13,7 +13,7 @@ export const lastAvailableAngleAtom = atom((get) => {
   return readings.at(-1)?.value;
 });
 
-export const magnetometerReadingsAtom = atom<SensorReading<string>[]>([]);
+export const magnetometerReadingsAtom = atom<MagnetometerReading[]>([]);
 
 //This logic should be whitin magnetometerAtom
 export default function useMagnetometer() {

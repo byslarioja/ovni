@@ -21,8 +21,8 @@ export type ClimateReadings = SensorReading<{
   humidity: string;
 }>;
 
-export type TimeAtomValue = number | null;
-export type PrimitiveTimeAtom = PrimitiveAtom<TimeAtomValue>;
+export type TimeReading = number | null;
+export type PrimitiveTimeAtom = PrimitiveAtom<TimeReading>;
 
 export type RotationType = { x: number; y: number; z: number };
 export type RotationReading = SensorReading<RotationType>;
@@ -35,3 +35,5 @@ export type GPSReading = SensorReading<{
   speed: number;
   altitude: number;
 }>;
+
+export type MagnetometerReading = SensorReading<string>;
