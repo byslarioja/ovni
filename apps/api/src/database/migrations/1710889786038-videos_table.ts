@@ -5,7 +5,7 @@ import {
   TableForeignKey,
 } from "typeorm";
 
-export class VideosInfo1710889786038 implements MigrationInterface {
+export class Videos1710889786038 implements MigrationInterface {
   private tableName = "videos";
 
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -27,6 +27,7 @@ export class VideosInfo1710889786038 implements MigrationInterface {
 
           { name: "userId", type: "varchar" },
 
+          { name: "app_version", type: "varchar" },
           { name: "start_time", type: "varchar" },
           { name: "end_time", type: "varchar" },
           { name: "uri", type: "varchar", isNullable: true },
@@ -53,7 +54,7 @@ export class VideosInfo1710889786038 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      "videos",
+      this.tableName,
       new TableForeignKey({
         columnNames: ["userId"],
         referencedColumnNames: ["id"],
@@ -64,8 +65,8 @@ export class VideosInfo1710889786038 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey("videos", "userId");
+    await queryRunner.dropForeignKey(this.tableName, "userId");
 
-    await queryRunner.dropTable("videos");
+    await queryRunner.dropTable(this.tableName);
   }
 }

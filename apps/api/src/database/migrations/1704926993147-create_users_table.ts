@@ -74,6 +74,6 @@ export class CreateUsersTable1704926993147 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE users`);
+    await queryRunner.dropTable(this.tableName);
   }
 }
