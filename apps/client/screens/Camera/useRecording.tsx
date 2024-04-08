@@ -6,11 +6,24 @@ import * as Crypto from "expo-crypto";
 import * as MediaLibrary from "expo-media-library";
 import useAuth from "Screens/Auth/useAuth";
 import { MutableRefObject, useCallback } from "react";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
 import { Camera } from "expo-camera";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import Toast from "react-native-toast-message";
+import {
+  ClimateReadings,
+  GPSReading,
+  MagnetometerReading,
+  RotationReading,
+  TimeReading,
+} from "./sensors/types";
+import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
+import { expo as app } from "../../app.json";
+import { deviceRotationReadingsAtom } from "./sensors/useDeviceRotation";
+import { climateReadingsAtom } from "./sensors/useClimate";
+import { GPSReadingsAtom } from "./sensors/useGPS";
+import { magnetometerReadingsAtom } from "./sensors/useMagnetometer";
 
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}`;
 const lang = translate(translation);
@@ -31,14 +44,34 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     }) => uploadVideoInfo(videoInfo, token),
   });
 
+  const startTime = useAtomValue(startTimeAtom);
+  const endTime = useAtomValue(endTimeAtom);
+  const rotation = useAtomValue(deviceRotationReadingsAtom);
+  const climate = useAtomValue(climateReadingsAtom);
+  const gps = useAtomValue(GPSReadingsAtom);
+  const orientation = useAtomValue(magnetometerReadingsAtom);
+
+  const getReadings = () => {
+    return {
+      start: startTime,
+      end: endTime,
+      appVersion: app.version,
+      rotation,
+      climate,
+      gps,
+      orientation,
+    };
+  };
+
   const saveVideo = useCallback(
     async (uri: string) => {
       try {
         const asset = await MediaLibrary.createAssetAsync(uri);
         const hash = Crypto.randomUUID(); //TODO: this needs to be created from video's content
+        const readings = getReadings();
 
         await AsyncStorage.setItem(hash, JSON.stringify(asset));
-        mutate({ videoInfo: { hash, asset }, token });
+        mutate({ videoInfo: { hash, asset, readings }, token });
 
         router.navigate("/");
         Toast.show({
@@ -88,4 +121,15 @@ async function uploadVideoInfo(videoInfo: VideoInfo, token: string) {
 type VideoInfo = {
   hash: string;
   asset: Asset;
+  readings: Readings;
+};
+
+type Readings = {
+  start: TimeReading;
+  end: TimeReading;
+  appVersion: string;
+  rotation: RotationReading[];
+  climate: ClimateReadings[];
+  gps: GPSReading[];
+  orientation: MagnetometerReading[];
 };
