@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import "dotenv/config";
+import { findById } from "@app/repositories/user.repository";
 
 export interface CustomRequest extends Request {
   token: string | JwtPayload;
@@ -18,8 +19,18 @@ export const auth = async (
       throw new Error();
     }
 
-    const decoded = jwt.verify(token, process.env.APP_KEY);
-    req.body.token = decoded;
+    const decoded = jwt.verify(token, process.env.APP_KEY) as {
+      id: string;
+      email: string;
+    };
+
+    const authenticatedUser = await findById(decoded.id);
+
+    if (!authenticatedUser) {
+      throw new Error();
+    }
+
+    req.body.user = authenticatedUser;
 
     next();
   } catch (err) {
