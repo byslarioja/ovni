@@ -6,6 +6,6 @@ import { VideoSchema, videoController } from "./create-video";
 
 const videoRouter = Router();
 
-videoRouter.post("/videos", [auth, validate(VideoSchema)], videoController);
+videoRouter.post("/", [auth, validate(VideoSchema)], videoController);
 
 export default videoRouter;

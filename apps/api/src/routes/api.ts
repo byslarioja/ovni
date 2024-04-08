@@ -8,6 +8,6 @@ const router = Router();
 router.get("/", (_, res) => res.status(200).json({ message: "ok" }));
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/video", videoRouter);
+router.use("/videos", videoRouter);
 
 export default router;
