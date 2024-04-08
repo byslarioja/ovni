@@ -67,7 +67,10 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     async (uri: string) => {
       try {
         const asset = await MediaLibrary.createAssetAsync(uri);
-        const hash = Crypto.randomUUID(); //TODO: this needs to be created from video's content
+        //asset.creationTime and asset.modificationTime
+        const hash = await createHash(
+          `${asset.creationTime}${asset.modificationTime}`
+        );
         const readings = getReadings();
 
         await AsyncStorage.setItem(hash, JSON.stringify(asset));
@@ -102,6 +105,14 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
 
   return { handleRecord };
 }
+
+const createHash = async (stringToHash: string) => {
+  const hash = await Crypto.digestStringAsync(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    stringToHash
+  );
+  return hash;
+};
 
 async function uploadVideoInfo(videoInfo: VideoInfo, token: string) {
   const response = await fetch(`${BASE_URI}/video/video-info`, {
