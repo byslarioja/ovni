@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -12,8 +11,8 @@ import { Video } from "./Video";
 
 @Entity("users")
 export class User {
-  @PrimaryGeneratedColumn("increment")
-  id: string = randomUUID();
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   name: string;
