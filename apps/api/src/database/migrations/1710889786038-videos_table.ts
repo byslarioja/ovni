@@ -24,7 +24,8 @@ export class VideosInfo1710889786038 implements MigrationInterface {
           { name: "width", type: "int" },
           { name: "height", type: "int" },
           { name: "duration", type: "float" },
-          { name: "uploaded_by", type: "varchar" },
+
+          { name: "userId", type: "varchar" },
 
           { name: "start_time", type: "varchar" },
           { name: "end_time", type: "varchar" },
@@ -54,7 +55,7 @@ export class VideosInfo1710889786038 implements MigrationInterface {
     await queryRunner.createForeignKey(
       "videos",
       new TableForeignKey({
-        columnNames: ["uploaded_by"],
+        columnNames: ["userId"],
         referencedColumnNames: ["id"],
         referencedTableName: "users",
         onDelete: "CASCADE",
@@ -63,7 +64,7 @@ export class VideosInfo1710889786038 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey("videos", "uploaded_by");
+    await queryRunner.dropForeignKey("videos", "userId");
 
     await queryRunner.dropTable("videos");
   }

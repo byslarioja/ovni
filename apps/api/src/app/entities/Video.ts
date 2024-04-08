@@ -42,7 +42,7 @@ export class Video {
   @Column({ nullable: true })
   uri: string;
 
-  @ManyToOne(() => User, (user) => user.videos)
+  @ManyToOne(() => User, (user) => user.videos, { eager: true })
   user: User;
 
   @CreateDateColumn()
