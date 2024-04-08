@@ -1,3 +1,10 @@
+import { User } from "@app/entities/User";
+import {
+  ClimateValue,
+  GPSValue,
+  OrientationValue,
+  RotationValue,
+} from "@app/types/sensor-readings";
 import { z } from "zod";
 
 const AssetSchema = z.object({
@@ -15,28 +22,44 @@ const AssetSchema = z.object({
 const ReadingSchema = z.object({
   rotation: z.array(
     z.object({
-      x: z.string(),
-      y: z.string(),
-      z: z.string(),
+      value: z.object({
+        x: z.optional(z.number().nullable()),
+        y: z.optional(z.number().nullable()),
+        z: z.optional(z.number().nullable()),
+      }),
+      timestamp: z.number(),
     })
   ),
   climate: z.array(
     z.object({
-      temperature: z.string(),
-      humidity: z.string(),
+      value: z.object({
+        temperature: z.optional(z.string().nullable()),
+        humidity: z.optional(z.string().nullable()),
+      }),
+      timestamp: z.number(),
     })
   ),
   gps: z.array(
     z.object({
-      coords: z.object({
-        latitude: z.string(),
-        longitude: z.string(),
+      value: z.object({
+        coords: z.optional(
+          z.object({
+            latitude: z.number().nullable().optional(),
+            longitude: z.number().nullable().optional(),
+          })
+        ),
+        speed: z.optional(z.number()),
+        altitude: z.optional(z.number()),
       }),
-      speed: z.string(),
-      altitude: z.string(),
+      timestamp: z.number(),
     })
   ),
-  orientation: z.array(z.string()),
+  orientation: z.array(
+    z.object({
+      value: z.string(),
+      timestamp: z.number(),
+    })
+  ),
 });
 
 export const VideoSchema = z.object({
@@ -46,14 +69,14 @@ export const VideoSchema = z.object({
     appVersion: z.string(),
     hash: z.string(),
     asset: AssetSchema,
-    reading: ReadingSchema,
+    readings: ReadingSchema,
   }),
 });
 
 //z.infer makes deep members optionals, that's why i'm repeting myself
 export type VideoRequest = {
   body: {
-    token: { id: string; email: string };
+    user: User;
     start: string;
     end: string;
     appVersion: string;
@@ -70,20 +93,10 @@ export type VideoRequest = {
       duration: number;
     };
     readings: {
-      rotation: SensorReading<{ x: number; y: number; z: number }>[];
-      climate: SensorReading<{
-        temperature: string;
-        humidity: string;
-      }>[];
-      gps: SensorReading<{
-        coords: {
-          latitude: number;
-          longitude: number;
-        };
-        speed: number;
-        altitude: number;
-      }>[];
-      orientation: SensorReading<string>[];
+      rotation: SensorReading<RotationValue>[];
+      climate: SensorReading<ClimateValue>[];
+      gps: SensorReading<GPSValue>[];
+      orientation: SensorReading<OrientationValue>[];
     };
   };
 };

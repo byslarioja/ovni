@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,13 +6,15 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 import { User } from "./User";
+import { SensorReading } from "./SensorReadings";
 
 @Entity("videos")
 export class Video {
-  @PrimaryGeneratedColumn("increment")
-  id: string = randomUUID();
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   integrity_string: string;
@@ -34,6 +35,9 @@ export class Video {
   duration: number;
 
   @Column()
+  app_version: string;
+
+  @Column()
   start_time: string;
 
   @Column()
@@ -44,6 +48,9 @@ export class Video {
 
   @ManyToOne(() => User, (user) => user.videos, { eager: true })
   user: User;
+
+  @OneToMany(() => SensorReading, (reading) => reading.video)
+  readings: SensorReading[];
 
   @CreateDateColumn()
   created_at: Date;
