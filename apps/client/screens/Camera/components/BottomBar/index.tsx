@@ -12,7 +12,7 @@ import {
 import useMagnetometer from "../../sensors/useMagnetometer";
 import { SensorValue } from "../SensorValue";
 import useClimateReadings from "../../sensors/useClimate";
-import useGPSReadings from "Screens/Camera/sensors/useLocation";
+import useGPSReadings from "Screens/Camera/sensors/useGPS";
 
 export default function BottomBar() {
   const climate = useClimateReadings();
