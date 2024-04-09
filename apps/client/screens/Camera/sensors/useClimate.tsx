@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
 import { ClimateReadings, ClimateResponse } from "./types";
+import axios from "axios";
 
 const API_URL_PREFIX = "https://api.open-meteo.com/v1/forecast";
 const API_PARAMS = "current=temperature_2m,relative_humidity_2m";
@@ -18,21 +19,17 @@ const getClimate = async ({
   longitude: number;
 }): Promise<ClimateResponse> => {
   const URI = `${API_URL_PREFIX}?latitude=${latitude}&longitude=${longitude}&${API_PARAMS}`;
+  const response = await axios.get(URI);
 
-  try {
-    const response = await fetch(URI);
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-  }
+  return response.data;
 };
 
 export const climateReadingsAtom = atom<ClimateReadings[]>([]);
 
 export const lastAvailableClimateAtom = atom((get) => {
-  const gpsReadings = get(climateReadingsAtom);
+  const climateReadings = get(climateReadingsAtom);
 
-  return gpsReadings.at(-1)?.value;
+  return climateReadings.at(-1)?.value;
 });
 
 export default function useClimateReadings() {
