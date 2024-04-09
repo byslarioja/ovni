@@ -13,6 +13,10 @@ export const translation = {
     },
     MESSAGES: {
       SAVED: "Video saved successfully.",
+      API_ERROR: {
+        TITLE: "Something went wrong",
+        DESCRIPTION: "Video was saved in your app's library.",
+      },
     },
   },
   es: {
@@ -31,6 +35,10 @@ export const translation = {
     },
     MESSAGES: {
       SAVED: "Vídeo guardado con éxito.",
+      API_ERROR: {
+        TITLE: "Algo salió mal",
+        DESCRIPTION: "El video fue guardado en la galería de la aplicación.",
+      },
     },
   },
 };

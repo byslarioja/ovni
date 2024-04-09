@@ -16,9 +16,10 @@ import { recordingAtom, useRecording } from "./useRecording";
 import { useAtomValue } from "jotai";
 import { Loader } from "./components/Loader";
 
+const lang = translate(translation);
+
 export default function CameraView() {
   const { x, y } = useDeviceRotation();
-  const lang = translate(translation);
   const isRecording = useAtomValue(recordingAtom);
 
   const {

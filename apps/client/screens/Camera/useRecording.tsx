@@ -1,32 +1,29 @@
-import { translate } from "Shared/utils/translate";
-import { Asset } from "expo-media-library";
-import { translation } from "./translation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Crypto from "expo-crypto";
 import * as MediaLibrary from "expo-media-library";
 import useAuth from "Screens/Auth/useAuth";
 import { MutableRefObject, useCallback } from "react";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { Camera } from "expo-camera";
 import { useMutation } from "@tanstack/react-query";
-import { router } from "expo-router";
-import Toast from "react-native-toast-message";
-import {
-  ClimateReadings,
-  GPSReading,
-  MagnetometerReading,
-  RotationReading,
-  TimeReading,
-} from "./sensors/types";
 import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
-import { expo as app } from "../../app.json";
 import { deviceRotationReadingsAtom } from "./sensors/useDeviceRotation";
 import { climateReadingsAtom } from "./sensors/useClimate";
 import { GPSReadingsAtom } from "./sensors/useGPS";
 import { magnetometerReadingsAtom } from "./sensors/useMagnetometer";
-
-const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}`;
-const lang = translate(translation);
+import {
+  createHash,
+  uploadVideoInfo,
+  onError,
+  onSuccess,
+} from "./services/video.service";
+import {
+  readingsWithinVideoLength,
+  refineClimate,
+  refineGPS,
+  refineOrientation,
+  refineRotation,
+} from "./services/sensor.service";
+import { expo as app } from "../../app.json";
 
 export const recordingAtom = atom(false);
 
@@ -35,13 +32,9 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const [isRecording, setIsRecording] = useAtom(recordingAtom);
 
   const { mutate } = useMutation({
-    mutationFn: ({
-      videoInfo,
-      token,
-    }: {
-      videoInfo: VideoInfo;
-      token: string;
-    }) => uploadVideoInfo(videoInfo, token),
+    mutationFn: uploadVideoInfo,
+    onError,
+    onSuccess,
   });
 
   const startTime = useAtomValue(startTimeAtom);
@@ -52,38 +45,58 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const orientation = useAtomValue(magnetometerReadingsAtom);
 
   const getReadings = () => {
+    const gpsReadings = gps
+      .filter(refineGPS)
+      .filter(
+        (reading, index, readings) =>
+          index === readings.length - 1 ||
+          readingsWithinVideoLength(reading, startTime, endTime)
+      );
+    const climateReadings = climate
+      .filter(refineClimate)
+      .filter(
+        (reading, index, readings) =>
+          index === readings.length - 1 ||
+          readingsWithinVideoLength(reading, startTime, endTime)
+      );
+    const orientationReadings = orientation
+      .filter(refineOrientation)
+      .filter(
+        (reading, index, readings) =>
+          index === readings.length - 1 ||
+          readingsWithinVideoLength(reading, startTime, endTime)
+      );
+    const rotationReadings = rotation
+      .filter(refineRotation)
+      .filter(
+        (reading, index, readings) =>
+          index === readings.length - 1 ||
+          readingsWithinVideoLength(reading, startTime, endTime)
+      );
+
     return {
       start: startTime,
       end: endTime,
       appVersion: app.version,
-      rotation,
-      climate,
-      gps,
-      orientation,
+      readings: {
+        rotation: rotationReadings,
+        climate: climateReadings,
+        gps: gpsReadings,
+        orientation: orientationReadings,
+      },
     };
   };
 
   const saveVideo = useCallback(
     async (uri: string) => {
-      try {
-        const asset = await MediaLibrary.createAssetAsync(uri);
-        //asset.creationTime and asset.modificationTime
-        const hash = await createHash(
-          `${asset.creationTime}${asset.modificationTime}`
-        );
-        const readings = getReadings();
+      const asset = await MediaLibrary.createAssetAsync(uri);
+      const hash = await createHash(
+        `${asset.creationTime}${asset.modificationTime}`
+      );
+      const readings = getReadings();
+      await AsyncStorage.setItem(hash, JSON.stringify(asset));
 
-        await AsyncStorage.setItem(hash, JSON.stringify(asset));
-        mutate({ videoInfo: { hash, asset, readings }, token });
-
-        router.navigate("/");
-        Toast.show({
-          type: "success",
-          text1: lang.t("MESSAGES.SAVED"),
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      mutate({ hash, asset, ...readings, token });
     },
     [token]
   );
@@ -105,42 +118,3 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
 
   return { handleRecord };
 }
-
-const createHash = async (stringToHash: string) => {
-  const hash = await Crypto.digestStringAsync(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    stringToHash
-  );
-  return hash;
-};
-
-async function uploadVideoInfo(videoInfo: VideoInfo, token: string) {
-  const response = await fetch(`${BASE_URI}/video/video-info`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(videoInfo),
-  });
-
-  if (!response.ok) {
-    throw new Error(`${lang.t("CAMERA_SERVICE.ERROR")} ${response.status}`);
-  }
-}
-
-type VideoInfo = {
-  hash: string;
-  asset: Asset;
-  readings: Readings;
-};
-
-type Readings = {
-  start: TimeReading;
-  end: TimeReading;
-  appVersion: string;
-  rotation: RotationReading[];
-  climate: ClimateReadings[];
-  gps: GPSReading[];
-  orientation: MagnetometerReading[];
-};
