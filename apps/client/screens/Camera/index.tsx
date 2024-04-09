@@ -15,17 +15,17 @@ import appConfig from "../../app.json";
 import { recordingAtom, useRecording } from "./useRecording";
 import { useAtomValue } from "jotai";
 import { Loader } from "./components/Loader";
+import { useClock } from "./useClock";
 
 const lang = translate(translation);
 
 export default function CameraView() {
   const { x, y } = useDeviceRotation();
   const isRecording = useAtomValue(recordingAtom);
-
+  const clock = useClock();
   const {
     zoom,
     setZoom,
-    clock,
     cameraStatus,
     requestCameraPermission,
     microphoneStatus,

@@ -3,7 +3,6 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import { useAtomValue, useSetAtom } from "jotai";
 import { recordingAtom } from "./useRecording";
-import { formatDate } from "Shared/utils/time";
 import {
   elapsedTimeAtom,
   endTimeAtom,
@@ -12,7 +11,6 @@ import {
 
 export function useCamera() {
   const [zoom, setZoom] = useState(0);
-  const [clock, setClock] = useState(new Date());
   const isRecording = useAtomValue(recordingAtom);
 
   const setElapsedTime = useSetAtom(elapsedTimeAtom);
@@ -37,13 +35,6 @@ export function useCamera() {
         await MediaLibrary.requestPermissionsAsync();
       }
     })();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setClock(new Date());
-    }, 60000);
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -76,7 +67,6 @@ export function useCamera() {
   return {
     zoom,
     setZoom,
-    clock: formatDate(clock),
     cameraStatus,
     requestCameraPermission,
     microphoneStatus,
