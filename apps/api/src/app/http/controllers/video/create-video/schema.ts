@@ -64,8 +64,8 @@ const ReadingSchema = z.object({
 
 export const VideoSchema = z.object({
   body: z.object({
-    start: z.string(),
-    end: z.string(),
+    start: z.number(),
+    end: z.number(),
     appVersion: z.string(),
     hash: z.string(),
     asset: AssetSchema,
@@ -77,8 +77,8 @@ export const VideoSchema = z.object({
 export type VideoRequest = {
   body: {
     user: User;
-    start: string;
-    end: string;
+    start: number;
+    end: number;
     appVersion: string;
     hash: string;
     asset: {

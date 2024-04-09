@@ -15,8 +15,8 @@ export const createVideo = async (newVideo: VideoRequest["body"]) => {
   video.height = newVideo.asset.height;
   video.duration = newVideo.asset.duration;
   video.app_version = newVideo.appVersion;
-  video.start_time = newVideo.start;
-  video.end_time = newVideo.end;
+  video.start_time = String(newVideo.start);
+  video.end_time = String(newVideo.end);
 
   video.user = newVideo.user;
 
