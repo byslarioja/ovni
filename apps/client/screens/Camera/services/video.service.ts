@@ -37,7 +37,14 @@ export const createHash = async (stringToHash: string) => {
 
 export const onError = ({ response }: ApiErrorResponse) => {
   //TODO: maybe post this into a logging service?
-  console.error({ issues: response.data.issues });
+
+  const resolveZodError = (
+    issues: ApiErrorResponse["response"]["data"]["issues"]
+  ) => issues.map((i) => ({ ...i, path: i.path.join(".") }));
+
+  console.error({
+    issues: resolveZodError(response.data.issues),
+  });
 
   router.navigate("/");
 
@@ -49,6 +56,8 @@ export const onError = ({ response }: ApiErrorResponse) => {
 };
 
 export const onSuccess = () => {
+  router.navigate("/");
+
   Toast.show({
     type: "success",
     text1: lang.t("MESSAGES.SAVED"),
