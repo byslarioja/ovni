@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as MediaLibrary from "expo-media-library";
 import useAuth from "Screens/Auth/useAuth";
 import { MutableRefObject, useCallback } from "react";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Camera } from "expo-camera";
 import { useMutation } from "@tanstack/react-query";
 import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
@@ -24,17 +24,20 @@ import {
   refineRotation,
 } from "./services/sensor.service";
 import { expo as app } from "../../app.json";
+import { resetSensorsAtom } from "./sensors/useResetSensors";
 
 export const recordingAtom = atom(false);
 
 export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const { token } = useAuth();
   const [isRecording, setIsRecording] = useAtom(recordingAtom);
+  const resetSensorReadings = useSetAtom(resetSensorsAtom);
 
   const { mutate } = useMutation({
     mutationFn: uploadVideoInfo,
     onError,
     onSuccess,
+    onSettled: resetSensorReadings,
   });
 
   const startTime = useAtomValue(startTimeAtom);
