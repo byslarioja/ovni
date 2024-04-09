@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as MediaLibrary from "expo-media-library";
 import useAuth from "Screens/Auth/useAuth";
-import { MutableRefObject, useCallback } from "react";
+import { MutableRefObject, useEffect } from "react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Camera } from "expo-camera";
 import { useMutation } from "@tanstack/react-query";
@@ -33,6 +33,13 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const [isRecording, setIsRecording] = useAtom(recordingAtom);
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
 
+  const [startTime, setStartTime] = useAtom(startTimeAtom);
+  const [endTime, setEndTime] = useAtom(endTimeAtom);
+  const rotation = useAtomValue(deviceRotationReadingsAtom);
+  const climate = useAtomValue(climateReadingsAtom);
+  const gps = useAtomValue(GPSReadingsAtom);
+  const orientation = useAtomValue(magnetometerReadingsAtom);
+
   const { mutate } = useMutation({
     mutationFn: uploadVideoInfo,
     onError,
@@ -40,69 +47,65 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     onSettled: resetSensorReadings,
   });
 
-  const startTime = useAtomValue(startTimeAtom);
-  const endTime = useAtomValue(endTimeAtom);
-  const rotation = useAtomValue(deviceRotationReadingsAtom);
-  const climate = useAtomValue(climateReadingsAtom);
-  const gps = useAtomValue(GPSReadingsAtom);
-  const orientation = useAtomValue(magnetometerReadingsAtom);
-
   const getReadings = () => {
-    const gpsReadings = gps
-      .filter(refineGPS)
-      .filter(
-        (reading, index, readings) =>
-          index === readings.length - 1 ||
-          readingsWithinVideoLength(reading, startTime, endTime)
-      );
-    const climateReadings = climate
-      .filter(refineClimate)
-      .filter(
-        (reading, index, readings) =>
-          index === readings.length - 1 ||
-          readingsWithinVideoLength(reading, startTime, endTime)
-      );
-    const orientationReadings = orientation
-      .filter(refineOrientation)
-      .filter(
-        (reading, index, readings) =>
-          index === readings.length - 1 ||
-          readingsWithinVideoLength(reading, startTime, endTime)
-      );
-    const rotationReadings = rotation
-      .filter(refineRotation)
-      .filter(
-        (reading, index, readings) =>
-          index === readings.length - 1 ||
-          readingsWithinVideoLength(reading, startTime, endTime)
-      );
-
     return {
-      start: startTime,
-      end: endTime,
-      appVersion: app.version,
-      readings: {
-        rotation: rotationReadings,
-        climate: climateReadings,
-        gps: gpsReadings,
-        orientation: orientationReadings,
-      },
+      rotation: rotation
+        .filter(refineRotation)
+        .filter(
+          (reading, index, readings) =>
+            index === readings.length - 1 ||
+            readingsWithinVideoLength(reading, startTime, endTime)
+        ),
+      climate: climate
+        .filter(refineClimate)
+        .filter(
+          (reading, index, readings) =>
+            index === readings.length - 1 ||
+            readingsWithinVideoLength(reading, startTime, endTime)
+        ),
+      gps: gps
+        .filter(refineGPS)
+        .filter(
+          (reading, index, readings) =>
+            index === readings.length - 1 ||
+            readingsWithinVideoLength(reading, startTime, endTime)
+        ),
+      orientation: orientation
+        .filter(refineOrientation)
+        .filter(
+          (reading, index, readings) =>
+            index === readings.length - 1 ||
+            readingsWithinVideoLength(reading, startTime, endTime)
+        ),
     };
   };
 
-  const saveVideo = useCallback(
-    async (uri: string) => {
-      const asset = await MediaLibrary.createAssetAsync(uri);
-      const hash = await createHash(
-        `${asset.creationTime}${asset.modificationTime}`
-      );
-      const readings = getReadings();
-      await AsyncStorage.setItem(hash, JSON.stringify(asset));
+  //FIX: startTime and endTime may become null right before mutation
+  useEffect(() => {
+    if (isRecording && startTime === null) setStartTime(Date.now());
+    if (!isRecording && startTime !== null) setEndTime(Date.now());
+  }, [isRecording]);
 
-      mutate({ hash, asset, ...readings, token });
-    },
-    [token]
-  );
+  const saveVideo = async (uri: string) => {
+    const asset = await MediaLibrary.createAssetAsync(uri);
+    const hash = await createHash(
+      `${asset.creationTime}${asset.modificationTime}`
+    );
+    const readings = getReadings();
+    await AsyncStorage.setItem(hash, JSON.stringify(asset));
+
+    mutate({
+      hash,
+      //FIX: should be exactly start:startTime taken from the atom
+      start: startTime ? startTime : asset.creationTime,
+      //FIX: should be exactly end:endTime taken from the atom
+      end: endTime ? endTime : asset.creationTime + asset.duration * 1000,
+      appVersion: app.version,
+      asset,
+      readings,
+      token,
+    });
+  };
 
   const handleRecord = async () => {
     try {
