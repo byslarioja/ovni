@@ -5,13 +5,12 @@ import { styles } from "./styles";
 import Theme from "Shared/theme";
 import useAuth from "Screens/Auth/useAuth";
 import { router } from "expo-router";
-import { useAtomValue } from "jotai";
-import { elapsedTimeAtom } from "Screens/Camera/sensors/useElapsedTime";
+import { useElapsedTime } from "Screens/Camera/sensors/useElapsedTime";
 
 export default function TopBar() {
   const [menu, setMenu] = useState(false);
   const { logout } = useAuth();
-  const elapsedTime = useAtomValue(elapsedTimeAtom);
+  const elapsedTime = useElapsedTime();
 
   return (
     <View style={styles.top}>
