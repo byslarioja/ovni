@@ -1,6 +1,11 @@
 import { Camera } from "expo-camera";
 import Slider from "@react-native-community/slider";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Text,
+  TouchableNativeFeedback,
+  View,
+} from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
 import useDeviceRotation from "./sensors/useDeviceRotation";
@@ -92,17 +97,15 @@ export default function CameraView() {
               <Text style={styles.text}>v{appConfig.expo.version}</Text>
             </View>
             {isRecording ? (
-              <TouchableOpacity
-                style={[styles.recButton, styles.recOnButton]}
-                onPress={handleRecord}
-              >
-                <View style={styles.recOnCenterButton} />
-              </TouchableOpacity>
+              <TouchableNativeFeedback onPress={handleRecord}>
+                <View style={[styles.recButton, styles.recOnButton]}>
+                  <View style={styles.recOnCenterButton} />
+                </View>
+              </TouchableNativeFeedback>
             ) : (
-              <TouchableOpacity
-                style={[styles.recButton, styles.recOffButton]}
-                onPress={handleRecord}
-              />
+              <TouchableNativeFeedback onPress={handleRecord}>
+                <View style={[styles.recButton, styles.recOffButton]}></View>
+              </TouchableNativeFeedback>
             )}
             <View>
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
