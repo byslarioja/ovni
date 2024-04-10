@@ -5,7 +5,7 @@ import {
   ChevronLeft,
   Users,
   Video,
-  Settings,
+  // Settings,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
@@ -48,9 +48,9 @@ const links: NavLinkType[] = [
     icon: Video,
     href: "/videos",
   },
-  {
-    title: "Configuración",
-    icon: Settings,
-    href: "/settings",
-  },
+  // {
+  //   title: "Configuración",
+  //   icon: Settings,
+  //   href: "/settings",
+  // },
 ];
