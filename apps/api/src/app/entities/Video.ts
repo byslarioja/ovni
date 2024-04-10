@@ -9,7 +9,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { User } from "./User";
-import { SensorReading } from "./SensorReadings";
+import { SensorReading } from "./SensorReading";
 
 @Entity("videos")
 export class Video {
@@ -49,7 +49,7 @@ export class Video {
   @ManyToOne(() => User, (user) => user.videos, { eager: true })
   user: User;
 
-  @OneToMany(() => SensorReading, (reading) => reading.video)
+  @OneToMany(() => SensorReading, (reading) => reading.video, { eager: true })
   readings: SensorReading[];
 
   @CreateDateColumn()

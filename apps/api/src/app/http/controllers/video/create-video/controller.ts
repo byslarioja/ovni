@@ -3,7 +3,10 @@ import { VideoRequest } from "./schema";
 import { createVideo } from "@app/repositories/video.repository";
 import { VideoResource } from "@app/http/resources/video.resource";
 
-export const videoController = async (req: VideoRequest, res: Response) => {
+export const createVideoController = async (
+  req: VideoRequest,
+  res: Response
+) => {
   const validated = req.body;
 
   try {

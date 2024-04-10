@@ -1,2 +1,2 @@
-export { videoController } from "./controller";
+export { createVideoController } from "./controller";
 export { VideoSchema } from "./schema";

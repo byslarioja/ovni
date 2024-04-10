@@ -1,4 +1,4 @@
-import { SensorReading } from "@app/entities/SensorReadings";
+import { SensorReading } from "@app/entities/SensorReading";
 import { Video } from "@app/entities/Video";
 import { VideoRequest } from "@app/http/controllers/video/create-video/schema";
 import { refineReadings } from "@app/http/services/readings";
@@ -29,4 +29,10 @@ export const createVideo = async (newVideo: VideoRequest["body"]) => {
     .execute();
 
   return createdVideo;
+};
+
+export const getAllVideos = async () => {
+  const videoRepository = AppDataSource.getRepository(Video);
+
+  return await videoRepository.find({ where: { deleted_at: null } });
 };
