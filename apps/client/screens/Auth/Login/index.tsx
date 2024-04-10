@@ -3,10 +3,17 @@ import { UserIcon, PasswordIcon } from "Components/Icon";
 import { Title } from "Components/Typography";
 import { CustomTextInput } from "Components/form";
 import { Controller, useForm } from "react-hook-form";
-import { ActivityIndicator, Image, View } from "react-native";
+import { Image, View } from "react-native";
 import useAuth from "../useAuth";
 import { LoaderButton } from "Components/Button/LoaderButton";
 import { Redirect } from "expo-router";
+import Theme from "Shared/theme";
+import { Loader } from "Components/Loader";
+import { Routes } from "Shared/routes";
+import { translate } from "Shared/utils/translate";
+import { translation } from "./translation";
+
+const lang = translate(translation);
 
 type FormData = {
   email: string;
@@ -14,7 +21,7 @@ type FormData = {
 };
 
 const INPUT_RULES = {
-  required: "Este campo es requerido",
+  required: lang.t("ERROR.REQUIRED"),
 };
 
 export default function Login() {
@@ -35,19 +42,22 @@ export default function Login() {
   };
 
   if (isLoading) {
-    return (
-      <View style={{ height: "100%", justifyContent: "center" }}>
-        <ActivityIndicator size={"large"} />
-      </View>
-    );
+    return <Loader />;
   }
 
   if (isLogged) {
-    return <Redirect href={"/camera"} />;
+    return <Redirect href={Routes.Library} />;
   }
 
   return (
-    <>
+    <View
+      style={{
+        alignItems: "center",
+        backgroundColor: Theme.color.neutral.background,
+        padding: 20,
+        height: "100%",
+      }}
+    >
       <Image
         style={{ width: 200, resizeMode: "contain" }}
         source={require("../../../assets/logo.webp")}
@@ -62,8 +72,8 @@ export default function Login() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Ingrese correo electrónico"
-              label="Correo electrónico"
+              placeholder={lang.t("INPUT.EMAIL.PLACEHOLDER")}
+              label={lang.t("INPUT.EMAIL.LABEL")}
               rightIcon={<UserIcon />}
               error={errors?.email?.message}
             />
@@ -79,8 +89,8 @@ export default function Login() {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              placeholder="Ingrese su nombre contraseña"
-              label="Contraseña"
+              placeholder={lang.t("INPUT.PASSWORD.PLACEHOLDER")}
+              label={lang.t("INPUT.PASSWORD.LABEL")}
               rightIcon={<PasswordIcon />}
               error={errors?.password?.message}
               isPassword
@@ -92,9 +102,12 @@ export default function Login() {
         {isLoading ? (
           <LoaderButton />
         ) : (
-          <Button onPress={handleSubmit(onSubmit)} text="Ingresar" />
+          <Button
+            onPress={handleSubmit(onSubmit)}
+            text={lang.t("BUTTON.LOGIN")}
+          />
         )}
       </View>
-    </>
+    </View>
   );
 }

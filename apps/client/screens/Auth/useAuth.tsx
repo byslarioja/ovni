@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { attemptLogin, verifyToken } from "./auth.service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { Routes } from "Shared/routes";
 
 export default function useAuth() {
   const [token, setToken] = useState<string>();
@@ -36,7 +37,7 @@ export default function useAuth() {
 
   const logout = async () => {
     await AsyncStorage.removeItem("token");
-    router.replace("auth/login");
+    router.navigate(Routes.Login);
     setState((prev) => ({ ...prev, logged: false }));
     setToken(null);
   };

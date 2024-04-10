@@ -7,6 +7,7 @@ import useAuth from "Screens/Auth/useAuth";
 import { router } from "expo-router";
 import { useAtomValue } from "jotai";
 import { elapsedTimeAtom } from "Screens/Camera/sensors/useElapsedTime";
+import { Routes } from "Shared/routes";
 
 export default function TopBar() {
   const [menu, setMenu] = useState(false);
@@ -25,7 +26,7 @@ export default function TopBar() {
       <View style={[styles.topButton, styles.topMenu]}>
         {menu ? (
           <View style={[styles.menuButton, styles.centerItem]}>
-            <TouchableOpacity onPress={() => router.push("/")}>
+            <TouchableOpacity onPress={() => router.navigate(Routes.Library)}>
               <GaleryIcon size={24} color={Theme.color.button.neutral} />
             </TouchableOpacity>
             <TouchableOpacity onPress={logout}>

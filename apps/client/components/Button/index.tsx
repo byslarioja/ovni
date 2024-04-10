@@ -8,7 +8,7 @@ export function Button({ onPress, text }) {
     <TouchableHighlight
       onPress={onPress}
       style={style.background}
-      underlayColor={Theme.color.button.secondary}
+      underlayColor={Theme.color.scheme.accent["400"]}
     >
       <Title
         transform="uppercase"

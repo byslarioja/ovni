@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   topButton: {
     backgroundColor: "rgba(54, 54, 54, 0.5)",
-    borderColor: "rgba(242, 242, 242, .25)",
+    borderColor: Theme.color.neutral.border,
     borderWidth: 0.5,
     borderRadius: 5,
     padding: 10,

@@ -2,15 +2,16 @@ import { Link } from "expo-router";
 import { View } from "react-native";
 import { VideoCameraIcon } from "./VideoCameraIcon";
 import Theme from "Shared/theme";
+import { Routes } from "Shared/routes";
 
 export function FloatingActionButton() {
   return (
     <Link
-      href={"camera"}
+      href={Routes.Camera}
       style={{
         position: "absolute",
         bottom: 40,
-        right: 40,
+        right: 20,
       }}
     >
       <View

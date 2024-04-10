@@ -1,19 +1,67 @@
+const scheme = {
+  black: {
+    50: "#E8E8E9",
+    100: "#D0D0D2",
+    200: "#A1A1A5",
+    300: "#737378",
+    400: "#464649",
+    500: "#181819",
+    600: "#141415",
+    700: "#0F0F10",
+    800: "#0A0A0A",
+    900: "#050505",
+    950: "#020203",
+  },
+  accent: {
+    50: "#F1F3FE",
+    100: "#E3E7FD",
+    200: "#C6D0FB",
+    300: "#AAB8F8",
+    400: "#8DA1F6",
+    500: "#718AF4",
+    600: "#2F52EF",
+    700: "#0F31C7",
+    800: "#0A2185",
+    900: "#051042",
+    950: "#030821",
+  },
+  secondary: {
+    50: "#E7E8EE",
+    100: "#CFD0DD",
+    200: "#A0A2BB",
+    300: "#707399",
+    400: "#4C4E6B",
+    500: "#2A2B3B",
+    600: "#222330",
+    700: "#191A24",
+  },
+  white: {
+    50: "#FFFFFF",
+    100: "#FFFFFF",
+    200: "#FAFBFF",
+    300: "#FAFBFF",
+    400: "#FAFBFF",
+    500: "#F8F9FF",
+  },
+};
+
 const Theme = {
   color: {
+    scheme,
     neutral: {
-      background: "#202224",
+      background: scheme.black["600"],
       overlay: "rgba(0, 0, 0, 0.75)",
-      border: "#B3B3B3",
+      border: "rgba(242, 242, 242, .25)",
     },
     text: {
-      dark: "#323232",
-      light: "#F2F2F2",
+      dark: scheme.black["800"],
+      light: scheme.white["100"],
       placeholder: "rgba(32, 34, 36, 0.35)",
       disabled: "#CACACA",
     },
     button: {
       neutral: "#F2F2F2",
-      primary: "#446CA1",
+      primary: scheme.accent["500"],
       secondary: "#D95D5D",
     },
     states: {
@@ -34,13 +82,6 @@ const Theme = {
         pressed: "#7FA62F",
       },
     },
-  },
-  spacing: {
-    borderRadiusLow: 5,
-    screenPadding: 20,
-  },
-  border: {
-    width: 0.5,
   },
 };
 

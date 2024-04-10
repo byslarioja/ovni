@@ -5,6 +5,7 @@ import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import { translate } from "Shared/utils/translate";
 import { translation } from "../translation";
+import { Routes } from "Shared/routes";
 
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}`;
 const lang = translate(translation);
@@ -46,7 +47,7 @@ export const onError = ({ response }: ApiErrorResponse) => {
     issues: resolveZodError(response.data.issues),
   });
 
-  router.navigate("/");
+  router.navigate(Routes.Library);
 
   Toast.show({
     type: "error",
@@ -56,7 +57,7 @@ export const onError = ({ response }: ApiErrorResponse) => {
 };
 
 export const onSuccess = () => {
-  router.navigate("/");
+  router.navigate(Routes.Library);
 
   Toast.show({
     type: "success",

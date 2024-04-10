@@ -1,11 +1,13 @@
 import { ErrorImage } from "Components/ErrorImage";
-import Library from "Screens/Library";
+import Login from "Screens/Auth/Login";
 import Theme from "Shared/theme";
 import { translate } from "Shared/utils/translate";
 import { ErrorBoundaryProps } from "expo-router";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default Library;
+export default function Page() {
+  return <Login />;
+}
 
 export function ErrorBoundary(props: ErrorBoundaryProps) {
   const lang = translate({

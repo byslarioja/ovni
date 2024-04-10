@@ -40,7 +40,7 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const gps = useAtomValue(GPSReadingsAtom);
   const orientation = useAtomValue(magnetometerReadingsAtom);
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: uploadVideoInfo,
     onError,
     onSuccess,
@@ -122,5 +122,5 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     }
   };
 
-  return { handleRecord };
+  return { handleRecord, isPending };
 }

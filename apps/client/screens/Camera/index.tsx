@@ -1,11 +1,6 @@
-import { Camera } from "expo-camera";
+import { Camera as ExpoCamera } from "expo-camera";
 import Slider from "@react-native-community/slider";
-import {
-  ActivityIndicator,
-  Text,
-  TouchableNativeFeedback,
-  View,
-} from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
 import useDeviceRotation from "./sensors/useDeviceRotation";
@@ -19,12 +14,12 @@ import { useRef } from "react";
 import appConfig from "../../app.json";
 import { recordingAtom, useRecording } from "./useRecording";
 import { useAtomValue } from "jotai";
-import { Loader } from "./components/Loader";
+import { Loader } from "Components/Loader";
 import { useClock } from "./useClock";
 
 const lang = translate(translation);
 
-export default function CameraView() {
+export default function Camera() {
   const { x, y } = useDeviceRotation();
   const isRecording = useAtomValue(recordingAtom);
   const clock = useClock();
@@ -40,11 +35,15 @@ export default function CameraView() {
   } = useCamera();
 
   const cameraRef = useRef(null);
-  const { handleRecord } = useRecording(cameraRef);
+  const { handleRecord, isPending } = useRecording(cameraRef);
+
+  if (isPending) {
+    return <Loader text={lang.t("LOADING.MUTATION_PENDING")} />;
+  }
 
   if (!cameraStatus || !microphoneStatus || !mediaLibraryStatus) {
     // Camera permissions are still loading
-    return <Loader />;
+    return <Loader text={lang.t("LOADING.PERMISSIONS")} />;
   }
 
   if (!cameraStatus.granted) {
@@ -78,7 +77,7 @@ export default function CameraView() {
   }
 
   return (
-    <Camera style={styles.camera} zoom={zoom} ref={cameraRef}>
+    <ExpoCamera style={styles.camera} zoom={zoom} ref={cameraRef}>
       <View style={styles.container}>
         <TopBar />
         <View style={styles.center}>
@@ -97,15 +96,15 @@ export default function CameraView() {
               <Text style={styles.text}>v{appConfig.expo.version}</Text>
             </View>
             {isRecording ? (
-              <TouchableNativeFeedback onPress={handleRecord}>
+              <TouchableOpacity onPress={handleRecord}>
                 <View style={[styles.recButton, styles.recOnButton]}>
                   <View style={styles.recOnCenterButton} />
                 </View>
-              </TouchableNativeFeedback>
+              </TouchableOpacity>
             ) : (
-              <TouchableNativeFeedback onPress={handleRecord}>
+              <TouchableOpacity onPress={handleRecord}>
                 <View style={[styles.recButton, styles.recOffButton]}></View>
-              </TouchableNativeFeedback>
+              </TouchableOpacity>
             )}
             <View>
               <Text style={styles.text}>Zoom: {Math.trunc(zoom * 100)}%</Text>
@@ -122,6 +121,6 @@ export default function CameraView() {
         </View>
         <BottomBar />
       </View>
-    </Camera>
+    </ExpoCamera>
   );
 }

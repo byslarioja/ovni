@@ -18,6 +18,10 @@ export const translation = {
         DESCRIPTION: "Video was saved in your app's library.",
       },
     },
+    LOADING: {
+      MUTATION_PENDING: "Saving video",
+      PERMISSIONS: "Loading permissions",
+    },
   },
   es: {
     CAMERA: {
@@ -40,5 +44,9 @@ export const translation = {
         DESCRIPTION: "El video fue guardado en la galería de la aplicación.",
       },
     },
+  },
+  LOADING: {
+    MUTATION_PENDING: "Guardando vídeo",
+    PERMISSIONS: "Cargando permisos",
   },
 };
