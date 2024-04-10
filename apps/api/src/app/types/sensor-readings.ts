@@ -14,4 +14,4 @@ export type GPSValue = {
 
 export type RotationValue = { x: number; y: number; z: number };
 
-export type OrientationValue = string;
+export type OrientationValue = number;

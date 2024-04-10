@@ -56,7 +56,7 @@ const ReadingSchema = z.object({
   ),
   orientation: z.array(
     z.object({
-      value: z.string(),
+      value: z.number(),
       timestamp: z.number(),
     })
   ),
