@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as VideosImport } from './routes/videos'
+import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as UsersUserIdImport } from './routes/users/$userId'
 
@@ -19,6 +20,11 @@ import { Route as UsersUserIdImport } from './routes/users/$userId'
 
 const VideosRoute = VideosImport.update({
   path: '/videos',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -36,6 +42,10 @@ const UsersUserIdRoute = UsersUserIdImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/videos': {
       preLoaderRoute: typeof VideosImport
       parentRoute: typeof rootRoute
@@ -54,6 +64,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
+  IndexRoute,
   VideosRoute,
   UsersUserIdRoute,
   UsersIndexRoute,
