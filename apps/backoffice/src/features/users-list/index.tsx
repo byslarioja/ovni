@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { BanUser } from "../ban-user";
-import { UsersListProps } from "@/types/video";
+import { UsersListProps } from "@/types/props";
 
 export default function UsersList({ users }: UsersListProps) {
   return (
@@ -22,7 +22,7 @@ export default function UsersList({ users }: UsersListProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users?.map((user) => (
+        {users.map((user) => (
           <TableRow key={user.id}>
             <TableCell className="font-medium">{user.id}</TableCell>
             <TableCell>{user.name}</TableCell>
