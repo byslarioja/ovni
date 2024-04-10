@@ -14,7 +14,7 @@ export const showUserController = async (req: ShowUserRequest, res: Response) =>
 
     if(!user) return res.status(404).send({message:'User not found'})
 
-    return res.status(200).json(UserResource.toJson(user));
+    return res.status(200).json({user: UserResource.toJson(user)});
   } catch (error) {
     console.error(error);
 
