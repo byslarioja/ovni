@@ -1,0 +1,1 @@
+export {showUserController} from './controller'
