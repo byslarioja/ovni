@@ -17,10 +17,10 @@
       "channel": "preview",
       "env": {
         "EXPO_PUBLIC_API_URL": "https://ovni.onrender.com/api",
-        "EXPO_PUBLIC_GYRO_INTERVAL": "10000",
-        "EXPO_PUBLIC_GPS_INTERVAL": "10000",
-        "EXPO_PUBLIC_MAGNETOMETER_INTERVAL": "10000",
-        "EXPO_PUBLIC_CLIMATE_INTERVAL": "10000"
+        "EXPO_PUBLIC_GYRO_INTERVAL": "500",
+        "EXPO_PUBLIC_GPS_INTERVAL": "500",
+        "EXPO_PUBLIC_MAGNETOMETER_INTERVAL": "500",
+        "EXPO_PUBLIC_CLIMATE_INTERVAL": "500"
       }
     },
     "production": {}
