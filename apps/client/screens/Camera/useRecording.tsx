@@ -4,7 +4,7 @@ import useAuth from "Screens/Auth/useAuth";
 import { MutableRefObject, useEffect } from "react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Camera } from "expo-camera";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
 import { deviceRotationReadingsAtom } from "./sensors/useDeviceRotation";
 import { climateReadingsAtom } from "./sensors/useClimate";
@@ -29,6 +29,7 @@ import { resetSensorsAtom } from "./sensors/useResetSensors";
 export const recordingAtom = atom(false);
 
 export function useRecording(cameraRef: MutableRefObject<Camera>) {
+  const queryClient = useQueryClient();
   const { token } = useAuth();
   const [isRecording, setIsRecording] = useAtom(recordingAtom);
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
@@ -40,11 +41,18 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const gps = useAtomValue(GPSReadingsAtom);
   const orientation = useAtomValue(magnetometerReadingsAtom);
 
+  useEffect(() => {
+    resetSensorReadings();
+  }, []);
+
   const { mutate, isPending } = useMutation({
     mutationFn: uploadVideoInfo,
     onError,
     onSuccess,
-    onSettled: resetSensorReadings,
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["assets"] });
+      resetSensorReadings();
+    },
   });
 
   const getReadings = () => {
@@ -79,7 +87,6 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
         ),
     };
   };
-
   //FIX: startTime and endTime may become null right before mutation
   useEffect(() => {
     if (isRecording && startTime === null) setStartTime(Date.now());
@@ -113,6 +120,7 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
         setIsRecording(false);
         cameraRef.current.stopRecording();
       } else {
+        resetSensorReadings();
         setIsRecording(true);
         const video = await cameraRef.current.recordAsync();
         saveVideo(video.uri);
