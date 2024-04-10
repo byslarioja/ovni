@@ -16,6 +16,10 @@ export class UserResource {
       updated_at: user.updated_at,
     };
   }
+
+  public static toArray(videos: SerializableUser[]): Array<SerializableUser> {
+    return videos.map(this.toJson);
+  }
 }
 
 export type SerializableUser = Omit<User, "password" | "deleted_at" | "videos">;
