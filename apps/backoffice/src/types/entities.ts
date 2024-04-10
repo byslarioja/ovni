@@ -1,10 +1,4 @@
-export type ApiVideoResponse = {
-  videos: Video[];
-};
-
-export type VideoProps = Video;
-
-interface Video {
+export interface Video {
   id: string;
   width: number;
   height: number;
@@ -15,6 +9,19 @@ interface Video {
   uri: string | null;
   user: User;
   readings: Reading[];
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  country: string;
+  city: string;
+  zip_code: string;
+  youtube_channel: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -40,17 +47,4 @@ type ClimateValue = {
 interface Coords {
   latitude: string;
   longitude: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  country: string;
-  city: string;
-  zip_code: string;
-  youtube_channel: string;
-  created_at: Date;
-  updated_at: Date;
 }

@@ -6,21 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useUsersList } from "./useUsersList";
-import { Spinner } from "@/components/Spinner";
 import { BanUser } from "../ban-user";
+import { UsersListProps } from "@/types/video";
 
-export default function UsersList() {
-  const { users, isPending } = useUsersList();
-
-  if (isPending) {
-    return (
-      <div className="grid place-content-center h-full">
-        <Spinner size={32} />
-      </div>
-    );
-  }
-
+export default function UsersList({ users }: UsersListProps) {
   return (
     <Table>
       <TableHeader>

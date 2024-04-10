@@ -11,8 +11,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useBanUser } from "./useBanUser";
 import { Spinner } from "@/components/Spinner";
+import { useBanUser } from "./useBanUser";
 
 export function BanUser({
   userId,

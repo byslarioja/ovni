@@ -12,7 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as VideosImport } from './routes/videos'
-import { Route as UsersImport } from './routes/users'
+import { Route as UsersIndexImport } from './routes/users/index'
+import { Route as UsersUserIdImport } from './routes/users/$userId'
 
 // Create/Update Routes
 
@@ -21,8 +22,13 @@ const VideosRoute = VideosImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UsersRoute = UsersImport.update({
-  path: '/users',
+const UsersIndexRoute = UsersIndexImport.update({
+  path: '/users/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UsersUserIdRoute = UsersUserIdImport.update({
+  path: '/users/$userId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -30,12 +36,16 @@ const UsersRoute = UsersImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      preLoaderRoute: typeof UsersImport
-      parentRoute: typeof rootRoute
-    }
     '/videos': {
       preLoaderRoute: typeof VideosImport
+      parentRoute: typeof rootRoute
+    }
+    '/users/$userId': {
+      preLoaderRoute: typeof UsersUserIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/users/': {
+      preLoaderRoute: typeof UsersIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -43,6 +53,10 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([UsersRoute, VideosRoute])
+export const routeTree = rootRoute.addChildren([
+  VideosRoute,
+  UsersUserIdRoute,
+  UsersIndexRoute,
+])
 
 /* prettier-ignore-end */

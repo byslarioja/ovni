@@ -16,16 +16,21 @@
     "@tanstack/react-query-devtools": "^5.28.9",
     "@tanstack/react-router": "^1.22.8",
     "@tanstack/router-vite-plugin": "^1.22.8",
+    "add": "^2.0.6",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.363.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "shadcn-ui": "^0.8.0",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "toast": "^0.5.4"
   },
   "devDependencies": {
+    "@tanstack/router-devtools": "^1.26.19",
+    "@types/add": "^2",
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
