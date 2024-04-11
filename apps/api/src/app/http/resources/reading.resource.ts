@@ -3,8 +3,11 @@ import { Sensor } from "@app/enums/Sensor";
 import {
   ClimateValue,
   GPSValue,
+  OrientationValue,
   RotationValue,
 } from "@app/types/sensor-readings";
+import { ClimatePrimitive } from "types-sensors";
+import { degToDMS, spaceToAngle } from "utils";
 
 export class SensorReadingResource {
   public static toJson(reading: SensorReading): SerializableSensorReading {
@@ -24,9 +27,11 @@ export class SensorReadingResource {
 
 function formatValue(reading: SensorReading) {
   if (reading.sensor === Sensor.Orientation) {
-    return degToDMS(reading.value as number);
+    const value = reading.value as OrientationValue;
+    return degToDMS(spaceToAngle(value));
   } else if (reading.sensor === Sensor.Rotation) {
     const value = reading.value as RotationValue;
+
     return {
       x: degToDMS(value.x),
       y: degToDMS(value.y),
@@ -47,17 +52,6 @@ function formatValue(reading: SensorReading) {
   return reading.value as ClimateValue;
 }
 
-function degToDMS(deg: number, dplaces = 0) {
-  var d = Math.floor(deg);
-  var m = Math.floor((deg - d) * 60);
-  var s =
-    Math.round(((deg - d) * 60 - m) * 60 * Math.pow(10, dplaces)) /
-    Math.pow(10, dplaces);
-  s == 60 && (m++, (s = 0));
-  m == 60 && (d++, (m = 0));
-  return d + "° " + m + "' " + s + '"';
-}
-
 export type SerializableSensorReading = Omit<
   SensorReading,
   "id" | "value" | "video" | "created_at" | "updated_at" | "deleted_at"
@@ -70,5 +64,5 @@ export type SerializableSensorReading = Omit<
         coords: { latitude: string; longitude: string };
         altitude: string;
       }
-    | { temperature: string; humidity: string };
+    | ClimatePrimitive;
 };

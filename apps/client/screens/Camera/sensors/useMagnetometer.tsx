@@ -1,19 +1,24 @@
 import { useEffect } from "react";
-import { Magnetometer, MagnetometerMeasurement } from "expo-sensors";
+import { Magnetometer } from "expo-sensors";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { MagnetometerReading } from "./types";
+import { degToDMS, spaceToAngle } from "utils";
 
 const MAGNETOMETER_UPDATE_INTERVAL = Number(
   process.env.EXPO_PUBLIC_MAGNETOMETER_INTERVAL
 );
 
+export const magnetometerReadingsAtom = atom<MagnetometerReading[]>([]);
+
 export const lastAvailableAngleAtom = atom((get) => {
   const readings = get(magnetometerReadingsAtom);
+  const lastReading = readings.at(-1);
 
-  return readings.at(-1)?.value;
+  if (!lastReading) return null;
+
+  const angle = spaceToAngle(lastReading.value);
+  return degToDMS(angle);
 });
-
-export const magnetometerReadingsAtom = atom<MagnetometerReading[]>([]);
 
 //This logic should be whitin magnetometerAtom
 export default function useMagnetometer() {
@@ -26,7 +31,7 @@ export default function useMagnetometer() {
     const subscription = Magnetometer.addListener((data) => {
       setMagnetometerReading((prev) => [
         ...prev,
-        { value: degToDMS(_angle(data)), timestamp: Date.now() },
+        { value: data, timestamp: Date.now() },
       ]);
     });
 
@@ -34,30 +39,6 @@ export default function useMagnetometer() {
       subscription && subscription.remove();
     };
   }, []);
-
-  const _angle = (magnetometer: MagnetometerMeasurement) => {
-    let angle = 0;
-    if (magnetometer) {
-      let { x, y, z } = magnetometer;
-      if (Math.atan2(y, x) >= 0) {
-        angle = Math.atan2(y, x) * (180 / Math.PI);
-      } else {
-        angle = (Math.atan2(y, x) + 2 * Math.PI) * (180 / Math.PI);
-      }
-    }
-    return angle;
-  };
-
-  const degToDMS = (deg: number, dplaces = 0) => {
-    var d = Math.floor(deg);
-    var m = Math.floor((deg - d) * 60);
-    var s =
-      Math.round(((deg - d) * 60 - m) * 60 * Math.pow(10, dplaces)) /
-      Math.pow(10, dplaces);
-    s == 60 && (m++, (s = 0));
-    m == 60 && (d++, (m = 0));
-    return d + "° " + m + "' " + s + '"';
-  };
 
   return { angle: lastAvailableAngle };
 }

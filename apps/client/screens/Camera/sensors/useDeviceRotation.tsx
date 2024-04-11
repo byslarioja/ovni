@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Accelerometer } from "expo-sensors";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { RotationReading } from "./types";
+import { calculateDeviceRotation } from "utils/angles";
 
 const GYRO_UPDATE_INTERVAL = Number(process.env.EXPO_PUBLIC_GYRO_INTERVAL);
 
@@ -12,15 +13,10 @@ export const lastAvailableRotationReading = atom((get) => {
 
   if (!rotation) return { x: "N/A", y: "N/A", z: "N/A" };
 
-  const format = (h: number, c1: number, c2: number) => {
-    const RAD = 180 / Math.PI;
-    return Math.atan2(h, Math.sqrt(c1 * c1 + c2 * c2)) * RAD;
-  };
-
   return {
-    x: format(rotation.x, rotation.y, rotation.z).toFixed(2) + "°",
-    y: format(rotation.y, rotation.x, rotation.z).toFixed(2) + "°",
-    z: format(rotation.z, rotation.x, rotation.y).toFixed(2) + "°",
+    x: calculateDeviceRotation(rotation.x, rotation.y, rotation.z),
+    y: calculateDeviceRotation(rotation.y, rotation.x, rotation.z),
+    z: calculateDeviceRotation(rotation.z, rotation.x, rotation.y),
   };
 });
 

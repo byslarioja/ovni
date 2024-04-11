@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@types/sensors": ["packages/@types/sensors/index"]
+    }
+  }
+}
