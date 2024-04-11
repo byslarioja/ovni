@@ -5400,9 +5400,9 @@ __metadata:
     ts-node-dev: "npm:^2.0.0"
     tsconfig-paths: "npm:^4.2.0"
     typeorm: "npm:0.3.19"
-    types-sensors: "npm:^1.0.0"
+    types-sensors: "workspace:^"
     typescript: "npm:4.5.2"
-    utils: "npm:^1.0.0"
+    utils: "workspace:^"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -6436,9 +6436,9 @@ __metadata:
     react-native-screens: "npm:~3.29.0"
     react-native-svg: "npm:14.1.0"
     react-native-toast-message: "npm:^2.2.0"
-    types-sensors: "npm:^1.0.0"
+    types-sensors: "workspace:^"
     typescript: "npm:^5.3.0"
-    utils: "npm:^1.0.0"
+    utils: "workspace:^"
     wonka: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
@@ -15211,7 +15211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"types-sensors@npm:^1.0.0, types-sensors@workspace:packages/types-sensors":
+"types-sensors@npm:^1.0.0, types-sensors@workspace:^, types-sensors@workspace:packages/types-sensors":
   version: 0.0.0-use.local
   resolution: "types-sensors@workspace:packages/types-sensors"
   languageName: unknown
@@ -15502,7 +15502,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"utils@npm:^1.0.0, utils@workspace:packages/utils":
+"utils@workspace:^, utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "utils@workspace:packages/utils"
   dependencies:

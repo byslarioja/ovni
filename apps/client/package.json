@@ -43,12 +43,12 @@
     "react-native-svg": "14.1.0",
     "react-native-toast-message": "^2.2.0",
     "typescript": "^5.3.0",
-    "utils": "^1.0.0",
+    "utils": "workspace:^",
     "wonka": "^6.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "types-sensors": "^1.0.0"
+    "types-sensors": "workspace:^"
   },
   "private": true
 }

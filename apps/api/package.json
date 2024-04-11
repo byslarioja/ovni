@@ -20,7 +20,7 @@
     "ts-node": "10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
-    "types-sensors": "^1.0.0",
+    "types-sensors": "workspace:^",
     "typescript": "4.5.2"
   },
   "dependencies": {
@@ -33,7 +33,7 @@
     "reflect-metadata": "^0.1.13",
     "resend": "^3.2.0",
     "typeorm": "0.3.19",
-    "utils": "^1.0.0",
+    "utils": "workspace:^",
     "zod": "^3.22.4"
   },
   "private": true
