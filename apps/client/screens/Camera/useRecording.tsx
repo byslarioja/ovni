@@ -6,23 +6,13 @@ import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Camera } from "expo-camera";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
-import { deviceRotationReadingsAtom } from "./sensors/useDeviceRotation";
-import { climateReadingsAtom } from "./sensors/useClimate";
-import { GPSReadingsAtom } from "./sensors/useGPS";
-import { magnetometerReadingsAtom } from "./sensors/useMagnetometer";
 import {
   createHash,
   uploadVideoInfo,
   onError,
   onSuccess,
 } from "./services/video.service";
-import {
-  readingsWithinVideoLength,
-  refineClimate,
-  refineGPS,
-  refineOrientation,
-  refineRotation,
-} from "./services/sensor.service";
+import { readingsAtom } from "./sensors/useReadings";
 import { expo as app } from "../../app.json";
 import { resetSensorsAtom } from "./sensors/useResetSensors";
 
@@ -36,10 +26,7 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
 
   const [startTime, setStartTime] = useAtom(startTimeAtom);
   const [endTime, setEndTime] = useAtom(endTimeAtom);
-  const rotation = useAtomValue(deviceRotationReadingsAtom);
-  const climate = useAtomValue(climateReadingsAtom);
-  const gps = useAtomValue(GPSReadingsAtom);
-  const orientation = useAtomValue(magnetometerReadingsAtom);
+  const readings = useAtomValue(readingsAtom);
 
   useEffect(() => {
     resetSensorReadings();
@@ -55,38 +42,6 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     },
   });
 
-  const getReadings = () => {
-    return {
-      rotation: rotation
-        .filter(refineRotation)
-        .filter(
-          (reading, index, readings) =>
-            index === readings.length - 1 ||
-            readingsWithinVideoLength(reading, startTime, endTime)
-        ),
-      climate: climate
-        .filter(refineClimate)
-        .filter(
-          (reading, index, readings) =>
-            index === readings.length - 1 ||
-            readingsWithinVideoLength(reading, startTime, endTime)
-        ),
-      gps: gps
-        .filter(refineGPS)
-        .filter(
-          (reading, index, readings) =>
-            index === readings.length - 1 ||
-            readingsWithinVideoLength(reading, startTime, endTime)
-        ),
-      orientation: orientation
-        .filter(refineOrientation)
-        .filter(
-          (reading, index, readings) =>
-            index === readings.length - 1 ||
-            readingsWithinVideoLength(reading, startTime, endTime)
-        ),
-    };
-  };
   //FIX: startTime and endTime may become null right before mutation
   useEffect(() => {
     if (isRecording && startTime === null) setStartTime(Date.now());
@@ -98,7 +53,7 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     const hash = await createHash(
       `${asset.creationTime}${asset.modificationTime}`
     );
-    const readings = getReadings();
+
     await AsyncStorage.setItem(hash, JSON.stringify(asset));
 
     mutate({
