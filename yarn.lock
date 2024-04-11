@@ -5400,6 +5400,7 @@ __metadata:
     ts-node-dev: "npm:^2.0.0"
     tsconfig-paths: "npm:^4.2.0"
     typeorm: "npm:0.3.19"
+    types-sensors: "npm:^1.0.0"
     typescript: "npm:4.5.2"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -6434,6 +6435,7 @@ __metadata:
     react-native-screens: "npm:~3.29.0"
     react-native-svg: "npm:14.1.0"
     react-native-toast-message: "npm:^2.2.0"
+    types-sensors: "npm:^1.0.0"
     typescript: "npm:^5.3.0"
     wonka: "npm:^6.3.4"
   languageName: unknown
@@ -15206,6 +15208,12 @@ __metadata:
   checksum: 10c0/c03a226b6d78c65fa0e69f5d0f0c515f80d6d2f39ffdac50a84e41bcc59d3296c012e4f6033d8f7444c9f5fd277c6bb4c9fa72bac637547d8bf2ff29a38cb3c6
   languageName: node
   linkType: hard
+
+"types-sensors@npm:^1.0.0, types-sensors@workspace:packages/types-sensors":
+  version: 0.0.0-use.local
+  resolution: "types-sensors@workspace:packages/types-sensors"
+  languageName: unknown
+  linkType: soft
 
 "typescript@npm:4.5.2":
   version: 4.5.2

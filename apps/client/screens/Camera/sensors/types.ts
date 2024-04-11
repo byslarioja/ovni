@@ -1,9 +1,11 @@
 import { PrimitiveAtom } from "jotai";
-
-export type SensorReading<T> = {
-  value: T;
-  timestamp: number;
-};
+import {
+  ClimatePrimitive,
+  GPSPrimitive,
+  OrientationPrimitive,
+  RotationPrimitive,
+  SensorReadingPrimitive,
+} from "types-sensors";
 
 export type ClimateResponse = {
   current: {
@@ -16,24 +18,13 @@ export type ClimateResponse = {
   };
 };
 
-export type ClimateReadings = SensorReading<{
-  temperature: string;
-  humidity: string;
-}>;
+export type ClimateReadings = SensorReadingPrimitive<ClimatePrimitive>;
 
 export type TimeReading = number | null;
 export type PrimitiveTimeAtom = PrimitiveAtom<TimeReading>;
 
-export type RotationType = { x: number; y: number; z: number };
-export type RotationReading = SensorReading<RotationType>;
+export type RotationReading = SensorReadingPrimitive<RotationPrimitive>;
 
-export type GPSReading = SensorReading<{
-  coords: {
-    latitude: number;
-    longitude: number;
-  };
-  speed: number;
-  altitude: number;
-}>;
+export type GPSReading = SensorReadingPrimitive<GPSPrimitive>;
 
-export type MagnetometerReading = SensorReading<string>;
+export type MagnetometerReading = SensorReadingPrimitive<OrientationPrimitive>;

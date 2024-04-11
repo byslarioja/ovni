@@ -1,17 +1,14 @@
-export type ClimateValue = {
-  temperature: string;
-  humidity: string;
-};
+import {
+  ClimatePrimitive,
+  GPSPrimitive,
+  OrientationPrimitive,
+  RotationPrimitive,
+} from "types-sensors";
 
-export type GPSValue = {
-  coords: {
-    latitude: number;
-    longitude: number;
-  };
-  speed: number;
-  altitude: number;
-};
+export type ClimateValue = ClimatePrimitive;
 
-export type RotationValue = { x: number; y: number; z: number };
+export type GPSValue = GPSPrimitive;
 
-export type OrientationValue = number;
+export type RotationValue = RotationPrimitive;
+
+export type OrientationValue = OrientationPrimitive;

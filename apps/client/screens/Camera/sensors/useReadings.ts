@@ -4,13 +4,13 @@ import {
   GPSReading,
   MagnetometerReading,
   RotationReading,
-  SensorReading,
 } from "./types";
 import { deviceRotationReadingsAtom } from "./useDeviceRotation";
 import { climateReadingsAtom } from "./useClimate";
 import { GPSReadingsAtom } from "./useGPS";
 import { magnetometerReadingsAtom } from "./useMagnetometer";
 import { endTimeAtom, startTimeAtom } from "./useElapsedTime";
+import { SensorReadingPrimitive } from "types-sensors";
 
 export const readingsAtom = atom((get) => {
   const startTime = get(startTimeAtom);
@@ -58,9 +58,9 @@ const refineRotation = (reading: RotationReading) =>
 
 const readingsWithinVideoLength = (start: number, end: number) => {
   return (
-    reading: SensorReading<any>,
+    reading: SensorReadingPrimitive<any>,
     index: number,
-    readings: SensorReading<any>[]
+    readings: SensorReadingPrimitive<any>[]
   ) =>
     index !== readings.length - 1 ||
     (reading.timestamp >= start && reading.timestamp <= end);

@@ -5,6 +5,7 @@ import {
   OrientationValue,
   RotationValue,
 } from "@app/types/sensor-readings";
+import { SensorReadingPrimitive } from "types-sensors";
 import { z } from "zod";
 
 const AssetSchema = z.object({
@@ -19,22 +20,24 @@ const AssetSchema = z.object({
   duration: z.number(),
 });
 
+const SpaceSchema = z.object({
+  x: z.number(),
+  y: z.number(),
+  z: z.number(),
+});
+
 const ReadingSchema = z.object({
   rotation: z.array(
     z.object({
-      value: z.object({
-        x: z.optional(z.number().nullable()),
-        y: z.optional(z.number().nullable()),
-        z: z.optional(z.number().nullable()),
-      }),
+      value: SpaceSchema,
       timestamp: z.number(),
     })
   ),
   climate: z.array(
     z.object({
       value: z.object({
-        temperature: z.optional(z.string().nullable()),
-        humidity: z.optional(z.string().nullable()),
+        temperature: z.string(),
+        humidity: z.string(),
       }),
       timestamp: z.number(),
     })
@@ -42,12 +45,10 @@ const ReadingSchema = z.object({
   gps: z.array(
     z.object({
       value: z.object({
-        coords: z.optional(
-          z.object({
-            latitude: z.number().nullable().optional(),
-            longitude: z.number().nullable().optional(),
-          })
-        ),
+        coords: z.object({
+          latitude: z.number().optional(),
+          longitude: z.number().optional(),
+        }),
         speed: z.optional(z.number()),
         altitude: z.optional(z.number()),
       }),
@@ -56,7 +57,7 @@ const ReadingSchema = z.object({
   ),
   orientation: z.array(
     z.object({
-      value: z.number(),
+      value: SpaceSchema,
       timestamp: z.number(),
     })
   ),
@@ -93,15 +94,10 @@ export type VideoRequest = {
       duration: number;
     };
     readings: {
-      rotation: SensorReading<RotationValue>[];
-      climate: SensorReading<ClimateValue>[];
-      gps: SensorReading<GPSValue>[];
-      orientation: SensorReading<OrientationValue>[];
+      rotation: SensorReadingPrimitive<RotationValue>[];
+      climate: SensorReadingPrimitive<ClimateValue>[];
+      gps: SensorReadingPrimitive<GPSValue>[];
+      orientation: SensorReadingPrimitive<OrientationValue>[];
     };
   };
-};
-
-type SensorReading<T> = {
-  value: T;
-  timestamp: number;
 };

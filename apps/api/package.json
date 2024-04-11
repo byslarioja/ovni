@@ -20,6 +20,7 @@
     "ts-node": "10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
+    "types-sensors": "^1.0.0",
     "typescript": "4.5.2"
   },
   "dependencies": {

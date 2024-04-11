@@ -46,7 +46,8 @@
     "wonka": "^6.3.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "types-sensors": "^1.0.0"
   },
   "private": true
 }
