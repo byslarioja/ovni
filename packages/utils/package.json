@@ -1,16 +1,17 @@
 {
   "name": "utils",
-  "version": "1.0.0",
-  "description": "Shared utilities for ovni app",
-  "main": "index.ts",
-  "types": "index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "1.0.1",
   "author": "Matias Santillan <sntlln.93@gmail.com>",
   "license": "MIT",
   "private": true,
-  "devDependencies": {
-    "types-sensors": "^1.0.0"
+  "description": "Shared utilities for ovni apps",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/byslarioja/ovni.git",
+    "directory": "packages/utils"
+  },
+  "dependencies": {
+    "types-sensors": "workspace:^"
   }
 }

@@ -15211,7 +15211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"types-sensors@npm:^1.0.0, types-sensors@workspace:^, types-sensors@workspace:packages/types-sensors":
+"types-sensors@workspace:^, types-sensors@workspace:packages/types-sensors":
   version: 0.0.0-use.local
   resolution: "types-sensors@workspace:packages/types-sensors"
   languageName: unknown
@@ -15506,7 +15506,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "utils@workspace:packages/utils"
   dependencies:
-    types-sensors: "npm:^1.0.0"
+    types-sensors: "workspace:^"
   languageName: unknown
   linkType: soft
 

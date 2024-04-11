@@ -6,6 +6,7 @@
     "paths": {
       "@utils/*": ["packages/utils/*"]
     },
-    "outDir": "dist"
+    "outDir": "dist",
+    "moduleResolution": "Node"
   }
 }

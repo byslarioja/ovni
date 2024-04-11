@@ -6,6 +6,7 @@
     "paths": {
       "@types/sensors": ["packages/types-sensors/index"]
     },
-    "outDir": "dist"
+    "outDir": "dist",
+    "moduleResolution": "Node"
   }
 }
