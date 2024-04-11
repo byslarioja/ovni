@@ -7,7 +7,7 @@ import {
 
 export class VideoResource {
   public static toJson(video: Video): SerializableVideo {
-    return {
+    const videoResource = {
       id: video.id,
       width: video.width,
       height: video.height,
@@ -17,10 +17,18 @@ export class VideoResource {
       end_time: video.end_time,
       uri: video.uri,
       user: UserResource.toJson(video.user),
-      readings: SensorReadingResource.toArray(video.readings),
       created_at: video.created_at,
       updated_at: video.updated_at,
     };
+
+    if (video.readings) {
+      return {
+        ...videoResource,
+        readings: SensorReadingResource.toArray(video.readings),
+      };
+    }
+
+    return videoResource;
   }
 
   public static toArray(videos: Video[]): Array<SerializableVideo> {
@@ -36,4 +44,4 @@ type SerializableVideo = Omit<
   | "integrity_string"
   | "user"
   | "readings"
-> & { user: SerializableUser } & { readings: SerializableSensorReading[] };
+> & { user: SerializableUser } & { readings?: SerializableSensorReading[] };
