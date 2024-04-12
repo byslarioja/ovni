@@ -1,1 +1,1 @@
-export { degToDMS, spaceToAngle } from "./angles";
+export { degToDMS, spaceToAngle, calculateDeviceRotation } from "./src/angles";
