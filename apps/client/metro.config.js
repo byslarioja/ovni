@@ -16,4 +16,6 @@ config.resolver.nodeModulesPaths = [
   path.resolve(monorepoRoot, "node_modules"),
 ];
 
+// 3. Add firebase config to metro
+config.resolver.sourceExts.push("cjs");
 module.exports = config;
