@@ -5402,7 +5402,6 @@ __metadata:
     typeorm: "npm:0.3.19"
     types-sensors: "workspace:^"
     typescript: "npm:4.5.2"
-    utils: "workspace:^"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -6438,7 +6437,6 @@ __metadata:
     react-native-toast-message: "npm:^2.2.0"
     types-sensors: "workspace:^"
     typescript: "npm:^5.3.0"
-    utils: "workspace:^"
     wonka: "npm:^6.3.4"
   languageName: unknown
   linkType: soft
@@ -15522,7 +15520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"utils@workspace:^, utils@workspace:packages/utils":
+"utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "utils@workspace:packages/utils"
   dependencies:
