@@ -4,13 +4,7 @@ import { VideoRequest } from "@app/http/controllers/video/create-video/schema";
 import { refineReadings } from "@app/http/services/readings";
 import { AppDataSource } from "@config/database";
 
-export const createVideo = async ({
-  newVideo,
-  filePath,
-}: {
-  newVideo: VideoRequest["body"];
-  filePath: string;
-}) => {
+export const createVideo = async (newVideo: VideoRequest["body"]) => {
   const video = new Video();
   const videoRepository = AppDataSource.getRepository(Video);
 
@@ -23,7 +17,7 @@ export const createVideo = async ({
   video.app_version = newVideo.appVersion;
   video.start_time = String(newVideo.start);
   video.end_time = String(newVideo.end);
-  video.uri = filePath;
+  video.uri = newVideo.uri;
 
   video.user = newVideo.user;
 

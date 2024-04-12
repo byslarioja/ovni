@@ -8,19 +8,6 @@ import {
 import { SensorReadingPrimitive } from "src/globals/sensor.primitives";
 import { z } from "zod";
 
-function checkFileType(file: { name: string }) {
-  if (file?.name) {
-    const fileType = file.name.split(".").pop();
-    if (fileType === "mp4") return true;
-  }
-  return false;
-}
-
-export const fileSchema = z
-  .any()
-  .refine((val) => val.length > 0, "File is required")
-  .refine((file) => checkFileType(file), "Only .mp4 format is supported.");
-
 const AssetSchema = z.object({
   id: z.string(),
   filename: z.string(),
@@ -77,12 +64,12 @@ const ReadingSchema = z.object({
 });
 
 export const VideoSchema = z.object({
-  file: fileSchema,
   body: z.object({
     start: z.number(),
     end: z.number(),
     appVersion: z.string(),
     hash: z.string(),
+    uri: z.string(),
     asset: AssetSchema,
     readings: ReadingSchema,
   }),
@@ -99,6 +86,7 @@ export type VideoRequest = {
     end: number;
     appVersion: string;
     hash: string;
+    uri: string;
     asset: {
       id: string;
       filename: string;

@@ -8,10 +8,9 @@ export const createVideoController = async (
   res: Response
 ) => {
   const validated = req.body;
-  const filePath = req.file.path;
 
   try {
-    const video = await createVideo({ newVideo: validated, filePath });
+    const video = await createVideo(validated);
 
     return res.status(201).json(VideoResource.toJson(video));
   } catch (error) {
