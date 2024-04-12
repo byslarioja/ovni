@@ -10,16 +10,17 @@ import { Routes } from "Shared/routes";
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}`;
 const lang = translate(translation);
 
-export async function uploadVideoInfo(
-  payload: VideoPayload
-): Promise<ApiVideoSavedResponse> {
+export async function uploadVideoInfo({
+  payload,
+  token,
+}: VideoPayload): Promise<ApiVideoSavedResponse> {
   const response = await axios.post(
     `${BASE_URI}/videos`,
     { ...payload },
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${payload.token}`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );

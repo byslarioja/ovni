@@ -43,12 +43,15 @@ export interface ApiErrorResponse {
  * Request types
  */
 export interface VideoPayload {
-  hash: string;
-  start: TimeReading;
-  end: TimeReading;
-  appVersion: string;
-  asset: Asset;
-  readings: Readings;
+  payload: {
+    uri: string;
+    hash: string;
+    start: TimeReading;
+    end: TimeReading;
+    appVersion: string;
+    asset: Asset;
+    readings: Readings;
+  };
   token: string;
 }
 
