@@ -33,7 +33,6 @@
     "reflect-metadata": "^0.1.13",
     "resend": "^3.2.0",
     "typeorm": "0.3.19",
-    "utils": "workspace:^",
     "zod": "^3.22.4"
   },
   "private": true
