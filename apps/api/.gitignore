@@ -5,6 +5,7 @@ build/
 tmp/
 temp/
 dist/
+uploads/
 
 npm-debug.*
 yarn-debug.*
