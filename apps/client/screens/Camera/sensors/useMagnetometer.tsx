@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Magnetometer } from "expo-sensors";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { MagnetometerReading } from "./types";
-import { SpaceType } from "types-sensors";
+import { SpaceType } from "globals/sensor.primitives";
 
 const MAGNETOMETER_UPDATE_INTERVAL = Number(
   process.env.EXPO_PUBLIC_MAGNETOMETER_INTERVAL

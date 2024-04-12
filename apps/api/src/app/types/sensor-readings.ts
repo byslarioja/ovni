@@ -3,7 +3,7 @@ import {
   GPSPrimitive,
   OrientationPrimitive,
   RotationPrimitive,
-} from "types-sensors";
+} from "src/globals/sensor.primitives";
 
 export type ClimateValue = ClimatePrimitive;
 

@@ -5,7 +5,7 @@ import {
   OrientationValue,
   RotationValue,
 } from "@app/types/sensor-readings";
-import { SensorReadingPrimitive } from "types-sensors";
+import { SensorReadingPrimitive } from "src/globals/sensor.primitives";
 import { z } from "zod";
 
 const AssetSchema = z.object({

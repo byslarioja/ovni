@@ -1,11 +1,11 @@
-import { PrimitiveAtom } from "jotai";
 import {
   ClimatePrimitive,
   GPSPrimitive,
   OrientationPrimitive,
   RotationPrimitive,
   SensorReadingPrimitive,
-} from "types-sensors";
+} from "globals/sensor.primitives";
+import { PrimitiveAtom } from "jotai";
 
 export type ClimateResponse = {
   current: {

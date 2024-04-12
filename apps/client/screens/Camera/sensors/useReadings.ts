@@ -10,7 +10,7 @@ import { climateReadingsAtom } from "./useClimate";
 import { GPSReadingsAtom } from "./useGPS";
 import { magnetometerReadingsAtom } from "./useMagnetometer";
 import { endTimeAtom, startTimeAtom } from "./useElapsedTime";
-import { SensorReadingPrimitive } from "types-sensors";
+import { SensorReadingPrimitive } from "globals/sensor.primitives";
 
 export const readingsAtom = atom((get) => {
   const startTime = get(startTimeAtom);

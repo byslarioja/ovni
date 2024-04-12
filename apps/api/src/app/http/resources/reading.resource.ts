@@ -6,7 +6,7 @@ import {
   OrientationValue,
   RotationValue,
 } from "@app/types/sensor-readings";
-import { ClimatePrimitive, SpaceType } from "types-sensors";
+import { ClimatePrimitive, SpaceType } from "src/globals/sensor.primitives";
 
 const RAD = 180 / Math.PI;
 
