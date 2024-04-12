@@ -8,7 +8,7 @@ import {
 import { SensorReadingPrimitive } from "src/globals/sensor.primitives";
 import { z } from "zod";
 
-function checkFileType(file: File) {
+function checkFileType(file: { name: string }) {
   if (file?.name) {
     const fileType = file.name.split(".").pop();
     if (fileType === "mp4") return true;
