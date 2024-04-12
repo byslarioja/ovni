@@ -9,10 +9,14 @@ import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
 import useAuth from "Screens/Auth/useAuth";
 import { Asset } from "expo-media-library";
 import appConfig from "../../app.json";
+import { useState } from "react";
 
 export const useUpload = () => {
   const queryClient = useQueryClient();
   const { token } = useAuth();
+
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
   const readings = useAtomValue(readingsAtom);
@@ -27,6 +31,7 @@ export const useUpload = () => {
       console.info(data);
       queryClient.invalidateQueries({ queryKey: ["assets"] });
       resetSensorReadings();
+      setProgress(0);
     },
   });
 
@@ -47,9 +52,10 @@ export const useUpload = () => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred * 100) / snapshot.totalBytes;
-        console.log(progress);
+        setIsUploading(true);
+        setProgress(
+          Math.round((snapshot.bytesTransferred * 100) / snapshot.totalBytes)
+        );
       },
       (error) => console.error(error),
       () => {
@@ -69,6 +75,7 @@ export const useUpload = () => {
             },
             token,
           };
+          setIsUploading(false);
 
           mutate(payload);
 
@@ -78,5 +85,5 @@ export const useUpload = () => {
     );
   };
 
-  return { handleUpload, isPending };
+  return { handleUpload, isPending, isUploading, progress };
 };

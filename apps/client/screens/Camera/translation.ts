@@ -19,7 +19,8 @@ export const translation = {
       },
     },
     LOADING: {
-      MUTATION_PENDING: "Saving video",
+      MUTATION_PENDING: "Almost done",
+      UPLOAD_PENDING: "Uploading video",
       PERMISSIONS: "Loading permissions",
     },
   },
@@ -46,7 +47,8 @@ export const translation = {
     },
   },
   LOADING: {
-    MUTATION_PENDING: "Guardando vídeo",
+    MUTATION_PENDING: "Casi terminamos",
+    UPLOAD_PENDING: "Subiendo vídeo",
     PERMISSIONS: "Cargando permisos",
   },
 };

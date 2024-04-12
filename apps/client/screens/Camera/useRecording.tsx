@@ -25,7 +25,7 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const setRecording = useSetAtom(handleRecordingAtom);
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
 
-  const { handleUpload, isPending } = useUpload();
+  const { handleUpload, isPending, isUploading, progress } = useUpload();
 
   useEffect(() => {
     resetSensorReadings();
@@ -58,5 +58,5 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     }
   };
 
-  return { handleRecord, isPending };
+  return { handleRecord, isPending, isUploading, progress };
 }

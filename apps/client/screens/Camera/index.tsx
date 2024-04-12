@@ -35,10 +35,17 @@ export default function Camera() {
   } = useCamera();
 
   const cameraRef = useRef(null);
-  const { handleRecord, isPending } = useRecording(cameraRef);
+  const { handleRecord, isPending, isUploading, progress } =
+    useRecording(cameraRef);
 
-  if (isPending) {
-    return <Loader text={lang.t("LOADING.MUTATION_PENDING")} />;
+  if (isPending || isUploading) {
+    const text = isPending
+      ? lang.t("LOADING.MUTATION_PENDING")
+      : lang.t("LOADING.UPLOAD_PENDING");
+
+    const subtext = isUploading && `${progress}%`;
+
+    return <Loader text={text} subtext={subtext} />;
   }
 
   if (!cameraStatus || !microphoneStatus || !mediaLibraryStatus) {

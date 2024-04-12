@@ -1,8 +1,8 @@
-import { Title } from "Components/Typography";
+import { Label, Title } from "Components/Typography";
 import Theme from "Shared/theme";
 import { ActivityIndicator, View } from "react-native";
 
-export function Loader({ text }: { text?: string }) {
+export function Loader({ text, subtext }: { text?: string; subtext?: string }) {
   return (
     <View
       style={{
@@ -14,6 +14,9 @@ export function Loader({ text }: { text?: string }) {
     >
       <ActivityIndicator size={60} color={Theme.color.text.light} />
       {text && <Title customStyle={{ textAlign: "center" }}>{text}</Title>}
+      {subtext && (
+        <Label customStyle={{ textAlign: "center" }}>{subtext}</Label>
+      )}
     </View>
   );
 }
