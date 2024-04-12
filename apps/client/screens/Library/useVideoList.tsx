@@ -14,7 +14,7 @@ export function useAssetVideoList() {
 
 const getAssetInfo = async () => {
   const { assets } = await MediaLibrary.getAssetsAsync({
-    mediaType: "video",
+    mediaType: MediaLibrary.MediaType.video,
   });
 
   return assets;
