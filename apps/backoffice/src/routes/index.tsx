@@ -1,11 +1,20 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { PageTitle } from "@/components/PageTitle";
+import VideosList from "@/features/videos-list";
+import { getVideos } from "@/services/video.service";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: RedirectToVideosPage,
+  component: VideosPage,
+  loader: getVideos,
 });
 
-function RedirectToVideosPage() {
-  const navigate = useNavigate();
-  navigate({ to: "/videos" });
-  return <>Look mami</>;
+function VideosPage() {
+  const videos = Route.useLoaderData();
+
+  return (
+    <>
+      <PageTitle>Vídeos</PageTitle>
+      <VideosList {...videos} />
+    </>
+  );
 }
