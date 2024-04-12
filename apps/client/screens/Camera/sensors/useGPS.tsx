@@ -1,23 +1,9 @@
 import * as Location from "expo-location";
-import { useQuery } from "@tanstack/react-query";
 import { GPSReading } from "./types";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const GPS_REFETCH_INTERVAL = Number(process.env.EXPO_PUBLIC_GPS_INTERVAL);
-
-const getLocation = async () => {
-  let { status } = await Location.requestForegroundPermissionsAsync();
-
-  if (status !== "granted") {
-    console.error("Permission not granted");
-    return;
-  }
-
-  const location = await Location.getCurrentPositionAsync({});
-
-  return location;
-};
 
 export const GPSReadingsAtom = atom<GPSReading[]>([]);
 
@@ -30,29 +16,45 @@ export const lastAvailableGPSReadingAtom = atom((get) => {
 export default function useGPS() {
   const setReadings = useSetAtom(GPSReadingsAtom);
   const lastAvailableCoords = useAtomValue(lastAvailableGPSReadingAtom);
-
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["location"],
-    queryFn: getLocation,
-    refetchInterval: GPS_REFETCH_INTERVAL,
-  });
+  const [isPending, setIsPending] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    setReadings((prev) => [
-      ...prev,
-      {
-        value: {
-          coords: {
-            latitude: data?.coords.latitude,
-            longitude: data?.coords.longitude,
-          },
-          speed: data?.coords.speed,
-          altitude: data?.coords.altitude,
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.error("Permission to access location was denied");
+        setIsError(true);
+        return;
+      }
+
+      const locationSubscription = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.High,
+          timeInterval: GPS_REFETCH_INTERVAL,
         },
-        timestamp: Date.now(),
-      },
-    ]);
-  }, [data]);
+        (position) => {
+          setReadings((prev) => [
+            ...prev,
+            {
+              value: {
+                coords: {
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude,
+                },
+                speed: position.coords.speed,
+                altitude: position.coords.altitude,
+              },
+              timestamp: Date.now(),
+            },
+          ]);
+          setIsPending(false);
+        }
+      );
+
+      return () => locationSubscription.remove();
+    })();
+  }, []);
 
   return {
     gps: lastAvailableCoords,

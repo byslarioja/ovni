@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Accelerometer } from "expo-sensors";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { RotationReading } from "./types";
-import { calculateDeviceRotation } from "utils/angles";
 
 const GYRO_UPDATE_INTERVAL = Number(process.env.EXPO_PUBLIC_GYRO_INTERVAL);
 
@@ -51,3 +50,16 @@ export default function useDeviceRotation() {
 
   return { ...deviceRotation };
 }
+
+const RAD = 180 / Math.PI;
+
+export const calculateDeviceRotation = (
+  h: number,
+  c1: number,
+  c2: number,
+  toFixed = 2
+) => {
+  const angle = Math.atan2(h, Math.sqrt(c1 * c1 + c2 * c2)) * RAD;
+
+  return angle.toFixed(toFixed) + "°";
+};

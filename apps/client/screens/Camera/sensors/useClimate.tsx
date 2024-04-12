@@ -38,7 +38,7 @@ export default function useClimateReadings() {
   const setClimateReadings = useSetAtom(climateReadingsAtom);
 
   const { isPending, isLoading, isError, data } = useQuery({
-    queryKey: ["climate", lastAvailableCoords],
+    queryKey: ["climate"],
     queryFn: () => getClimate(lastAvailableCoords.coords),
     refetchInterval: CLIMATE_REFETCH_INTERVAL,
   });

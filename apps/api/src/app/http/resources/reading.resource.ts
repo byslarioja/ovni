@@ -6,8 +6,9 @@ import {
   OrientationValue,
   RotationValue,
 } from "@app/types/sensor-readings";
-import { ClimatePrimitive } from "types-sensors";
-import { degToDMS, spaceToAngle } from "utils";
+import { ClimatePrimitive, SpaceType } from "types-sensors";
+
+const RAD = 180 / Math.PI;
 
 export class SensorReadingResource {
   public static toJson(reading: SensorReading): SerializableSensorReading {
@@ -65,4 +66,30 @@ export type SerializableSensorReading = Omit<
         altitude: string;
       }
     | ClimatePrimitive;
+};
+
+const degToDMS = (deg: number, dplaces = 0) => {
+  var d = Math.floor(deg);
+  var m = Math.floor((deg - d) * 60);
+  var s =
+    Math.round(((deg - d) * 60 - m) * 60 * Math.pow(10, dplaces)) /
+    Math.pow(10, dplaces);
+  s == 60 && (m++, (s = 0));
+  m == 60 && (d++, (m = 0));
+
+  return d + "° " + m + "' " + s + '"';
+};
+
+const spaceToAngle = (space: SpaceType) => {
+  let angle = 0;
+  if (space) {
+    let { x, y, z } = space;
+    if (Math.atan2(y, x) >= 0) {
+      angle = Math.atan2(y, x) * RAD;
+    } else {
+      angle = (Math.atan2(y, x) + 2 * Math.PI) * RAD;
+    }
+  }
+
+  return angle;
 };
