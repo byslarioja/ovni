@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as MediaLibrary from "expo-media-library";
 import useAuth from "Screens/Auth/useAuth";
 import { MutableRefObject, useEffect } from "react";
-import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { Camera } from "expo-camera";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
@@ -18,14 +18,25 @@ import { resetSensorsAtom } from "./sensors/useResetSensors";
 
 export const recordingAtom = atom(false);
 
+const handleRecordingAtom = atom(null, (get, set, update: boolean) => {
+  if (update) {
+    set(startTimeAtom, Date.now());
+  } else {
+    set(endTimeAtom, Date.now());
+  }
+
+  set(recordingAtom, (prev) => !prev);
+});
+
 export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const queryClient = useQueryClient();
   const { token } = useAuth();
-  const [isRecording, setIsRecording] = useAtom(recordingAtom);
+  const isRecording = useAtomValue(recordingAtom);
+  const setRecording = useSetAtom(handleRecordingAtom);
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
 
-  const [startTime, setStartTime] = useAtom(startTimeAtom);
-  const [endTime, setEndTime] = useAtom(endTimeAtom);
+  const start = useAtomValue(startTimeAtom);
+  const end = useAtomValue(endTimeAtom);
   const readings = useAtomValue(readingsAtom);
 
   useEffect(() => {
@@ -42,12 +53,6 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     },
   });
 
-  //FIX: startTime and endTime may become null right before mutation
-  useEffect(() => {
-    if (isRecording && startTime === null) setStartTime(Date.now());
-    if (!isRecording && startTime !== null) setEndTime(Date.now());
-  }, [isRecording]);
-
   const saveVideo = async (uri: string) => {
     const asset = await MediaLibrary.createAssetAsync(uri);
     const hash = await createHash(
@@ -59,9 +64,9 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     mutate({
       hash,
       //FIX: should be exactly start:startTime taken from the atom
-      start: startTime ? startTime : asset.creationTime,
+      start: start || asset.creationTime + asset.duration * 1000,
       //FIX: should be exactly end:endTime taken from the atom
-      end: endTime ? endTime : asset.creationTime + asset.duration * 1000,
+      end: end || asset.creationTime,
       appVersion: app.version,
       asset,
       readings,
@@ -72,13 +77,13 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
   const handleRecord = async () => {
     try {
       if (isRecording) {
-        setIsRecording(false);
+        setRecording(false);
         cameraRef.current.stopRecording();
       } else {
-        resetSensorReadings();
-        setIsRecording(true);
+        setRecording(true);
         const video = await cameraRef.current.recordAsync();
         saveVideo(video.uri);
+        resetSensorReadings();
       }
     } catch (error) {
       console.error(error);
