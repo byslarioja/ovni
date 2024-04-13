@@ -4,7 +4,6 @@ import {
   GPSReading,
   MagnetometerReading,
   RotationReading,
-  TimeReading,
 } from "../sensors/types";
 
 /**
@@ -46,8 +45,8 @@ export interface VideoPayload {
   payload: {
     uri: string;
     hash: string;
-    start: TimeReading;
-    end: TimeReading;
+    start: number;
+    end: number;
     appVersion: string;
     asset: Asset;
     readings: Readings;

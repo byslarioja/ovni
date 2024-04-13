@@ -5,7 +5,6 @@ import {
   RotationPrimitive,
   SensorReadingPrimitive,
 } from "globals/sensor.primitives";
-import { PrimitiveAtom } from "jotai";
 
 export type ClimateResponse = {
   current: {
@@ -19,9 +18,6 @@ export type ClimateResponse = {
 };
 
 export type ClimateReadings = SensorReadingPrimitive<ClimatePrimitive>;
-
-export type TimeReading = number | null;
-export type PrimitiveTimeAtom = PrimitiveAtom<TimeReading>;
 
 export type RotationReading = SensorReadingPrimitive<RotationPrimitive>;
 

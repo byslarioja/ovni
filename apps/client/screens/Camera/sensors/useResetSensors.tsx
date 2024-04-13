@@ -10,6 +10,9 @@ export const resetSensorsAtom = atom(null, (_, set) => {
   set(climateReadingsAtom, (prev) => [prev.at(-1)]);
   set(deviceRotationReadingsAtom, (prev) => [prev.at(-1)]);
   set(magnetometerReadingsAtom, (prev) => [prev.at(-1)]);
-  set(startTimeAtom, null);
-  set(endTimeAtom, null);
+});
+
+export const resetTimeAtom = atom(null, (_, set) => {
+  set(endTimeAtom, 0);
+  set(startTimeAtom, 0);
 });

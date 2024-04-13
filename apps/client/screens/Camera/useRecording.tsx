@@ -46,7 +46,7 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     try {
       if (isRecording) {
         setRecording(false);
-        cameraRef.current.stopRecording();
+        await cameraRef.current.stopRecording();
       } else {
         setRecording(true);
         const video = await cameraRef.current.recordAsync();
