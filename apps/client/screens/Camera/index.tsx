@@ -126,7 +126,7 @@ export default function Camera() {
             </View>
           </View>
         </View>
-        {isRecording && <BottomBar />}
+        <BottomBar />
       </View>
     </ExpoCamera>
   );
