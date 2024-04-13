@@ -1,22 +1,18 @@
-import { atom } from "jotai";
-import { PrimitiveTimeAtom, TimeReading } from "./types";
+import { atom, useAtomValue } from "jotai";
+import { useQuery } from "@tanstack/react-query";
+import { getElapsedTime } from "../services/time.service";
 
-/**
- * TODO: elapsedTimeAtom should depend on startTimeAtom
- */
-export const elapsedTimeAtom = atom("00:00:00");
-// export const elapsedTimeAtom = atom((get) => {
-//   const startTime = get(startTimeAtom);
-//   const start = startTime || Date.now();
+export const useElapsedTime = () => {
+  const startTime = useAtomValue(startTimeAtom);
 
-//   const totalSeconds = Math.floor((Date.now() - start) / 1000);
-//   const hours = Math.floor(totalSeconds / 3600);
-//   const minutes = Math.floor((totalSeconds % 3600) / 60);
-//   const seconds = totalSeconds % 60;
+  const { data } = useQuery({
+    queryKey: ["elapsed-time"],
+    queryFn: () => getElapsedTime(startTime),
+    refetchInterval: 500,
+  });
 
-//   return `${hours.toString().padStart(2, "0")}:${minutes
-//     .toString()
-//     .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-// });
-export const startTimeAtom = atom<TimeReading>(null) as PrimitiveTimeAtom;
-export const endTimeAtom = atom<TimeReading>(null) as PrimitiveTimeAtom;
+  return { elapsedTime: data };
+};
+
+export const startTimeAtom = atom(0);
+export const endTimeAtom = atom(0);
