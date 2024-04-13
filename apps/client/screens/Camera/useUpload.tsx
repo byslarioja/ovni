@@ -27,8 +27,7 @@ export const useUpload = () => {
     mutationFn: uploadVideoInfo,
     onError,
     onSuccess,
-    onSettled: (data) => {
-      console.info(data);
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["assets"] });
       resetSensorReadings();
       setProgress(0);
@@ -78,8 +77,6 @@ export const useUpload = () => {
           setIsUploading(false);
 
           mutate(payload);
-
-          console.info(`Link: ${downloadURL}`);
         });
       }
     );
