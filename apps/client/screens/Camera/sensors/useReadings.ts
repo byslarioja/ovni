@@ -12,6 +12,18 @@ import { magnetometerReadingsAtom } from "./useMagnetometer";
 import { endTimeAtom, startTimeAtom } from "./useElapsedTime";
 import { SensorReadingPrimitive } from "globals/sensor.primitives";
 
+export const readingsPayloadAtom = atom<{
+  rotation: RotationReading[];
+  climate: ClimateReadings[];
+  gps: GPSReading[];
+  orientation: MagnetometerReading[];
+}>({
+  rotation: [],
+  climate: [],
+  gps: [],
+  orientation: [],
+});
+
 export const readingsAtom = atom((get) => {
   const startTime = get(startTimeAtom);
   const endTime = get(endTimeAtom);
@@ -51,7 +63,7 @@ const refineClimate = (reading: ClimateReadings) =>
     typeof reading.value.temperature === typeof "");
 
 const refineOrientation = (reading: MagnetometerReading) =>
-  reading && reading.value;
+  reading && (reading.value.x || reading.value.y || reading.value.z);
 
 const refineRotation = (reading: RotationReading) =>
   reading && (reading.value.x || reading.value.y || reading.value.z);

@@ -7,6 +7,7 @@ import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
 import { createHash } from "./services/video.service";
 import { resetSensorsAtom } from "./sensors/useResetSensors";
 import { useUpload } from "./useUpload";
+import { readingsAtom, readingsPayloadAtom } from "./sensors/useReadings";
 
 export const recordingAtom = atom(false);
 
@@ -15,6 +16,7 @@ const handleRecordingAtom = atom(null, (get, set, update: boolean) => {
     set(startTimeAtom, Date.now());
   } else {
     set(endTimeAtom, Date.now());
+    set(readingsPayloadAtom, get(readingsAtom));
   }
 
   set(recordingAtom, (prev) => !prev);

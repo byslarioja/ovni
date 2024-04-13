@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { uploadVideoInfo, onError, onSuccess } from "./services/video.service";
 import { resetSensorsAtom, resetTimeAtom } from "./sensors/useResetSensors";
 import { useAtomValue, useSetAtom } from "jotai";
-import { readingsAtom } from "./sensors/useReadings";
+import { readingsPayloadAtom } from "./sensors/useReadings";
 import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
 import useAuth from "Screens/Auth/useAuth";
 import { Asset } from "expo-media-library";
@@ -20,7 +20,7 @@ export const useUpload = () => {
 
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
   const resetTime = useSetAtom(resetTimeAtom);
-  const readings = useAtomValue(readingsAtom);
+  const readings = useAtomValue(readingsPayloadAtom);
   const startTime = useAtomValue(startTimeAtom);
   const endTime = useAtomValue(endTimeAtom);
 
@@ -74,7 +74,6 @@ export const useUpload = () => {
             token,
           };
           setIsUploading(false);
-
           mutate(payload);
         });
       }
