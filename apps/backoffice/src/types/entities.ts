@@ -6,7 +6,7 @@ export interface Video {
   app_version: string;
   start_time: string;
   end_time: string;
-  uri: string | null;
+  uri: string;
   user: User;
   readings: Reading[];
   created_at: Date;

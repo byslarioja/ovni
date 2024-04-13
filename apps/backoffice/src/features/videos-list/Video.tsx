@@ -9,7 +9,7 @@ export function Video(video: VideoProps) {
   return (
     <Card>
       <CardContent className="p-0 relative rounded-t-lg overflow-hidden">
-        <img
+        <video
           className="object-cover h-48 w-full "
           src={video.uri || "https://placehold.co/640x360"}
         />
@@ -28,9 +28,12 @@ export function Video(video: VideoProps) {
         <Button variant="destructive" size="icon">
           <Trash />
         </Button>
-        <Button variant="default" size="icon" className="bg-lime-600">
-          <DownloadCloud />
+        <Button variant="default" size="icon" className="bg-lime-600" asChild>
+          <a href={video.uri} download={`${video.id}.mp4`} target="_blank">
+            <DownloadCloud />
+          </a>
         </Button>
+
         <Button variant="default" size="icon" className="bg-sky-600">
           <Info />
         </Button>
