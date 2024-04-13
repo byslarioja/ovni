@@ -12,3 +12,12 @@ export function formatDate(timestamp: Date | number, locale = "en") {
     year: "numeric",
   }).format(new Date(timestamp));
 }
+
+export function toTitleCase(str: string) {
+  return str
+    .split(" ")
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
+}

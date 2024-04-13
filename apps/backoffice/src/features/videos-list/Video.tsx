@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { formatDate } from "@/lib/utils";
+import { formatDate, toTitleCase } from "@/lib/utils";
 import { VideoProps } from "@/types/props";
 import { Link } from "@tanstack/react-router";
 import { DownloadCloud, Info, Trash } from "lucide-react";
+import { handleDownloadReadings } from "./service";
 
 export function Video(video: VideoProps) {
   return (
@@ -16,9 +17,8 @@ export function Video(video: VideoProps) {
         <div className="absolute inset-0 w-full h-full bg-[rgba(0,0,0,0.5)] z-10"></div>
         <div className="absolute text-white right-0 top-0 py-3 px-6 z-20 text-lg text-muted-foreground">
           <p className="text-right">
-            Capturado por{" "}
             <Link to="/users/$userId" params={{ userId: video.user.id }}>
-              {video.user.name}
+              {toTitleCase(video.user.name)}
             </Link>
           </p>
           <p className="text-right">{formatDate(Number(video.start_time))}</p>
@@ -34,7 +34,12 @@ export function Video(video: VideoProps) {
           </a>
         </Button>
 
-        <Button variant="default" size="icon" className="bg-sky-600">
+        <Button
+          variant="default"
+          size="icon"
+          className="bg-sky-600"
+          onClick={() => handleDownloadReadings(video)}
+        >
           <Info />
         </Button>
       </CardFooter>
