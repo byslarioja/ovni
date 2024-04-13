@@ -29,8 +29,6 @@ export default function useGPS() {
   });
 
   useEffect(() => {
-    console.log("refetching");
-
     setReadings((prev) => [
       ...prev,
       {
