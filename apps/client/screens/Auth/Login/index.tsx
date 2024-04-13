@@ -6,12 +6,12 @@ import { Controller, useForm } from "react-hook-form";
 import { Image, View } from "react-native";
 import useAuth from "../useAuth";
 import { LoaderButton } from "Components/Button/LoaderButton";
-import { Redirect } from "expo-router";
 import Theme from "Shared/theme";
 import { Loader } from "Components/Loader";
-import { Routes } from "Shared/routes";
 import { translate } from "Shared/utils/translate";
 import { translation } from "./translation";
+import { Redirect } from "expo-router";
+import { Routes } from "Shared/routes";
 
 const lang = translate(translation);
 
@@ -25,7 +25,7 @@ const INPUT_RULES = {
 };
 
 export default function Login() {
-  const { isLoading, isLogged, login } = useAuth();
+  const { isPending: isLoading, login, isSuccess: isLogedIn } = useAuth();
   const {
     control,
     handleSubmit,
@@ -42,10 +42,10 @@ export default function Login() {
   };
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader text="isloading" />;
   }
 
-  if (isLogged) {
+  if (isLogedIn) {
     return <Redirect href={Routes.Library} />;
   }
 

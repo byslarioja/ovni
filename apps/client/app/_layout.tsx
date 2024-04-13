@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LogoutIcon } from "Components/Icon";
 import useAuth from "Screens/Auth/useAuth";
+import { Routes } from "Shared/routes";
 import Theme from "Shared/theme";
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import { TouchableOpacity } from "react-native";
 import Toast from "react-native-toast-message";
 
@@ -24,11 +25,11 @@ export default function AppLayout() {
         <Stack.Screen name={"index"} options={{ ...defaultScreenOptions }} />
         <Stack.Screen name={"register"} options={{ ...defaultScreenOptions }} />
         <Stack.Screen
-          name={"(app)/forgot-password"}
+          name={"forgot-password"}
           options={{ ...defaultScreenOptions }}
         />
         <Stack.Screen
-          name={"(app)/reset-password"}
+          name={"reset-password/[token]"}
           options={{ ...defaultScreenOptions }}
         />
         <Stack.Screen
@@ -37,14 +38,7 @@ export default function AppLayout() {
             ...defaultScreenOptions,
             headerShown: true,
             title: "Recorded videos",
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={useAuth().logout}
-                style={{ padding: 10 }}
-              >
-                <LogoutIcon size={24} color={Theme.color.text.light} />
-              </TouchableOpacity>
-            ),
+            headerRight: () => <LogoutButton />,
           }}
         />
         <Stack.Screen
@@ -60,6 +54,20 @@ export default function AppLayout() {
     </QueryClientProvider>
   );
 }
+
+const LogoutButton = () => {
+  const { logout, isLogedOut } = useAuth();
+
+  if (isLogedOut) {
+    return <Redirect href={Routes.Login} />;
+  }
+
+  return (
+    <TouchableOpacity onPress={() => logout()} style={{ padding: 10 }}>
+      <LogoutIcon size={24} color={Theme.color.text.light} />
+    </TouchableOpacity>
+  );
+};
 
 const defaultScreenOptions = {
   headerShown: false,

@@ -6,7 +6,7 @@ import { Routes } from "Shared/routes";
 import { Redirect, router } from "expo-router";
 import { useAtomValue } from "jotai";
 
-export default function Page() {
+export default function ForgotPassword() {
   const { isPending: isChecking, data: tokenIsValid } =
     useAtomValue(verifyTokenAtom);
 
@@ -20,7 +20,7 @@ export default function Page() {
 
   return (
     <>
-      <Title customStyle={{ color: "white" }}>Register</Title>
+      <Title customStyle={{ color: "white" }}>ForgotPassword</Title>
       <Button
         onPress={() => router.navigate(Routes.Login)}
         text="back to login"

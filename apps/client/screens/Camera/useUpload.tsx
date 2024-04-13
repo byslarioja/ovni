@@ -6,14 +6,14 @@ import { resetSensorsAtom, resetTimeAtom } from "./sensors/useResetSensors";
 import { useAtomValue, useSetAtom } from "jotai";
 import { readingsPayloadAtom } from "./sensors/useReadings";
 import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
-import useAuth from "Screens/Auth/useAuth";
+import { tokenAtom } from "Screens/Auth/useAuth";
 import { Asset } from "expo-media-library";
 import appConfig from "../../app.json";
 import { useState } from "react";
 
 export const useUpload = () => {
   const queryClient = useQueryClient();
-  const { token } = useAuth();
+  const { data: token } = useAtomValue(tokenAtom);
 
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);

@@ -1,54 +1,46 @@
-import { translate } from "Shared/utils/translate";
-import { translation } from "./translation";
+import axios from "axios";
 
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}/auth`;
-
-const lang = translate(translation);
 
 export async function attemptLogin(credentials: {
   email: string;
   password: string;
 }) {
-  try {
-    const res = await fetch(`${BASE_URI}/login`, {
-      method: "POST",
+  const response = await axios.post<LoggedUser>(
+    `${BASE_URI}/login`,
+    { ...credentials },
+    {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
-    });
-
-    if (!res.ok) {
-      throw new Error(lang.t("AUTH_SERVICE.ERROR"));
     }
-    const response = await res.json();
-    const { token } = response;
+  );
 
-    return token;
-  } catch (error) {
-    console.error({ error });
-  }
+  return response.data;
 }
 
 export async function verifyToken(token: string) {
-  try {
-    const res = await fetch(`${BASE_URI}/check-auth`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  if (!token) return false;
 
-    if (!res.ok) {
-      throw new Error(lang.t("AUTH_SERVICE.ERROR"));
-    }
-    const status = res.status;
+  const response = await axios.get(`${BASE_URI}/check-auth`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    return status === 200;
-  } catch (error) {
-    console.error({ error });
-  }
+  const status = response.status;
+
+  return status === 200;
 }
+
+type LoggedUser = {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  token: string;
+};

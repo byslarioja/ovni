@@ -7054,6 +7054,7 @@ __metadata:
     firebase: "npm:^10.11.0"
     i18n-js: "npm:^4.3.2"
     jotai: "npm:^2.7.1"
+    jotai-tanstack-query: "npm:^0.8.5"
     react: "npm:18.2.0"
     react-hook-form: "npm:^7.49.3"
     react-native: "npm:0.73.6"
@@ -10776,6 +10777,17 @@ __metadata:
   version: 1.1.0
   resolution: "join-component@npm:1.1.0"
   checksum: 10c0/7319cb1ca6ffc514d82ac1b965c4e6cd6bf852adec1e7833bd8613e17f4965e78e2653c8de75a1fe51d9a2cae36af3298008df4079cfd903ef3ecbd231fe11c1
+  languageName: node
+  linkType: hard
+
+"jotai-tanstack-query@npm:^0.8.5":
+  version: 0.8.5
+  resolution: "jotai-tanstack-query@npm:0.8.5"
+  peerDependencies:
+    "@tanstack/query-core": "*"
+    jotai: ">=2.0.0"
+    wonka: ^6.3.4
+  checksum: 10c0/761a9ed4b98b7c7899b11ffd94d29e1f3d8844b15f8c4175743e30a3ab99bd1ab672983c6b8b490c51fa166688c8f8575e9a9bf7b69be78c1a6dbc1907f1934a
   languageName: node
   linkType: hard
 

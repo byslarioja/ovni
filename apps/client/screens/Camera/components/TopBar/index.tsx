@@ -4,14 +4,18 @@ import { useState } from "react";
 import { styles } from "./styles";
 import Theme from "Shared/theme";
 import useAuth from "Screens/Auth/useAuth";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useElapsedTime } from "Screens/Camera/sensors/useElapsedTime";
 import { Routes } from "Shared/routes";
 
 export default function TopBar() {
   const [menu, setMenu] = useState(false);
-  const { logout } = useAuth();
+  const { logout, isLogedOut } = useAuth();
   const { elapsedTime } = useElapsedTime();
+
+  if (isLogedOut) {
+    return <Redirect href={Routes.Login} />;
+  }
 
   return (
     <View style={styles.top}>
@@ -28,7 +32,7 @@ export default function TopBar() {
             <TouchableOpacity onPress={() => router.navigate(Routes.Library)}>
               <GaleryIcon size={24} color={Theme.color.button.neutral} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={logout}>
+            <TouchableOpacity onPress={() => logout()}>
               <LogoutIcon size={24} color={Theme.color.button.neutral} />
             </TouchableOpacity>
           </View>

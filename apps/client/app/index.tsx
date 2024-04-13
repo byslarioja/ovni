@@ -1,11 +1,25 @@
 import { ErrorImage } from "Components/ErrorImage";
+import { Loader } from "Components/Loader";
 import Login from "Screens/Auth/Login";
+import { verifyTokenAtom } from "Screens/Auth/useAuth";
+import { Routes } from "Shared/routes";
 import Theme from "Shared/theme";
 import { translate } from "Shared/utils/translate";
-import { ErrorBoundaryProps } from "expo-router";
+import { ErrorBoundaryProps, Redirect } from "expo-router";
+import { useAtomValue } from "jotai";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Page() {
+  const { isPending, data: tokenIsValid } = useAtomValue(verifyTokenAtom);
+
+  if (isPending) {
+    return <Loader text="Comprobando credenciales" />;
+  }
+
+  if (tokenIsValid) {
+    return <Redirect href={Routes.Library} />;
+  }
+
   return <Login />;
 }
 
