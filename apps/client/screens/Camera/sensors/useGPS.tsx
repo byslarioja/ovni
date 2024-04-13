@@ -1,7 +1,9 @@
 import * as Location from "expo-location";
 import { GPSReading } from "./types";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getLocation } from "../services/sensors.service";
 
 const GPS_REFETCH_INTERVAL = Number(process.env.EXPO_PUBLIC_GPS_INTERVAL);
 
@@ -16,43 +18,42 @@ export const lastAvailableGPSReadingAtom = atom((get) => {
 export default function useGPS() {
   const setReadings = useSetAtom(GPSReadingsAtom);
   const lastAvailableCoords = useAtomValue(lastAvailableGPSReadingAtom);
-  const [isPending, setIsPending] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const {
+    isPending,
+    isError,
+    data: position,
+  } = useQuery({
+    queryKey: ["gps"],
+    queryFn: getLocation,
+    refetchInterval: GPS_REFETCH_INTERVAL,
+  });
+
+  useEffect(() => {
+    console.log("refetching");
+
+    setReadings((prev) => [
+      ...prev,
+      {
+        value: {
+          coords: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+          speed: position.coords.speed,
+          altitude: position.coords.altitude,
+        },
+        timestamp: Date.now(),
+      },
+    ]);
+  }, [position]);
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.error("Permission to access location was denied");
-        setIsError(true);
         return;
       }
-
-      const locationSubscription = await Location.watchPositionAsync(
-        {
-          accuracy: Location.Accuracy.High,
-          timeInterval: GPS_REFETCH_INTERVAL,
-        },
-        (position) => {
-          setReadings((prev) => [
-            ...prev,
-            {
-              value: {
-                coords: {
-                  latitude: position.coords.latitude,
-                  longitude: position.coords.longitude,
-                },
-                speed: position.coords.speed,
-                altitude: position.coords.altitude,
-              },
-              timestamp: Date.now(),
-            },
-          ]);
-          setIsPending(false);
-        }
-      );
-
-      return () => locationSubscription.remove();
     })();
   }, []);
 
