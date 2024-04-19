@@ -5,8 +5,8 @@ import { styles } from "./styles";
 import Theme from "Shared/theme";
 import useAuth from "Screens/Auth/useAuth";
 import { Redirect, router } from "expo-router";
-import { useElapsedTime } from "Screens/Camera/sensors/useElapsedTime";
 import { Routes } from "Shared/routes";
+import { useElapsedTime } from "Screens/Camera/hooks/useElapsedTime";
 
 export default function TopBar() {
   const [menu, setMenu] = useState(false);
