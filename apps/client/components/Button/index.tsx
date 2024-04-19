@@ -1,21 +1,23 @@
-import { Title } from "Components/Typography";
+import { Label } from "Components/Typography";
 import Theme from "Shared/theme";
 import { TouchableHighlight } from "react-native";
-import { style } from "./styles";
+import { styles } from "./styles";
 
-export function Button({ onPress, text }) {
+export function Button({ onPress, text, capitalize = false }) {
   return (
     <TouchableHighlight
       onPress={onPress}
-      style={style.background}
-      underlayColor={Theme.color.scheme.accent["400"]}
+      style={styles.button}
+      underlayColor={Theme.color.scheme.black[200]}
     >
-      <Title
-        transform="uppercase"
-        customStyle={{ textAlign: "center", fontSize: 15, fontWeight: "700" }}
+      <Label
+        customStyle={{
+          ...styles.text,
+          textTransform: capitalize ? "capitalize" : "none",
+        }}
       >
-        {text}
-      </Title>
+        {text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()}
+      </Label>
     </TouchableHighlight>
   );
 }

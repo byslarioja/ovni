@@ -1,10 +1,10 @@
 import Theme from "Shared/theme";
 import { ActivityIndicator, View } from "react-native";
-import { style } from "./styles";
+import { styles } from "./styles";
 
 export function LoaderButton() {
   return (
-    <View style={style.background}>
+    <View style={styles.button}>
       <ActivityIndicator color={Theme.color.text.light} />
     </View>
   );
