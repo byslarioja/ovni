@@ -3,11 +3,10 @@ import * as MediaLibrary from "expo-media-library";
 import { MutableRefObject, useEffect } from "react";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { Camera } from "expo-camera";
-import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
-import { createHash } from "./services/video.service";
-import { resetSensorsAtom } from "./sensors/useResetSensors";
+import { endTimeAtom, startTimeAtom } from "../sensors/useTime";
+import { createHash } from "../services/video.service";
+import { resetSensorsAtom } from "../sensors/useResetSensors";
 import { useUpload } from "./useUpload";
-import { readingsAtom, readingsPayloadAtom } from "./sensors/useReadings";
 
 export const recordingAtom = atom(false);
 
@@ -16,10 +15,9 @@ const handleRecordingAtom = atom(null, (get, set, update: boolean) => {
     set(startTimeAtom, Date.now());
   } else {
     set(endTimeAtom, Date.now());
-    set(readingsPayloadAtom, get(readingsAtom));
   }
 
-  set(recordingAtom, (prev) => !prev);
+  set(recordingAtom, update);
 });
 
 export function useRecording(cameraRef: MutableRefObject<Camera>) {
@@ -51,7 +49,9 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
         await cameraRef.current.stopRecording();
       } else {
         setRecording(true);
-        const video = await cameraRef.current.recordAsync();
+        const video = await cameraRef.current.recordAsync({
+          quality: "720p",
+        });
         saveVideo(video.uri);
         resetSensorReadings();
       }

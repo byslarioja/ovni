@@ -1,15 +1,15 @@
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "firebase.config";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { uploadVideoInfo, onError, onSuccess } from "./services/video.service";
-import { resetSensorsAtom, resetTimeAtom } from "./sensors/useResetSensors";
+import { uploadVideoInfo, onError, onSuccess } from "../services/video.service";
+import { resetSensorsAtom } from "../sensors/useResetSensors";
 import { useAtomValue, useSetAtom } from "jotai";
-import { readingsPayloadAtom } from "./sensors/useReadings";
-import { endTimeAtom, startTimeAtom } from "./sensors/useElapsedTime";
+import { endTimeAtom, startTimeAtom } from "../sensors/useTime";
 import { tokenAtom } from "Screens/Auth/useAuth";
 import { Asset } from "expo-media-library";
-import appConfig from "../../app.json";
+import appConfig from "../../../app.json";
 import { useState } from "react";
+import { readingsAtom } from "../sensors/useReadings";
 
 export const useUpload = () => {
   const queryClient = useQueryClient();
@@ -19,8 +19,7 @@ export const useUpload = () => {
   const [progress, setProgress] = useState(0);
 
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
-  const resetTime = useSetAtom(resetTimeAtom);
-  const readings = useAtomValue(readingsPayloadAtom);
+  const readings = useAtomValue(readingsAtom);
   const startTime = useAtomValue(startTimeAtom);
   const endTime = useAtomValue(endTimeAtom);
 
@@ -32,7 +31,6 @@ export const useUpload = () => {
       queryClient.invalidateQueries({ queryKey: ["assets"] });
       resetSensorReadings();
       setProgress(0);
-      resetTime();
     },
   });
 
