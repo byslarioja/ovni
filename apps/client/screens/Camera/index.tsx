@@ -5,17 +5,16 @@ import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
 import useDeviceRotation from "./sensors/useDeviceRotation";
 import { styles } from "./styles";
-import RequestPermission from "Components/RequestPermission";
-import { useCamera } from "./useCamera";
 import Theme from "Shared/theme";
 import { translation } from "./translation";
 import { translate } from "Shared/utils/translate";
 import { useRef } from "react";
 import appConfig from "../../app.json";
-import { recordingAtom, useRecording } from "./useRecording";
-import { useAtomValue } from "jotai";
+import { recordingAtom, useRecording } from "./hooks/useRecording";
+import { useAtom, useAtomValue } from "jotai";
 import { Loader } from "Components/Loader";
-import { useClock } from "./useClock";
+import { useClock } from "./hooks/useClock";
+import { zoomAtom } from "./sensors/useZoom";
 
 const lang = translate(translation);
 
@@ -23,16 +22,7 @@ export default function Camera() {
   const { x, y } = useDeviceRotation();
   const isRecording = useAtomValue(recordingAtom);
   const clock = useClock();
-  const {
-    zoom,
-    setZoom,
-    cameraStatus,
-    requestCameraPermission,
-    microphoneStatus,
-    requestMicrophonePermission,
-    mediaLibraryStatus,
-    requestMediaLibraryPermission,
-  } = useCamera();
+  const [zoom, setZoom] = useAtom(zoomAtom);
 
   const cameraRef = useRef(null);
   const { handleRecord, isPending, isUploading, progress } =
@@ -46,41 +36,6 @@ export default function Camera() {
     const subtext = isUploading && `${progress}%`;
 
     return <Loader text={text} subtext={subtext} />;
-  }
-
-  if (!cameraStatus || !microphoneStatus || !mediaLibraryStatus) {
-    // Camera permissions are still loading
-    return <Loader text={lang.t("LOADING.PERMISSIONS")} />;
-  }
-
-  if (!cameraStatus.granted) {
-    // Camera permissions are not granted yet
-    return (
-      <RequestPermission
-        title={lang.t("CAMERA.PERMISSIONS.CAMERA")}
-        requestPermission={requestCameraPermission}
-      />
-    );
-  }
-
-  if (!microphoneStatus.granted) {
-    // Microphone permissions are not granted yet
-    return (
-      <RequestPermission
-        title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
-        requestPermission={requestMicrophonePermission}
-      />
-    );
-  }
-
-  if (!mediaLibraryStatus.granted) {
-    // Microphone permissions are not granted yet
-    return (
-      <RequestPermission
-        title={lang.t("CAMERA.PERMISSIONS.MICROPHONE")}
-        requestPermission={requestMediaLibraryPermission}
-      />
-    );
   }
 
   return (

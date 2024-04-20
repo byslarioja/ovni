@@ -1,51 +1,58 @@
 import { Label } from "Components/Typography";
 import Theme from "Shared/theme";
+import {
+  ClimatePrimitive,
+  GPSPrimitive,
+  RotationPrimitive,
+} from "globals/sensor.primitives";
 import { cloneElement, memo, ReactNode, useMemo } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 export const SensorValue = memo((props: SensorValueProps) => {
-  const { value, isPending, isError, icon } = props;
-
   const iconElement = useMemo(
     () =>
-      cloneElement(icon as React.ReactElement, {
+      cloneElement(props.icon as React.ReactElement, {
         color: Theme.color.button.neutral,
         size: 20,
       }),
-    [icon]
+    [props.icon]
   );
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       {iconElement}
-      <SensorContent value={value} isPending={isPending} isError={isError} />
+      <SensorContent {...props} />
     </View>
   );
 });
 
-const SensorContent = memo((props: SensorContentProps) => {
-  const { value, isPending, isError } = props;
+const SensorContent = (props: SensorContentProps) => {
+  const { value, isPending, isError, format } = props;
 
   if (isPending)
     return (
       <ActivityIndicator size="small" color={Theme.color.button.neutral} />
     );
 
-  if (isError) {
+  if (isError || !value) {
     return <Label customStyle={{ fontSize: 13 }}>N/A</Label>;
   }
 
-  return <Label customStyle={{ fontSize: 13 }}>{value}</Label>;
-});
+  return <Label customStyle={{ fontSize: 13 }}>{format(value)}</Label>;
+};
 
 type SensorValueProps = {
-  value: string;
+  value: ValuePrimitive;
   isPending: boolean;
   isError: boolean;
+  format: (value: ValuePrimitive) => string;
   icon: ReactNode;
 };
 
-type SensorContentProps = Pick<
-  SensorValueProps,
-  "value" | "isPending" | "isError"
->;
+type ValuePrimitive =
+  | GPSPrimitive
+  | ClimatePrimitive
+  | string
+  | RotationPrimitive;
+
+type SensorContentProps = Omit<SensorValueProps, "icon">;
