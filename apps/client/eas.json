@@ -20,7 +20,7 @@
         "EXPO_PUBLIC_GYRO_INTERVAL": "500",
         "EXPO_PUBLIC_GPS_INTERVAL": "500",
         "EXPO_PUBLIC_MAGNETOMETER_INTERVAL": "500",
-        "EXPO_PUBLIC_CLIMATE_INTERVAL": "500"
+        "EXPO_PUBLIC_CLIMATE_INTERVAL": "5000"
       }
     },
     "production": {}
