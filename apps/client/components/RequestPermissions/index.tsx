@@ -4,8 +4,11 @@ import { styles } from "./styles";
 import { useRef, useState } from "react";
 import { Redirect } from "expo-router";
 import { Routes } from "Shared/routes";
+import { PermissionResponse } from "expo-media-library";
 
-export default function RequestPermissions({ permissions }) {
+export default function RequestPermissions({
+  permissions,
+}: RequestPermissionsProps) {
   const [currentItem, setCurrentItem] = useState(0);
   const { width } = useWindowDimensions();
   const granted = permissions.reduce(
@@ -15,7 +18,7 @@ export default function RequestPermissions({ permissions }) {
   const flatListRef = useRef(null);
 
   const deniedPermissions = permissions.filter(
-    (permission) => permission && permission?.status?.status === "denied"
+    (permission) => permission && !permission?.status?.granted
   );
 
   if (granted) {
@@ -43,7 +46,7 @@ export default function RequestPermissions({ permissions }) {
         viewabilityConfig={{
           viewAreaCoveragePercentThreshold: 50,
         }}
-        // scrollEnabled={false}
+        scrollEnabled={false}
         scrollEventThrottle={32}
         ref={flatListRef}
       />
@@ -58,3 +61,11 @@ export default function RequestPermissions({ permissions }) {
     </View>
   );
 }
+
+type RequestPermissionsProps = {
+  permissions: {
+    name: string;
+    status: PermissionResponse;
+    request: () => Promise<PermissionResponse>;
+  }[];
+};

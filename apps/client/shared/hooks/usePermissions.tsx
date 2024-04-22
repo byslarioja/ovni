@@ -1,7 +1,6 @@
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
-import { useEffect } from "react";
 
 export function usePermissions() {
   const [mediaLibraryStatus, mediaLibraryRequest] =
