@@ -21,7 +21,7 @@ export function Video(video: VideoProps) {
               {toTitleCase(video.user.name)}
             </Link>
           </p>
-          <p className="text-right">{formatDate(Number(video.start_time))}</p>
+          <p className="text-right">{formatDate(video.created_at)}</p>
         </div>
       </CardContent>
       <CardFooter className="p-3 justify-end gap-1">
