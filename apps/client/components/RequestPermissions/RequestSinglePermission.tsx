@@ -21,12 +21,14 @@ export function RequestSinglePermission({ item }: RequestPermission) {
     (item.status.status === "undetermined" || item.status.status === "denied");
 
   const title = lang.t(`PERMISSIONS.${item.name.toUpperCase()}.TITLE`);
+
+  // TODO: Should consider caniaskagain value for this but for somereason is not working
   const buttonText = shouldOpenAppSettings
     ? lang.t(`PERMISSIONS.${item.name.toUpperCase()}.BUTTON`)
-    : lang.t("PERMISSIONS.OPEN_SETTINGS");
-  const handlePermission = shouldOpenAppSettings
-    ? item.request
-    : Linking.openSettings;
+    : lang.t(`PERMISSIONS.${item.name.toUpperCase()}.BUTTON`);
+  // : lang.t("PERMISSIONS.OPEN_SETTINGS");
+  const handlePermission = shouldOpenAppSettings ? item.request : item.request;
+  // : Linking.openSettings;
 
   return (
     <View style={[styles.item, { width }]}>

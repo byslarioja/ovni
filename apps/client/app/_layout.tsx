@@ -17,9 +17,10 @@ const lang = translate(translation);
 
 export default function AppLayout() {
   const { isPending, permissions } = usePermissions();
-  const granted = permissions.reduce((granted, permission) => {
-    return permission.status?.granted && granted;
-  }, true);
+  const granted = permissions.reduce(
+    (granted, permission) => permission.status?.granted && granted,
+    true
+  );
 
   if (isPending) {
     return <Loader text={lang.t("PERMISSIONS.LOADING")} />;
