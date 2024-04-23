@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: { queryClient },
+  context: { queryClient, title: "Inicio" },
   defaultPendingComponent: () => <Loader />,
   defaultNotFoundComponent: () => {
     return <Error404 />;

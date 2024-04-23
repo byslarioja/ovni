@@ -5,25 +5,28 @@ import "../globals.css";
 import React, { Suspense } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient } from "@tanstack/react-query";
+import { Breadcrumbs } from "@/features/Breadcrumbs";
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
-  {
-    component: () => (
-      <TooltipProvider>
-        <div className="flex h-screen">
-          <SideNavbar />
-          <div className="w-full h-full flex flex-col p-16">
-            <Outlet />
-          </div>
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+  title: string;
+}>()({
+  component: () => (
+    <TooltipProvider>
+      <div className="flex h-screen">
+        <SideNavbar />
+        <div className="w-full h-full flex flex-col p-16">
+          <Breadcrumbs />
+          <Outlet />
         </div>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Suspense>
-          <TanStackRouterDevtoolsProduction />
-        </Suspense>
-      </TooltipProvider>
-    ),
-  }
-);
+      </div>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Suspense>
+        <TanStackRouterDevtoolsProduction />
+      </Suspense>
+    </TooltipProvider>
+  ),
+});
 
 const TanStackRouterDevtoolsProduction =
   process.env.NODE_ENV === "production"

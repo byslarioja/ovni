@@ -11,8 +11,10 @@ const videosQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/videos")({
   component: VideosPage,
-  loader: ({ context: { queryClient: QueryClient } }) =>
-    QueryClient.ensureQueryData(videosQueryOptions),
+  loader: ({ context }) => {
+    context.title = "Videos";
+    context.queryClient.ensureQueryData(videosQueryOptions);
+  },
 });
 
 function VideosPage() {

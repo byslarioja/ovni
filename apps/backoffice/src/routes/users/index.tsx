@@ -11,8 +11,10 @@ const usersQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/users/")({
   component: UsersPage,
-  loader: ({ context: { queryClient: QueryClient } }) =>
-    QueryClient.ensureQueryData(usersQueryOptions),
+  loader: ({ context }) => {
+    context.title = "Usuarios";
+    context.queryClient.ensureQueryData(usersQueryOptions);
+  },
 });
 
 function UsersPage() {
