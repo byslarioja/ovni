@@ -3,8 +3,9 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { formatDate, toTitleCase } from "@/lib/utils";
 import { VideoProps } from "@/types/props";
 import { Link } from "@tanstack/react-router";
-import { DownloadCloud, Info, Trash } from "lucide-react";
+import { DownloadCloud, Info } from "lucide-react";
 import { handleDownloadReadings } from "./service";
+import { DeleteVideo } from "../delete-video";
 
 export function Video(video: VideoProps) {
   return (
@@ -25,9 +26,7 @@ export function Video(video: VideoProps) {
         </div>
       </CardContent>
       <CardFooter className="p-3 justify-end gap-1">
-        <Button variant="destructive" size="icon">
-          <Trash />
-        </Button>
+        <DeleteVideo videoId={video.id} userEmail={video.user.email} />
         <Button variant="default" size="icon" className="bg-lime-600" asChild>
           <a href={video.uri} download={`${video.id}.mp4`} target="_blank">
             <DownloadCloud />

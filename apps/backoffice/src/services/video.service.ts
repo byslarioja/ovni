@@ -8,3 +8,7 @@ export const getVideos = async (): Promise<ApiVideoResponse> => {
 
   return response.data;
 };
+
+export const deleteVideo = async (videoId: string): Promise<void> => {
+  return await axios.delete(`${BASE_URI}/videos/${videoId}`);
+};
