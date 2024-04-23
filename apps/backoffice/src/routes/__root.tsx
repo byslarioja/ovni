@@ -1,17 +1,15 @@
 import SideNavbar from "@/components/SideNavbar";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import "../globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient } from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
-
-export const Route = createRootRoute({
-  component: () => (
-    <TooltipProvider>
-      <QueryClientProvider client={queryClient}>
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+  {
+    component: () => (
+      <TooltipProvider>
         <div className="flex h-screen">
           <SideNavbar />
           <div className="w-full h-full flex flex-col p-16">
@@ -22,10 +20,10 @@ export const Route = createRootRoute({
         <Suspense>
           <TanStackRouterDevtoolsProduction />
         </Suspense>
-      </QueryClientProvider>
-    </TooltipProvider>
-  ),
-});
+      </TooltipProvider>
+    ),
+  }
+);
 
 const TanStackRouterDevtoolsProduction =
   process.env.NODE_ENV === "production"
