@@ -6,14 +6,33 @@ import { Link } from "@tanstack/react-router";
 import { DownloadCloud, Info } from "lucide-react";
 import { handleDownloadReadings } from "./service";
 import { DeleteVideo } from "../delete-video";
+import { useEffect, useRef, useState } from "react";
+import { Spinner } from "@/components/Spinner";
 
 export function Video(video: VideoProps) {
+  const [isLoading, setIsLoading] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.onloadeddata = () => {
+        setIsLoading(false);
+      };
+    }
+  }, []);
+
   return (
     <Card>
       <CardContent className="p-0 relative rounded-t-lg overflow-hidden">
+        {isLoading && (
+          <div className="bg-slate-50 absolute inset-0 flex items-center justify-center">
+            <Spinner />
+          </div>
+        )}
         <video
-          className="object-cover h-48 w-full "
-          src={video.uri || "https://placehold.co/640x360"}
+          ref={videoRef}
+          className="object-cover h-48 w-full"
+          src={video.uri}
         />
         <div className="absolute inset-0 w-full h-full bg-[rgba(0,0,0,0.5)] z-10"></div>
         <div className="absolute text-white right-0 top-0 py-3 px-6 z-20 text-lg text-muted-foreground">
