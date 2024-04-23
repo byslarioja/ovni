@@ -1,20 +1,14 @@
 import { PageTitle } from "@/components/PageTitle";
-import VideosList from "@/features/videos-list";
-import { getVideos } from "@/services/video.service";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: VideosPage,
-  loader: getVideos,
+  component: WelcomePage,
 });
 
-function VideosPage() {
-  const videos = Route.useLoaderData();
-
+function WelcomePage() {
   return (
     <>
-      <PageTitle>Vídeos</PageTitle>
-      <VideosList {...videos} />
+      <PageTitle>Inicio</PageTitle>
     </>
   );
 }
