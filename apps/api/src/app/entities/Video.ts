@@ -60,4 +60,11 @@ export class Video {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  public getFirebaseFilename() {
+    const segments = this.device_uri.split("/");
+    const deviceFilename = segments[segments.length - 1];
+
+    return "videos/" + this.integrity_string + deviceFilename;
+  }
 }

@@ -44,4 +44,5 @@ type SerializableVideo = Omit<
   | "integrity_string"
   | "user"
   | "readings"
+  | "getFirebaseFilename"
 > & { user: SerializableUser } & { readings?: SerializableSensorReading[] };

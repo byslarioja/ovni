@@ -37,3 +37,19 @@ export const getAllVideos = async () => {
 
   return await videoRepository.find({ where: { deleted_at: null } });
 };
+
+export const findById = async (id: string) => {
+  const repository = AppDataSource.getRepository(Video);
+
+  return await repository.findOne({ where: { id } });
+};
+
+export const deleteVideo = async (id: string) => {
+  const repository = AppDataSource.getRepository(Video);
+
+  await repository
+    .createQueryBuilder()
+    .softDelete()
+    .where("id = :id", { id })
+    .execute();
+};
