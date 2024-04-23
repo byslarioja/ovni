@@ -44,7 +44,6 @@ const links: NavLinkType[] = [
   },
   {
     title: "Videos",
-    label: "9",
     icon: Video,
     href: "/videos",
   },
