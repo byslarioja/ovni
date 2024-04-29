@@ -7,7 +7,7 @@ import {
 
 export class VideoResource {
   public static toJson(video: Video): SerializableVideo {
-    const videoResource = {
+    let videoResource: SerializableVideo = {
       id: video.id,
       width: video.width,
       height: video.height,
@@ -16,13 +16,19 @@ export class VideoResource {
       start_time: video.start_time,
       end_time: video.end_time,
       uri: video.uri,
-      user: UserResource.toJson(video.user),
       created_at: video.created_at,
       updated_at: video.updated_at,
     };
 
+    if (video.user) {
+      videoResource = {
+        ...videoResource,
+        user: UserResource.toJson(video.user),
+      };
+    }
+
     if (video.readings) {
-      return {
+      videoResource = {
         ...videoResource,
         readings: SensorReadingResource.toArray(video.readings),
       };
@@ -45,4 +51,4 @@ type SerializableVideo = Omit<
   | "user"
   | "readings"
   | "getFirebaseFilename"
-> & { user: SerializableUser } & { readings?: SerializableSensorReading[] };
+> & { user?: SerializableUser } & { readings?: SerializableSensorReading[] };

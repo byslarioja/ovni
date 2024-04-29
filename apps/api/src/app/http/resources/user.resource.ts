@@ -14,6 +14,7 @@ export class UserResource {
       youtube_channel: user.youtube_channel,
       created_at: user.created_at,
       updated_at: user.updated_at,
+      videos: user.videos,
     };
   }
 
@@ -22,4 +23,4 @@ export class UserResource {
   }
 }
 
-export type SerializableUser = Omit<User, "password" | "deleted_at" | "videos">;
+export type SerializableUser = Omit<User, "password" | "deleted_at">;

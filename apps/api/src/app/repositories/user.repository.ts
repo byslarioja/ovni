@@ -29,7 +29,10 @@ export const findByEmail = async (email: string) => {
 export const findById = async (id: string) => {
   const userRepository = AppDataSource.getRepository(User);
 
-  return await userRepository.findOne({ where: { id } });
+  return await userRepository.findOne({
+    where: { id },
+    relations: ["videos"],
+  });
 };
 
 export const updateUser = async (newEncryptedPassword: string, id: string) => {

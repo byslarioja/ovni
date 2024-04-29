@@ -35,7 +35,10 @@ export const createVideo = async (newVideo: VideoRequest["body"]) => {
 export const getAllVideos = async () => {
   const videoRepository = AppDataSource.getRepository(Video);
 
-  return await videoRepository.find({ where: { deleted_at: null } });
+  return await videoRepository.find({
+    where: { deleted_at: null },
+    relations: ["user"],
+  });
 };
 
 export const findById = async (id: string) => {

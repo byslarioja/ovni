@@ -46,7 +46,7 @@ export class Video {
   @Column({ nullable: true })
   uri: string;
 
-  @ManyToOne(() => User, (user) => user.videos, { eager: true })
+  @ManyToOne(() => User, (user) => user.videos)
   user: User;
 
   @OneToMany(() => SensorReading, (reading) => reading.video, { eager: true })
