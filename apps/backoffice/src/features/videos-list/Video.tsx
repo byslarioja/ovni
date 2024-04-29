@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { formatDate, toTitleCase } from "@/lib/utils";
 import { VideoProps } from "@/types/props";
 import { Link } from "@tanstack/react-router";
-import { DownloadCloud, Info } from "lucide-react";
+import { DownloadCloud, Info, User2 } from "lucide-react";
 import { handleDownloadReadings } from "./service";
 import { DeleteVideo } from "../delete-video";
 import { useEffect, useRef, useState } from "react";
@@ -25,7 +25,7 @@ export function Video(video: VideoProps) {
     <Card className="min-w-[250px]">
       <CardContent className="p-0 relative rounded-t-lg overflow-hidden">
         {isLoading && (
-          <div className="bg-slate-50 absolute inset-0 flex items-center justify-center">
+          <div className="bg-secondary absolute inset-0 flex items-center justify-center">
             <Spinner />
           </div>
         )}
@@ -46,16 +46,27 @@ export function Video(video: VideoProps) {
       </CardContent>
       <CardFooter className="p-3 justify-end gap-1">
         <DeleteVideo videoId={video.id} userEmail={video.user.email} />
-        <Button variant="default" size="icon" className="bg-lime-600" asChild>
+        <Button
+          variant="default"
+          size="icon"
+          className="bg-lime-600 text-white"
+          asChild
+        >
           <a href={video.uri} download={`${video.id}.mp4`} target="_blank">
             <DownloadCloud />
           </a>
         </Button>
 
+        <Button variant="default" size="icon" asChild>
+          <Link to="/users/$userId" params={{ userId: video.user.id }}>
+            <User2 />
+          </Link>
+        </Button>
+
         <Button
           variant="default"
           size="icon"
-          className="bg-sky-600"
+          className="bg-sky-600 text-white"
           onClick={() => handleDownloadReadings(video)}
         >
           <Info />

@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<{
 }>()({
   component: () => (
     <TooltipProvider>
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-background">
         <SideNavbar />
         <div className="w-full h-full flex flex-col p-16">
           <Breadcrumbs />

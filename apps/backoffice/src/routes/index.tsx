@@ -9,8 +9,8 @@ export const Route = createFileRoute("/")({
 export function WelcomePage() {
   return (
     <>
-      <div className="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <div className="relative  flex flex-col items-center justify-center selection:bg-primary selection:text-white">
+      <div className="text-primary/50">
+        <div className="relative flex flex-col items-center justify-center selection:bg-primary selection:text-primary">
           <main className="mt-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
               <PresentationCard
