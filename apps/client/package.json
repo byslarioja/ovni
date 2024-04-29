@@ -28,7 +28,7 @@
     "expo-localization": "~14.8.4",
     "expo-location": "~16.5.5",
     "expo-media-library": "~15.9.2",
-    "expo-router": "~3.4.8",
+    "expo-router": "~3.4.9",
     "expo-screen-orientation": "~6.4.1",
     "expo-sensors": "~12.9.1",
     "expo-status-bar": "~1.11.1",
