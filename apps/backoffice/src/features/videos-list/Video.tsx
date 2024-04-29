@@ -22,7 +22,7 @@ export function Video(video: VideoProps) {
   }, []);
 
   return (
-    <Card>
+    <Card className="min-w-[250px]">
       <CardContent className="p-0 relative rounded-t-lg overflow-hidden">
         {isLoading && (
           <div className="bg-slate-50 absolute inset-0 flex items-center justify-center">

@@ -22,6 +22,7 @@ export interface User {
   city: string;
   zip_code: string;
   youtube_channel: string;
+  videos: Video[];
   created_at: Date;
   updated_at: Date;
 }
