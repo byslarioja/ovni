@@ -17,7 +17,7 @@ export default function Page() {
   }
 
   if (tokenIsValid) {
-    return <Redirect href={Routes.Library} />;
+    return <Redirect href={Routes.Camera} />;
   }
 
   return <Login />;
