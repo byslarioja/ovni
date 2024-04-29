@@ -14,14 +14,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BanUser } from "@/features/ban-user";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+
+const userQueryOptions = (userId: string) =>
+  queryOptions({
+    queryKey: ["user", userId],
+    queryFn: () => getUser(userId),
+  });
 
 export const Route = createFileRoute("/users/$userId")({
   component: UserPage,
-  loader: ({ params: { userId } }) => getUser(userId),
+  loader: ({ context, params: { userId } }) => {
+    context.title = "Usuarios";
+    context.queryClient.ensureQueryData(userQueryOptions(userId));
+  },
 });
 
 function UserPage() {
-  const { user } = Route.useLoaderData();
+  const { userId } = Route.useParams();
+
+  const {
+    data: { user },
+  } = useSuspenseQuery(userQueryOptions(userId));
+
   const displayName = toTitleCase(user.name);
   const fallbackAvatar = user.name
     .split(" ")
@@ -94,7 +109,13 @@ function UserPage() {
           <Heading variant="h3" className="mb-5">
             Vídeos de {displayName}
           </Heading>
-          <VideosList videos={appendedVideos} />
+          {appendedVideos.length ? (
+            <VideosList videos={appendedVideos} />
+          ) : (
+            <p className="text-sm/relaxed">
+              Este usuario todavía no ha subido contenido.
+            </p>
+          )}
         </section>
       </div>
     </>
