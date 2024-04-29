@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Nav, NavLinkType } from "./nav";
-import {
-  ChevronRight,
-  ChevronLeft,
-  Users,
-  Video,
-  // Settings,
-} from "lucide-react";
+import { ChevronRight, ChevronLeft, Users, Video, Home } from "lucide-react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +32,11 @@ export default function SideNavbar() {
 
 const links: NavLinkType[] = [
   {
+    title: "Inicio",
+    icon: Home,
+    href: "/",
+  },
+  {
     title: "Usuarios",
     icon: Users,
     href: "/users",
@@ -47,9 +46,4 @@ const links: NavLinkType[] = [
     icon: Video,
     href: "/videos",
   },
-  // {
-  //   title: "Configuración",
-  //   icon: Settings,
-  //   href: "/settings",
-  // },
 ];

@@ -16,25 +16,16 @@ export function Breadcrumbs() {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link to="/">Inicio</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
         {breadcrumbs.map((breadcrumb, index) => (
           <React.Fragment key={index}>
-            <BreadcrumbItem>
-              {index === breadcrumbs.length - 1 ? (
-                <BreadcrumbLink>
-                  <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
-                </BreadcrumbLink>
-              ) : (
-                <BreadcrumbLink asChild>
-                  <Link to={breadcrumb.path}>{breadcrumb.title}</Link>
-                </BreadcrumbLink>
-              )}
-            </BreadcrumbItem>
+            {index === breadcrumbs.length - 1 ? (
+              <NonLinkableBreadcrumb title={breadcrumb.title} />
+            ) : (
+              <LinkableBreadcrumb
+                title={breadcrumb.title}
+                path={breadcrumb.path}
+              />
+            )}
             <BreadcrumbSeparator />
           </React.Fragment>
         ))}
@@ -42,3 +33,27 @@ export function Breadcrumbs() {
     </Breadcrumb>
   );
 }
+
+function NonLinkableBreadcrumb({ title }: NonLinkableBreadProps) {
+  return (
+    <BreadcrumbItem>
+      <BreadcrumbLink>
+        <BreadcrumbPage>{title}</BreadcrumbPage>
+      </BreadcrumbLink>
+    </BreadcrumbItem>
+  );
+}
+
+function LinkableBreadcrumb({ title, path }: LinkableBreadProps) {
+  return (
+    <BreadcrumbItem>
+      <BreadcrumbLink asChild>
+        <Link to={path}>{title}</Link>
+      </BreadcrumbLink>
+    </BreadcrumbItem>
+  );
+}
+
+type NonLinkableBreadProps = { title: string };
+
+type LinkableBreadProps = NonLinkableBreadProps & { path: string };

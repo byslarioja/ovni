@@ -10,5 +10,11 @@ export function useBreadcrumbs() {
     };
   });
 
-  return breadcrumbs.filter((_, i) => i > 0);
+  return breadcrumbs.filter(
+    (breadcrumb, index, self) =>
+      index ===
+      self.findIndex(
+        (t) => t.path === breadcrumb.path && t.title === breadcrumb.title
+      )
+  );
 }
