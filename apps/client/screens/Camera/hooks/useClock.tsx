@@ -3,9 +3,9 @@ import { formatDate } from "Shared/utils/time";
 import { useRef } from "react";
 
 function createClock() {
-  const startTime = Date.now();
   return () => {
-    return formatDate(startTime);
+    const startTime = Date.now();
+    return startTime;
   };
 }
 
@@ -14,8 +14,8 @@ export function useClock() {
   const { data: clock } = useQuery({
     queryKey: ["clock"],
     queryFn: clockRef.current,
-    refetchInterval: 30_000,
+    refetchInterval: 300,
   });
 
-  return clock;
+  return formatDate(clock);
 }
