@@ -1,5 +1,6 @@
 export const translation = {
   en: {
+    PAGE_TITLE: { LIBRARY: "Recorded videos" },
     PERMISSIONS: {
       CAMERA: {
         TITLE: "Camera Access",
@@ -30,6 +31,7 @@ export const translation = {
     },
   },
   es: {
+    PAGE_TITLE: { LIBRARY: "Vídeos grabados" },
     PERMISSIONS: {
       CAMERA: {
         TITLE: "Acceso a la Cámara",

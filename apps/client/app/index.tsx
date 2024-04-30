@@ -9,11 +9,24 @@ import { ErrorBoundaryProps, Redirect } from "expo-router";
 import { useAtomValue } from "jotai";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+const lang = translate({
+  en: {
+    IS_PENDING: "Checking credentials",
+    TITLE: "Something went wrong",
+    RETRY_BUTTON: "Retry?",
+  },
+  es: {
+    IS_PENDING: "Comprobando credenciales",
+    TITLE: "Algo salió mal",
+    RETRY_BUTTON: "¿Intentar de nuevo?",
+  },
+});
+
 export default function Page() {
   const { isPending, data: tokenIsValid } = useAtomValue(verifyTokenAtom);
 
   if (isPending) {
-    return <Loader text="Comprobando credenciales" />;
+    return <Loader text={lang.t("IS_PENDING")} />;
   }
 
   if (tokenIsValid) {
@@ -24,17 +37,6 @@ export default function Page() {
 }
 
 export function ErrorBoundary(props: ErrorBoundaryProps) {
-  const lang = translate({
-    en: {
-      TITLE: "Something went wrong",
-      RETRY_BUTTON: "Retry?",
-    },
-    es: {
-      TITLE: "Algo salió mal",
-      RETRY_BUTTON: "¿Intentar de nuevo?",
-    },
-  });
-
   return (
     <View style={styles.container}>
       <View style={{ marginBottom: 30 }}>

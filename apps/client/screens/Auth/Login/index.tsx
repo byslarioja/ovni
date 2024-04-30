@@ -42,11 +42,11 @@ export default function Login() {
   };
 
   if (isLoading) {
-    return <Loader text="isloading" />;
+    return <Loader text={lang.t("STATE.CHECKING_CREDENTIALS")} />;
   }
 
   if (isLogedIn) {
-    return <Redirect href={Routes.Library} />;
+    return <Redirect href={Routes.Camera} />;
   }
 
   return (

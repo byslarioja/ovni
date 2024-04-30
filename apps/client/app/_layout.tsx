@@ -1,15 +1,12 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { LogoutIcon } from "Components/Icon";
 import { Loader } from "Components/Loader";
+import { LogoutButton } from "Components/LogoutButton";
 import RequestPermissions from "Components/RequestPermissions";
-import useAuth from "Screens/Auth/useAuth";
 import { usePermissions } from "Shared/hooks/usePermissions";
-import { Routes } from "Shared/routes";
 import Theme from "Shared/theme";
 import { translation } from "Shared/translation";
 import { translate } from "Shared/utils/translate";
-import { Redirect, Stack } from "expo-router";
-import { TouchableOpacity } from "react-native";
+import { Stack } from "expo-router";
 import Toast from "react-native-toast-message";
 
 const queryClient = new QueryClient();
@@ -57,7 +54,7 @@ export default function AppLayout() {
             ...defaultScreenOptions,
             headerShown: true,
             title: "Recorded videos",
-            headerRight: () => <LogoutButton />,
+            headerRight: () => <LogoutButton style={{ padding: 10 }} />,
           }}
         />
         <Stack.Screen
@@ -73,20 +70,6 @@ export default function AppLayout() {
     </QueryClientProvider>
   );
 }
-
-const LogoutButton = () => {
-  const { logout, isLogedOut } = useAuth();
-
-  if (isLogedOut) {
-    return <Redirect href={Routes.Login} />;
-  }
-
-  return (
-    <TouchableOpacity onPress={() => logout()} style={{ padding: 10 }}>
-      <LogoutIcon size={24} color={Theme.color.text.light} />
-    </TouchableOpacity>
-  );
-};
 
 const defaultScreenOptions = {
   headerShown: false,

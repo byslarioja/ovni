@@ -1,5 +1,8 @@
 export const translation = {
   en: {
+    STATE: {
+      CHECKING_CREDENTIALS: "Checking credentials",
+    },
     INPUT: {
       EMAIL: {
         PLACEHOLDER: "Enter your email",
@@ -20,6 +23,9 @@ export const translation = {
     },
   },
   es: {
+    STATE: {
+      CHECKING_CREDENTIALS: "Comprobando credenciales",
+    },
     INPUT: {
       EMAIL: {
         PLACEHOLDER: "Ingrese su correo electrónico",

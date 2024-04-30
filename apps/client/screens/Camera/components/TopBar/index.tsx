@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { AlertIcon, GaleryIcon, LogoutIcon, MenuIcon } from "Components/Icon";
+import { AlertIcon, GaleryIcon, MenuIcon } from "Components/Icon";
 import { useState } from "react";
 import { styles } from "./styles";
 import Theme from "Shared/theme";
@@ -7,10 +7,11 @@ import useAuth from "Screens/Auth/useAuth";
 import { Redirect, router } from "expo-router";
 import { Routes } from "Shared/routes";
 import { useElapsedTime } from "Screens/Camera/hooks/useElapsedTime";
+import { LogoutButton } from "Components/LogoutButton";
 
 export default function TopBar() {
   const [menu, setMenu] = useState(false);
-  const { logout, isLogedOut } = useAuth();
+  const { isLogedOut } = useAuth();
   const { elapsedTime } = useElapsedTime();
 
   if (isLogedOut) {
@@ -32,9 +33,7 @@ export default function TopBar() {
             <TouchableOpacity onPress={() => router.navigate(Routes.Library)}>
               <GaleryIcon size={24} color={Theme.color.button.neutral} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => logout()}>
-              <LogoutIcon size={24} color={Theme.color.button.neutral} />
-            </TouchableOpacity>
+            <LogoutButton />
           </View>
         ) : (
           <></>
