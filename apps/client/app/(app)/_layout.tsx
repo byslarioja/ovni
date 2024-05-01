@@ -13,7 +13,7 @@ export default function AppLayout() {
   const { session, isLoading } = useSession();
 
   if (isLoading) {
-    return <Loader text={lang.t("STATE.CHECKING_CREDENTIALS")} />;
+    return <Loader text={lang.t("CHECKING_CREDENTIALS")} />;
   }
 
   if (!session) {
@@ -44,7 +44,6 @@ export default function AppLayout() {
         name={"library"}
         options={{
           orientation: "portrait",
-          statusBarTranslucent: true,
           headerShown: true,
           title: lang.t("PAGE_TITLE.LIBRARY"),
           headerRight: () => <LogoutButton style={{ padding: 10 }} />,

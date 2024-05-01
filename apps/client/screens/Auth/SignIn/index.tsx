@@ -5,7 +5,6 @@ import { CustomTextInput } from "Components/form";
 import { Controller, useForm } from "react-hook-form";
 import { Image, View } from "react-native";
 import { LoaderButton } from "Components/Button/LoaderButton";
-import Theme from "Shared/theme";
 import { translate } from "Shared/utils/translate";
 import { translation } from "./translation";
 import { useSession } from "Shared/contexts/session.context";
@@ -43,7 +42,6 @@ export default function SignIn() {
     <View
       style={{
         alignItems: "center",
-        backgroundColor: Theme.color.neutral.background,
         padding: 20,
         height: "100%",
       }}

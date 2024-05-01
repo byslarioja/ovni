@@ -4,7 +4,7 @@
     "slug": "iseeyou",
     "scheme": "iseeyou-scheme",
     "version": "1.0.0",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
@@ -28,9 +28,6 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.iseeyou.ovni"
-    },
-    "androidStatusBar": {
-      "translucent": true
     },
     "plugins": [
       [
