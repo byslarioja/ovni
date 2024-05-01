@@ -21,7 +21,7 @@ const INPUT_RULES = {
   required: lang.t("ERROR.REQUIRED"),
 };
 
-export default function Login() {
+export default function SignIn() {
   const { signIn, isSigningIn } = useSession();
 
   const {

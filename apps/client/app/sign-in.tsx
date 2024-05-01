@@ -1,5 +1,5 @@
-import Login from "Screens/Auth/Login";
+import SignIn from "Screens/Auth/SignIn";
 
 export default function Page() {
-  return <Login />;
+  return <SignIn />;
 }
