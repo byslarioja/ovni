@@ -1,9 +1,9 @@
 import { Loader } from "Components/Loader";
 import { LogoutButton } from "Components/LogoutButton";
-import { translation } from "Screens/Auth/Login/translation";
 import { useSession } from "Shared/contexts/session.context";
 import { Routes } from "Shared/routes";
 import Theme from "Shared/theme";
+import { translation } from "Shared/translation";
 import { translate } from "Shared/utils/translate";
 import { Redirect, Stack } from "expo-router";
 
@@ -46,7 +46,7 @@ export default function AppLayout() {
           orientation: "portrait",
           statusBarTranslucent: true,
           headerShown: true,
-          title: "Recorded videos",
+          title: lang.t("PAGE_TITLE.LIBRARY"),
           headerRight: () => <LogoutButton style={{ padding: 10 }} />,
         }}
       />

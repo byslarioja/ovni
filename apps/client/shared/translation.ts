@@ -1,5 +1,6 @@
 export const translation = {
   en: {
+    CHECKING_CREDENTIALS: "Checking credentials",
     PAGE_TITLE: { LIBRARY: "Recorded videos" },
     PERMISSIONS: {
       CAMERA: {
@@ -31,6 +32,7 @@ export const translation = {
     },
   },
   es: {
+    CHECKING_CREDENTIALS: "Comprobando credenciales",
     PAGE_TITLE: { LIBRARY: "Vídeos grabados" },
     PERMISSIONS: {
       CAMERA: {
