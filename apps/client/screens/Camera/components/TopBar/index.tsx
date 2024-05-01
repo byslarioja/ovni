@@ -3,7 +3,7 @@ import { AlertIcon, GaleryIcon, MenuIcon } from "Components/Icon";
 import { useState } from "react";
 import { styles } from "./styles";
 import Theme from "Shared/theme";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { Routes } from "Shared/routes";
 import { useElapsedTime } from "Screens/Camera/hooks/useElapsedTime";
 import { LogoutButton } from "Components/LogoutButton";
@@ -24,9 +24,11 @@ export default function TopBar() {
       <View style={[styles.topButton, styles.topMenu]}>
         {menu ? (
           <View style={[styles.menuButton, styles.centerItem]}>
-            <TouchableOpacity onPress={() => router.navigate(Routes.Library)}>
-              <GaleryIcon size={24} color={Theme.color.button.neutral} />
-            </TouchableOpacity>
+            <Link href={Routes.Library} asChild>
+              <TouchableOpacity>
+                <GaleryIcon size={24} color={Theme.color.button.neutral} />
+              </TouchableOpacity>
+            </Link>
             <LogoutButton />
           </View>
         ) : (
