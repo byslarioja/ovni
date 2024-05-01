@@ -5,15 +5,15 @@ import { uploadVideoInfo, onError, onSuccess } from "../services/video.service";
 import { resetSensorsAtom } from "../sensors/useResetSensors";
 import { useAtomValue, useSetAtom } from "jotai";
 import { endTimeAtom, startTimeAtom } from "../sensors/useTime";
-import { tokenAtom } from "Screens/Auth/useAuth";
 import { Asset } from "expo-media-library";
 import appConfig from "../../../app.json";
 import { useState } from "react";
 import { readingsAtom } from "../sensors/useReadings";
+import { useSession } from "Shared/contexts/session.context";
 
 export const useUpload = () => {
   const queryClient = useQueryClient();
-  const { data: token } = useAtomValue(tokenAtom);
+  const { session } = useSession();
 
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -69,7 +69,7 @@ export const useUpload = () => {
               asset,
               readings,
             },
-            token,
+            token: session,
           };
           setIsUploading(false);
           mutate(payload);

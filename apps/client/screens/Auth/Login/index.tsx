@@ -4,14 +4,11 @@ import { Title } from "Components/Typography";
 import { CustomTextInput } from "Components/form";
 import { Controller, useForm } from "react-hook-form";
 import { Image, View } from "react-native";
-import useAuth from "../useAuth";
 import { LoaderButton } from "Components/Button/LoaderButton";
 import Theme from "Shared/theme";
-import { Loader } from "Components/Loader";
 import { translate } from "Shared/utils/translate";
 import { translation } from "./translation";
-import { Redirect } from "expo-router";
-import { Routes } from "Shared/routes";
+import { useSession } from "Shared/contexts/session.context";
 
 const lang = translate(translation);
 
@@ -25,7 +22,8 @@ const INPUT_RULES = {
 };
 
 export default function Login() {
-  const { isPending: isLoading, login, isSuccess: isLogedIn } = useAuth();
+  const { signIn, isSigningIn } = useSession();
+
   const {
     control,
     handleSubmit,
@@ -38,16 +36,8 @@ export default function Login() {
   });
 
   const onSubmit = async (data: FormData) => {
-    login(data);
+    signIn(data);
   };
-
-  if (isLoading) {
-    return <Loader text={lang.t("STATE.CHECKING_CREDENTIALS")} />;
-  }
-
-  if (isLogedIn) {
-    return <Redirect href={Routes.Camera} />;
-  }
 
   return (
     <View
@@ -99,7 +89,7 @@ export default function Login() {
           name="password"
         />
 
-        {isLoading ? (
+        {isSigningIn ? (
           <LoaderButton />
         ) : (
           <Button

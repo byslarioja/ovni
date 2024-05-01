@@ -1,8 +1,8 @@
 export enum Routes {
-  Login = "/",
+  SignIn = "/sign-in",
   Register = "/register",
-  ForgotPassword = "/(app)/forgot-password",
-  ResetPassword = "/(app)/reset-password",
-  Library = "/(app)/library",
-  Camera = "/(app)/camera",
+  ForgotPassword = "/forgot-password",
+  ResetPassword = "/reset-password",
+  Library = "/library",
+  Camera = "/",
 }

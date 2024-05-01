@@ -1,9 +1,7 @@
 import { LogoutIcon } from "Components/Icon";
-import useAuth from "Screens/Auth/useAuth";
-import { Routes } from "Shared/routes";
+import { useSession } from "Shared/contexts/session.context";
 import Theme from "Shared/theme";
 import { translate } from "Shared/utils/translate";
-import { Redirect } from "expo-router";
 import { Alert, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
 const lang = translate({
@@ -26,11 +24,7 @@ const lang = translate({
 });
 
 export const LogoutButton = (props: TouchableOpacityProps) => {
-  const { logout, isLogedOut } = useAuth();
-
-  if (isLogedOut) {
-    return <Redirect href={Routes.Login} />;
-  }
+  const { signOut } = useSession();
 
   const attemptLogout = () => {
     const title = lang.t("TITLE");
@@ -44,7 +38,7 @@ export const LogoutButton = (props: TouchableOpacityProps) => {
       [
         {
           text: confirm,
-          onPress: () => logout(),
+          onPress: signOut,
           style: "destructive",
         },
         { text: cancel, style: "cancel", isPreferred: true },

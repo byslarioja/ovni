@@ -3,20 +3,14 @@ import { AlertIcon, GaleryIcon, MenuIcon } from "Components/Icon";
 import { useState } from "react";
 import { styles } from "./styles";
 import Theme from "Shared/theme";
-import useAuth from "Screens/Auth/useAuth";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import { Routes } from "Shared/routes";
 import { useElapsedTime } from "Screens/Camera/hooks/useElapsedTime";
 import { LogoutButton } from "Components/LogoutButton";
 
 export default function TopBar() {
   const [menu, setMenu] = useState(false);
-  const { isLogedOut } = useAuth();
   const { elapsedTime } = useElapsedTime();
-
-  if (isLogedOut) {
-    return <Redirect href={Routes.Login} />;
-  }
 
   return (
     <View style={styles.top}>
