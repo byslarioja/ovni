@@ -5,6 +5,11 @@ import Toast from "react-native-toast-message";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { Routes } from "Shared/routes";
+import { AxiosError } from "axios";
+import { translate } from "Shared/utils/translate";
+import { translation } from "Shared/translation";
+
+const lang = translate(translation);
 
 const AuthContext = React.createContext<AuthContext>({
   signIn: () => null,
@@ -38,12 +43,20 @@ export function SessionProvider(props: React.PropsWithChildren) {
       setSession(token);
       push(Routes.Camera);
     },
-    onError: (error) => {
-      Toast.show({
-        text1: "Algo falló",
-        text2: error.message,
-        type: "error",
-      });
+    onError: (response: AxiosError) => {
+      const { status } = response;
+      if (status === 422 || status === 404) {
+        Toast.show({
+          text1: lang.t("ERRORS.INVALID_CREDENTIALS.TITLE"),
+          type: "error",
+        });
+      } else {
+        Toast.show({
+          text1: lang.t("ERRORS.GENERIC_ERROR.TITLE"),
+          text2: lang.t("ERRORS.GENERIC_ERROR.BODY"),
+          type: "error",
+        });
+      }
     },
     onSettled: () => {
       setIsSigningIn(false);

@@ -1,5 +1,14 @@
 export const translation = {
   en: {
+    ERRORS: {
+      GENERIC_ERROR: {
+        TITLE: "Something went wrong",
+        BODY: "Try again in a few minutes",
+      },
+      INVALID_CREDENTIALS: {
+        TITLE: "Wrong email or password",
+      },
+    },
     CHECKING_CREDENTIALS: "Checking credentials",
     PAGE_TITLE: { LIBRARY: "Recorded videos" },
     PERMISSIONS: {
@@ -32,6 +41,15 @@ export const translation = {
     },
   },
   es: {
+    ERRORS: {
+      GENERIC_ERROR: {
+        TITLE: "Algo falló",
+        BODY: "Intente nuevamente en unos minutos",
+      },
+      INVALID_CREDENTIALS: {
+        TITLE: "Correo electrónico o contraseña incorrectos",
+      },
+    },
     CHECKING_CREDENTIALS: "Comprobando credenciales",
     PAGE_TITLE: { LIBRARY: "Vídeos grabados" },
     PERMISSIONS: {
