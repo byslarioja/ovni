@@ -5,7 +5,7 @@ import { styles } from "./styles";
 export function LoaderButton() {
   return (
     <View style={styles.button}>
-      <ActivityIndicator color={Theme.color.text.light} />
+      <ActivityIndicator color={Theme.color.text.dark} />
     </View>
   );
 }

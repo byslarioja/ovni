@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 5,
-    marginHorizontal: 5,
+    minHeight: 45,
 
     alignItems: "center", // Center text/icon horizontally
     justifyContent: "center", // Center text/icon vertically
