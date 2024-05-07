@@ -69,7 +69,6 @@ export const VideoSchema = z.object({
     end: z.number(),
     appVersion: z.string(),
     hash: z.string(),
-    uri: z.string(),
     asset: AssetSchema,
     readings: ReadingSchema,
   }),
@@ -86,7 +85,6 @@ export type VideoRequest = {
     end: number;
     appVersion: string;
     hash: string;
-    uri: string;
     asset: {
       id: string;
       filename: string;

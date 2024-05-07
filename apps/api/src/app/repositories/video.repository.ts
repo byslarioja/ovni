@@ -17,7 +17,6 @@ export const createVideo = async (newVideo: VideoRequest["body"]) => {
   video.app_version = newVideo.appVersion;
   video.start_time = String(newVideo.start);
   video.end_time = String(newVideo.end);
-  video.uri = newVideo.uri;
 
   video.user = newVideo.user;
 
