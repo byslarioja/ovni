@@ -25,17 +25,12 @@ export default function Camera() {
   const [zoom, setZoom] = useAtom(zoomAtom);
 
   const cameraRef = useRef(null);
-  const { handleRecord, isPending, isUploading, progress } =
-    useRecording(cameraRef);
+  const { handleRecord, isPending } = useRecording(cameraRef);
 
-  if (isPending || isUploading) {
-    const text = isPending
-      ? lang.t("LOADING.MUTATION_PENDING")
-      : lang.t("LOADING.UPLOAD_PENDING");
+  if (isPending) {
+    const text = lang.t("LOADING.MUTATION_PENDING");
 
-    const subtext = isUploading && `${progress}%`;
-
-    return <Loader text={text} subtext={subtext} />;
+    return <Loader text={text} />;
   }
 
   return (

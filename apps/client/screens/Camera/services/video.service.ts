@@ -1,5 +1,11 @@
 import * as Crypto from "expo-crypto";
-import { ApiErrorResponse, ApiVideoSavedResponse, VideoPayload } from "./types";
+import {
+  ApiErrorResponse,
+  ApiVideoSavedResponse,
+  AssetPayload,
+  IntegrityPayload,
+  URIPayload,
+} from "./types";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import { router } from "expo-router";
@@ -10,11 +16,8 @@ import { Routes } from "Shared/routes";
 const BASE_URI = `${process.env.EXPO_PUBLIC_API_URL}`;
 const lang = translate(translation);
 
-export async function uploadVideoInfo({
-  payload,
-  token,
-}: VideoPayload): Promise<ApiVideoSavedResponse> {
-  const response = await axios.post(
+export async function uploadVideoInfo({ payload, token }: AssetPayload) {
+  const response = await axios.post<ApiVideoSavedResponse>(
     `${BASE_URI}/videos`,
     { ...payload },
     {
@@ -26,6 +29,46 @@ export async function uploadVideoInfo({
   );
 
   return response.data;
+}
+
+export async function uploadVideoURI({
+  uri,
+  hash,
+  token,
+}: URIPayload): Promise<[number, ApiVideoSavedResponse]> {
+  const response = await axios.put<ApiVideoSavedResponse>(
+    `${BASE_URI}/videos`,
+    { hash, uri },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return [response.status, response.data];
+}
+
+export async function checkIntegrity({ hash, token }: IntegrityPayload) {
+  let wasModified = false;
+
+  try {
+    const response = await axios.get<void>(
+      `${BASE_URI}/videos/check-integrity/${hash}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    wasModified = response.status !== 200;
+  } catch (e) {
+    wasModified = true;
+  } finally {
+    return wasModified;
+  }
 }
 
 export const createHash = async (stringToHash: string) => {

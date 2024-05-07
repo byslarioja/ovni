@@ -23,22 +23,25 @@ export async function setStorageItemAsync(key: string, value: string | null) {
   }
 }
 
-export function useStorageState(key: string): UseStateHook<string> {
+export function useStorageState<T = string>(key: string): UseStateHook<T> {
   // Public
-  const [state, setState] = useAsyncState<string>();
+  const [state, setState] = useAsyncState<T>();
 
   // Get => useQuery?
   useEffect(() => {
     AsyncStorage.getItem(key).then((value) => {
-      setState(value);
+      setState(typeof value === "string" ? value : JSON.parse(value));
     });
   }, [key]);
 
   // Set => useMutation?
   const setValue = useCallback(
-    async (value: string | null) => {
+    async (value: T | null) => {
       setState(value);
-      setStorageItemAsync(key, value);
+      setStorageItemAsync(
+        key,
+        typeof value === "string" ? value : JSON.stringify(value)
+      );
     },
     [key]
   );

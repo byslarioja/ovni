@@ -9,7 +9,7 @@ import {
 /**
  * Response types
  */
-export interface ApiVideoSavedResponse {
+export type ApiVideoSavedResponse = {
   data: {
     id: string;
     width: number;
@@ -22,28 +22,27 @@ export interface ApiVideoSavedResponse {
     created_at: string;
     updated_at: string;
   };
-}
+};
 
-interface VideoValidationError {
+type VideoValidationError = {
   code: string;
   expected: string;
   received: string;
   path: string[];
   message: string;
-}
+};
 
-export interface ApiErrorResponse {
+export type ApiErrorResponse = {
   response: {
     data: { issues: VideoValidationError[] };
   };
-}
+};
 
 /**
  * Request types
  */
-export interface VideoPayload {
+export type AssetPayload = {
   payload: {
-    uri: string;
     hash: string;
     start: number;
     end: number;
@@ -52,6 +51,27 @@ export interface VideoPayload {
     readings: Readings;
   };
   token: string;
+};
+
+export type URIPayload = {
+  hash: string;
+  uri: string;
+  token: string;
+};
+
+export type IntegrityPayload = {
+  hash: string;
+  token: string;
+};
+
+export type PersistedAsset = Asset & {
+  status: AssetStatus;
+};
+
+export enum AssetStatus {
+  Uploaded,
+  Rejected,
+  Pending,
 }
 
 type Readings = {
