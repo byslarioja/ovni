@@ -1,7 +1,6 @@
 import { User } from "@app/entities/User";
 
 export class UserResource {
-  //TODO: add videos
   public static toJson(user: User): SerializableUser {
     return {
       id: user.id,
@@ -18,8 +17,8 @@ export class UserResource {
     };
   }
 
-  public static toArray(videos: SerializableUser[]): Array<SerializableUser> {
-    return videos.map(this.toJson);
+  public static toArray(users: User[]): SerializableUser[] {
+    return users.map(this.toJson);
   }
 }
 

@@ -1,19 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { findById } from "@app/repositories/user.repository";
 
-export interface CustomRequest extends Request {
-  token: string | JwtPayload;
-}
-
 const APP_KEY = process.env.APP_KEY!;
 
-export const auth = async (
-  req: CustomRequest,
-  res: Response,
-  next: NextFunction
-) => {
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
 

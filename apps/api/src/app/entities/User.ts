@@ -24,19 +24,19 @@ export class User {
   password: string;
 
   @Column({ nullable: true })
-  phone: string;
+  phone?: string;
 
   @Column({ nullable: true })
-  country: string;
+  country?: string;
 
   @Column({ nullable: true })
-  city: string;
+  city?: string;
 
   @Column({ nullable: true })
-  zip_code: string;
+  zip_code?: string;
 
   @Column({ nullable: true })
-  youtube_channel: string;
+  youtube_channel?: string;
 
   @OneToMany(() => Video, (video) => video.user)
   videos: Video[];

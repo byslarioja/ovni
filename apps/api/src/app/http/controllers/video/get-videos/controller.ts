@@ -1,8 +1,8 @@
-import { Response } from "express";
+import { Response, Request } from "express";
 import { getAllVideos } from "@app/repositories/video.repository";
 import { VideoResource } from "@app/http/resources/video.resource";
 
-export const getVideosController = async (_, res: Response) => {
+export const getVideosController = async (_: Request, res: Response) => {
   try {
     const videos = await getAllVideos();
 

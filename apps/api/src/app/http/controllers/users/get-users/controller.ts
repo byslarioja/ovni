@@ -1,9 +1,9 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import "dotenv/config";
 import { getAllUsers } from "@app/repositories/user.repository";
 import { UserResource } from "@app/http/resources/user.resource";
 
-export const getUsersController = async (_, res: Response) => {
+export const getUsersController = async (_: Request, res: Response) => {
   try {
     const users = await getAllUsers();
 

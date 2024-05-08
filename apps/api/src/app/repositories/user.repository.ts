@@ -1,9 +1,10 @@
 import { User } from "@app/entities/User";
+import { RegisterUserRequest } from "@app/http/controllers/auth/register/schema";
 import { AppDataSource } from "@config/database";
 import bcrypt from "bcrypt";
 import { IsNull } from "typeorm";
 
-export const createUser = async (userData) => {
+export const createUser = async (userData: RegisterUserRequest["body"]) => {
   const user = new User();
   const userRepository = AppDataSource.getRepository(User);
 
