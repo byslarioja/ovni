@@ -1,0 +1,1 @@
+export { checkIntegrityController } from "./controller";

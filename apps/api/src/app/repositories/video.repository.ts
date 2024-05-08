@@ -55,3 +55,24 @@ export const deleteVideo = async (id: string) => {
     .where("id = :id", { id })
     .execute();
 };
+
+export const addVideoUri = async (uri: string, integrity_string: string) => {
+  const repository = AppDataSource.getRepository(Video);
+
+  const video = await repository.findOne({ where: { integrity_string } });
+  video.uri = uri;
+
+  await repository.save(video);
+};
+
+export const videoWasModified = async (integrity_string: string) => {
+  const repository = AppDataSource.getRepository(Video);
+
+  const video = await repository.findOne({ where: { integrity_string } });
+
+  if (!video) {
+    return true;
+  }
+
+  return false;
+};
