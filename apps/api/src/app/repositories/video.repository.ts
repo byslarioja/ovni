@@ -57,26 +57,33 @@ export const deleteVideo = async (id: string) => {
     .execute();
 };
 
-export const addVideoUri = async (uri: string, integrity_string: string) => {
+export const addVideoUri = async (
+  uri: string,
+  integrity_string: string
+): Promise<[Video | null, boolean]> => {
   const repository = AppDataSource.getRepository(Video);
 
   const video = await repository.findOne({ where: { integrity_string } });
 
-  if (!video) throw new Error(`Video ${integrity_string} not found`);
+  if (!video) return [null, true];
 
   video.uri = uri;
 
-  await repository.save(video);
+  const videoWithUri = await repository.save(video);
+
+  return [videoWithUri, false];
 };
 
-export const videoWasModified = async (integrity_string: string) => {
+export const videoWasModified = async (
+  integrity_string: string
+): Promise<[Video | null, boolean]> => {
   const repository = AppDataSource.getRepository(Video);
 
   const video = await repository.findOne({ where: { integrity_string } });
 
   if (!video) {
-    return true;
+    return [null, true];
   }
 
-  return false;
+  return [video, false];
 };

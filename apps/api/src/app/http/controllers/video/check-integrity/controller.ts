@@ -9,9 +9,13 @@ export const checkIntegrityController = async (
   const { hash } = req.params;
 
   try {
-    const wasModified = await videoWasModified(hash);
+    const [, wasModified] = await videoWasModified(hash);
 
-    if (wasModified) return res.status(422).send();
+    if (wasModified) {
+      return res
+        .status(422)
+        .send({ message: "Video was modified by the client." });
+    }
 
     return res.status(204).send();
   } catch (error) {

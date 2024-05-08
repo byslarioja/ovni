@@ -9,7 +9,11 @@ export const putVideoUriController = async (
   const { uri, hash } = req.body;
 
   try {
-    await addVideoUri(uri, hash);
+    const [, error] = await addVideoUri(uri, hash);
+
+    if (error) {
+      return res.status(404).send();
+    }
 
     return res.status(204).send();
   } catch (error) {
