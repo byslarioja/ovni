@@ -13,7 +13,13 @@ import useMagnetometer from "../../sensors/useMagnetometer";
 import { SensorValue } from "../SensorValue";
 import useClimateReadings from "../../sensors/useClimate";
 import useGPS from "Screens/Camera/sensors/useGPS";
-import { ClimatePrimitive, GPSPrimitive } from "globals/sensor.primitives";
+import { ClimatePrimitive } from "globals/sensor.primitives";
+import { translate } from "Shared/utils/translate";
+
+const i18n = translate({
+  es: { NOT_AVAILABLE: "N/D" },
+  en: { NOT_AVAILABLE: "N/A" },
+});
 
 export default function BottomBar() {
   const climate = useClimateReadings();
@@ -26,7 +32,10 @@ export default function BottomBar() {
         value={
           location.gps
             ? location.gps.coords
-            : { latitude: "N/A", longitude: "N/A" }
+            : {
+                latitude: i18n.t("NOT_AVAILABLE")!,
+                longitude: i18n.t("NOT_AVAILABLE")!,
+              }
         }
         isPending={location.isPending}
         isError={location.isError}
@@ -35,7 +44,7 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={angle ?? "N/A"}
+        value={angle ?? i18n.t("NOT_AVAILABLE")!}
         isPending={!angle}
         isError={false}
         icon={<CompasIcon />}
@@ -43,15 +52,22 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={location.gps ? location.gps.altitude : "N/A"}
+        value={i18n.t("NOT_AVAILABLE")!}
+        isPending={false}
+        isError={false}
+        icon={<RulerIcon />}
+        format={formatAltitude}
+      />
+      {/* <SensorValue
+        value={location.gps ? location.gps.altitude : i18n.t('NOT_AVAILABLE')!}
         isPending={location.isPending}
         isError={location.isError}
         icon={<RulerIcon />}
         format={formatAltitude}
-      />
+      /> */}
 
       <SensorValue
-        value={location.gps ? location.gps.speed : "N/A"}
+        value={location.gps ? location.gps.speed : i18n.t("NOT_AVAILABLE")!}
         isPending={location.isPending}
         isError={location.isError}
         icon={<MeasurerIcon />}
@@ -61,8 +77,8 @@ export default function BottomBar() {
       <SensorValue
         value={{
           ...climate,
-          temperature: climate.temperature ?? "N/A",
-          humidity: climate.humidity ?? "N/A",
+          temperature: climate.temperature ?? i18n.t("NOT_AVAILABLE")!,
+          humidity: climate.humidity ?? i18n.t("NOT_AVAILABLE")!,
         }}
         isPending={climate.isPending}
         isError={climate.isError}
@@ -73,8 +89,8 @@ export default function BottomBar() {
       <SensorValue
         value={{
           ...climate,
-          temperature: climate.temperature ?? "N/A",
-          humidity: climate.humidity ?? "N/A",
+          temperature: climate.temperature ?? i18n.t("NOT_AVAILABLE")!,
+          humidity: climate.humidity ?? i18n.t("NOT_AVAILABLE")!,
         }}
         isPending={climate.isPending}
         isError={climate.isError}
