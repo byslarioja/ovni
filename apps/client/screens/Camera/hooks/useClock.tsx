@@ -17,5 +17,5 @@ export function useClock() {
     refetchInterval: 300,
   });
 
-  return formatDate(clock);
+  return formatDate(clock!);
 }

@@ -39,7 +39,12 @@ export default function useClimateReadings() {
 
   const { isPending, isLoading, isError, data } = useQuery({
     queryKey: ["climate"],
-    queryFn: () => getClimate(lastAvailableCoords.coords),
+    queryFn: () => {
+      if (!lastAvailableCoords) {
+        return;
+      }
+      return getClimate(lastAvailableCoords.coords);
+    },
     refetchInterval: CLIMATE_REFETCH_INTERVAL,
   });
 

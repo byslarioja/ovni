@@ -1,6 +1,10 @@
 import { ActivityIndicator, View } from "react-native";
 
-export function ThumbnailLoader({ thumbnailWidth }) {
+export function ThumbnailLoader({
+  thumbnailWidth,
+}: {
+  thumbnailWidth: number;
+}) {
   return (
     <View
       style={{

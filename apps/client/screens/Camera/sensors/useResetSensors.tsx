@@ -5,11 +5,16 @@ import { deviceRotationReadingsAtom } from "./useDeviceRotation";
 import { magnetometerReadingsAtom } from "./useMagnetometer";
 import { endTimeAtom, startTimeAtom } from "./useTime";
 
+function reset<T>(prev: T[]) {
+  const lastItem = prev[prev.length - 1];
+  return lastItem ? [lastItem] : [];
+}
+
 export const resetSensorsAtom = atom(null, (_, set) => {
-  set(GPSReadingsAtom, (prev) => (prev ? [prev.at(-1)] : []));
-  set(climateReadingsAtom, (prev) => (prev ? [prev.at(-1)] : []));
-  set(deviceRotationReadingsAtom, (prev) => (prev ? [prev.at(-1)] : []));
-  set(magnetometerReadingsAtom, (prev) => (prev ? [prev.at(-1)] : []));
+  set(GPSReadingsAtom, reset);
+  set(climateReadingsAtom, reset);
+  set(deviceRotationReadingsAtom, reset);
+  set(magnetometerReadingsAtom, reset);
 });
 
 export const resetTimeAtom = atom(null, (_, set) => {

@@ -6,11 +6,11 @@ import { endTimeAtom, startTimeAtom } from "../sensors/useTime";
 import { createHash } from "../services/video.service";
 import { resetSensorsAtom } from "../sensors/useResetSensors";
 import { useUpload } from "./useUpload";
-import { useStorageState } from "Shared/hooks/useStorageState";
 import { readingsAtom } from "../sensors/useReadings";
 import appConfig from "../../../app.json";
 import { useSession } from "Shared/contexts/session.context";
 import { AssetStatus, PersistedAsset } from "../services/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const recordingAtom = atom(false);
 
@@ -24,7 +24,7 @@ const handleRecordingAtom = atom(null, (_, set, update: boolean) => {
   set(recordingAtom, update);
 });
 
-export function useRecording(cameraRef: MutableRefObject<Camera>) {
+export function useRecording(cameraRef: MutableRefObject<Camera | null>) {
   const isRecording = useAtomValue(recordingAtom);
   const setRecording = useSetAtom(handleRecordingAtom);
   const resetSensorReadings = useSetAtom(resetSensorsAtom);
@@ -50,30 +50,37 @@ export function useRecording(cameraRef: MutableRefObject<Camera>) {
     );
 
     //upload asset and hash to api
-    handleUpload({
-      payload: {
-        hash,
-        start: startTime,
-        end: endTime,
-        appVersion: appConfig.expo.version,
-        asset,
-        readings,
-      },
-      token: session,
-    });
+    if (session) {
+      handleUpload({
+        payload: {
+          hash,
+          start: startTime,
+          end: endTime,
+          appVersion: appConfig.expo.version,
+          asset,
+          readings,
+        },
+        token: session,
+      });
+    }
 
     //save asset to localstorage
-    const [[isLoading, persistedAssets], setPersistedAssets] =
-      useStorageState<PersistedAsset[]>("assets");
+    const persistedAssets = await AsyncStorage.getItem("videos");
+    const assets: PersistedAsset[] = persistedAssets
+      ? JSON.parse(persistedAssets)
+      : [];
 
-    !isLoading &&
-      setPersistedAssets([
-        ...persistedAssets,
-        { ...asset, status: AssetStatus.Pending },
-      ]);
+    const newPersistedAssets = [
+      ...assets,
+      { ...asset, status: AssetStatus.Pending },
+    ];
+
+    await AsyncStorage.setItem("videos", JSON.stringify(newPersistedAssets));
   };
 
   const handleRecord = async () => {
+    if (!cameraRef.current) return;
+
     try {
       if (isRecording) {
         setRecording(false);

@@ -23,7 +23,11 @@ export default function BottomBar() {
   return (
     <View style={styles.bottom}>
       <SensorValue
-        value={location.gps}
+        value={
+          location.gps
+            ? location.gps.coords
+            : { latitude: "N/A", longitude: "N/A" }
+        }
         isPending={location.isPending}
         isError={location.isError}
         icon={<LocationIcon />}
@@ -31,7 +35,7 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={angle}
+        value={angle ?? "N/A"}
         isPending={!angle}
         isError={false}
         icon={<CompasIcon />}
@@ -39,7 +43,7 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={location.gps}
+        value={location.gps ? location.gps.altitude : "N/A"}
         isPending={location.isPending}
         isError={location.isError}
         icon={<RulerIcon />}
@@ -47,7 +51,7 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={location.gps}
+        value={location.gps ? location.gps.speed : "N/A"}
         isPending={location.isPending}
         isError={location.isError}
         icon={<MeasurerIcon />}
@@ -55,7 +59,11 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={climate}
+        value={{
+          ...climate,
+          temperature: climate.temperature ?? "N/A",
+          humidity: climate.humidity ?? "N/A",
+        }}
         isPending={climate.isPending}
         isError={climate.isError}
         icon={<ThermometerIcon />}
@@ -63,7 +71,11 @@ export default function BottomBar() {
       />
 
       <SensorValue
-        value={climate}
+        value={{
+          ...climate,
+          temperature: climate.temperature ?? "N/A",
+          humidity: climate.humidity ?? "N/A",
+        }}
         isPending={climate.isPending}
         isError={climate.isError}
         icon={<DropIcon />}
@@ -75,8 +87,20 @@ export default function BottomBar() {
 
 const formatHumidity = (value: ClimatePrimitive) => value.humidity;
 const formatTemperature = (value: ClimatePrimitive) => value.temperature;
-const formatAltitude = (value: GPSPrimitive) =>
-  `${value.altitude.toFixed(2)}msnm`;
-const formatSpeed = (value: GPSPrimitive) => `${value.speed.toFixed(2)}m/s`;
-const formatCoords = (value: GPSPrimitive) =>
-  `${value.coords.latitude}/${value.coords.longitude}`;
+
+const formatAltitude = (value: number | string) => {
+  if (typeof value === "string") return value;
+
+  return `${value.toFixed(2)}msnm`;
+};
+
+const formatSpeed = (value: number | string) => {
+  if (typeof value === "string") return value;
+
+  return `${value.toFixed(2)}m/s`;
+};
+
+const formatCoords = (coords: {
+  latitude: number | string;
+  longitude: number | string;
+}) => `${coords.latitude}/${coords.longitude}`;

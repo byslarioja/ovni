@@ -1,14 +1,9 @@
 import { Label } from "Components/Typography";
 import Theme from "Shared/theme";
-import {
-  ClimatePrimitive,
-  GPSPrimitive,
-  RotationPrimitive,
-} from "globals/sensor.primitives";
-import { cloneElement, memo, ReactNode, useMemo } from "react";
+import { cloneElement, ReactNode, useMemo } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-export const SensorValue = memo((props: SensorValueProps) => {
+export function SensorValue<T>(props: SensorValueProps<T>) {
   const iconElement = useMemo(
     () =>
       cloneElement(props.icon as React.ReactElement, {
@@ -24,9 +19,9 @@ export const SensorValue = memo((props: SensorValueProps) => {
       <SensorContent {...props} />
     </View>
   );
-});
+}
 
-const SensorContent = (props: SensorContentProps) => {
+function SensorContent<T>(props: SensorContentProps<T>) {
   const { value, isPending, isError, format } = props;
 
   if (isPending)
@@ -39,20 +34,14 @@ const SensorContent = (props: SensorContentProps) => {
   }
 
   return <Label customStyle={{ fontSize: 13 }}>{format(value)}</Label>;
-};
+}
 
-type SensorValueProps = {
-  value: ValuePrimitive;
+type SensorValueProps<T> = {
+  value: T;
   isPending: boolean;
   isError: boolean;
-  format: (value: ValuePrimitive) => string;
+  format: (value: T) => string;
   icon: ReactNode;
 };
 
-type ValuePrimitive =
-  | GPSPrimitive
-  | ClimatePrimitive
-  | string
-  | RotationPrimitive;
-
-type SensorContentProps = Omit<SensorValueProps, "icon">;
+type SensorContentProps<T> = Omit<SensorValueProps<T>, "icon">;

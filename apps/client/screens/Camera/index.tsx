@@ -24,7 +24,7 @@ export default function Camera() {
   const clock = useClock();
   const [zoom, setZoom] = useAtom(zoomAtom);
 
-  const cameraRef = useRef(null);
+  const cameraRef = useRef<ExpoCamera | null>(null);
   const { handleRecord, isPending } = useRecording(cameraRef);
 
   if (isPending) {

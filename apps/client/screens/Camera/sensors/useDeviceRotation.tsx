@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Accelerometer } from "expo-sensors";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { RotationReading } from "./types";
+import { Subscription } from "expo-screen-orientation";
 
 const GYRO_UPDATE_INTERVAL = Number(process.env.EXPO_PUBLIC_GYRO_INTERVAL);
 
@@ -23,7 +24,7 @@ export default function useDeviceRotation() {
   const setDeviceRotation = useSetAtom(deviceRotationReadingsAtom);
   const deviceRotation = useAtomValue(lastAvailableRotationReading);
 
-  const [subscription, setSubscription] = useState(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
 
   Accelerometer.setUpdateInterval(GYRO_UPDATE_INTERVAL);
 

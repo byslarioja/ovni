@@ -17,6 +17,7 @@ export function RequestSinglePermission({ item }: RequestPermission) {
   );
 
   const shouldOpenAppSettings =
+    item.status &&
     item.status.canAskAgain &&
     (item.status.status === "undetermined" || item.status.status === "denied");
 
@@ -47,6 +48,6 @@ type RequestPermission = {
 
 type Item = {
   name: string;
-  status: PermissionResponse;
+  status: PermissionResponse | null;
   request: () => Promise<PermissionResponse>;
 };

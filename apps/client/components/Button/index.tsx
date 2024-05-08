@@ -3,7 +3,13 @@ import Theme from "Shared/theme";
 import { TouchableHighlight } from "react-native";
 import { styles } from "./styles";
 
-export function Button({ onPress, text, capitalize = false }) {
+type ButtonProps = {
+  onPress: () => void;
+  text: string;
+  capitalize?: boolean;
+};
+
+export function Button({ onPress, text, capitalize = false }: ButtonProps) {
   return (
     <TouchableHighlight
       onPress={onPress}

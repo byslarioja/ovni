@@ -3,8 +3,9 @@ import Theme from "Shared/theme";
 import { translate } from "Shared/utils/translate";
 import { translation } from "../translation";
 import { formatDate } from "Shared/utils/time";
+import { PersistedAsset } from "Screens/Camera/services/types";
 
-export function VideoInfo({ asset }) {
+export function VideoInfo({ asset }: { asset: PersistedAsset }) {
   const lang = translate(translation);
 
   return (
@@ -25,7 +26,13 @@ export function VideoInfo({ asset }) {
   );
 }
 
-const Attribute = ({ label, value }) => {
+const Attribute = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number;
+}) => {
   const textColor = Theme.color.text.dark;
 
   return (

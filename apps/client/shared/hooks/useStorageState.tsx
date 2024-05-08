@@ -29,9 +29,11 @@ export function useStorageState<T = string>(key: string): UseStateHook<T> {
 
   // Get => useQuery?
   useEffect(() => {
-    AsyncStorage.getItem(key).then((value) => {
-      setState(typeof value === "string" ? value : JSON.parse(value));
-    });
+    (async () => {
+      const item = await AsyncStorage.getItem(key);
+      const value = typeof item === "string" ? item : JSON.parse(item ?? "");
+      setState(value);
+    })();
   }, [key]);
 
   // Set => useMutation?

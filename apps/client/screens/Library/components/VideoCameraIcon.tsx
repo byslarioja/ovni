@@ -1,6 +1,7 @@
+import { IconProps } from "Components/Icon/type";
 import Svg, { Path } from "react-native-svg";
 
-export const VideoCameraIcon = ({ size, color }) => {
+export const VideoCameraIcon = ({ size, color }: IconProps) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 21 16" fill="none">
       <Path

@@ -15,7 +15,8 @@ const lang = translate(translation);
 export default function AppLayout() {
   const { isPending, permissions } = usePermissions();
   const granted = permissions.reduce(
-    (granted, permission) => permission.status?.granted && granted,
+    (granted, permission) =>
+      (permission.status ? permission.status.granted : false) && granted,
     true
   );
 

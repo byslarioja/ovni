@@ -12,9 +12,10 @@ export default function RequestPermissions({
   const [currentItem, setCurrentItem] = useState(0);
   const { width } = useWindowDimensions();
   const granted = permissions.reduce(
-    (granted, permission) => permission.status && granted,
+    (granted, permission) => (permission.status ?? false) && granted,
     false
   );
+
   const flatListRef = useRef(null);
 
   const deniedPermissions = permissions.filter(
@@ -41,7 +42,7 @@ export default function RequestPermissions({
         renderItem={({ item }) => <RequestSinglePermission item={item} />}
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={({ viewableItems }) => {
-          setCurrentItem(viewableItems[0].index);
+          setCurrentItem(viewableItems[0].index ?? 0);
         }}
         viewabilityConfig={{
           viewAreaCoveragePercentThreshold: 50,
@@ -65,7 +66,7 @@ export default function RequestPermissions({
 type RequestPermissionsProps = {
   permissions: {
     name: string;
-    status: PermissionResponse;
+    status: PermissionResponse | null;
     request: () => Promise<PermissionResponse>;
   }[];
 };

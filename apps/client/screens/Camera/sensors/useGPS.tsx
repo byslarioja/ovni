@@ -32,9 +32,9 @@ export default function useGPS() {
   });
 
   useEffect(() => {
-    setReadings((prev) => {
-      if (!position) return;
+    if (!position) return;
 
+    setReadings((prev) => {
       let readings: GPSReading[] = [];
 
       if (prev) readings = [...prev];
@@ -47,8 +47,8 @@ export default function useGPS() {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             },
-            speed: position.coords.speed,
-            altitude: position.coords.altitude,
+            speed: position.coords.speed!, //TODO: Fix this
+            altitude: position.coords.altitude!, //TODO: Fix this
           },
           timestamp: Date.now(),
         },

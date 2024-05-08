@@ -13,7 +13,7 @@ const lang = translate(translation);
 
 const AuthContext = React.createContext<AuthContext>({
   signIn: () => null,
-  isSigningIn: null,
+  isSigningIn: false,
   signOut: () => null,
   session: null,
   isLoading: false,

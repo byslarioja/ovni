@@ -26,6 +26,13 @@ export function CustomTextInput({
     stylesIconRight,
   } = useInputStyles(rightIcon);
 
+  const errorStyles = error
+    ? {
+        borderColor: Theme.color.states.danger.normal,
+        backgroundColor: Theme.color.states.danger.normal,
+      }
+    : {};
+
   return (
     <View style={styles.container}>
       {label && <Label>{label}</Label>}
@@ -35,13 +42,7 @@ export function CustomTextInput({
           placeholderTextColor={error ? Theme.color.text.light : colorText}
           keyboardType={keyboardType}
           onFocus={handleFocus}
-          style={[
-            stylesInput,
-            error && {
-              borderColor: Theme.color.states.danger.normal,
-              backgroundColor: Theme.color.states.danger.normal,
-            },
-          ]}
+          style={[stylesInput, errorStyles]}
           secureTextEntry={isPassword}
           onBlur={onBlur}
           onChangeText={onChangeText}
