@@ -6,6 +6,8 @@ import { sign } from "jsonwebtoken";
 import { UserResource } from "@app/http/resources/user.resource";
 import "dotenv/config";
 
+const APP_KEY = process.env.APP_KEY!;
+
 export const loginController = async (req: LoginUserRequest, res: Response) => {
   const validated = req.body;
 
@@ -25,13 +27,9 @@ export const loginController = async (req: LoginUserRequest, res: Response) => {
       return res.status(422).json({ message: "Login credentials are invalid" });
     }
 
-    const token = sign(
-      { id: foundUser.id, email: foundUser.email },
-      process.env.APP_KEY,
-      {
-        expiresIn: "30 days",
-      }
-    );
+    const token = sign({ id: foundUser.id, email: foundUser.email }, APP_KEY, {
+      expiresIn: "30 days",
+    });
 
     return res
       .status(200)

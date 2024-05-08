@@ -3,6 +3,7 @@ import { Video } from "@app/entities/Video";
 import { VideoRequest } from "@app/http/controllers/video/create-video/schema";
 import { refineReadings } from "@app/http/services/readings";
 import { AppDataSource } from "@config/database";
+import { IsNull } from "typeorm";
 
 export const createVideo = async (newVideo: VideoRequest["body"]) => {
   const video = new Video();
@@ -35,7 +36,7 @@ export const getAllVideos = async () => {
   const videoRepository = AppDataSource.getRepository(Video);
 
   return await videoRepository.find({
-    where: { deleted_at: null },
+    where: { deleted_at: IsNull() },
     relations: ["user"],
   });
 };
@@ -60,6 +61,9 @@ export const addVideoUri = async (uri: string, integrity_string: string) => {
   const repository = AppDataSource.getRepository(Video);
 
   const video = await repository.findOne({ where: { integrity_string } });
+
+  if (!video) throw new Error(`Video ${integrity_string} not found`);
+
   video.uri = uri;
 
   await repository.save(video);

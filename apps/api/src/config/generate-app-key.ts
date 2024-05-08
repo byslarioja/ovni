@@ -1,5 +1,6 @@
-const fs = require("fs");
-const crypto = require("crypto");
+import * as crypto from "crypto";
+import * as fs from "fs";
+
 const hash = crypto.randomBytes(64).toString("hex");
 const key = "APP_KEY = " + hash;
 let env = fs.readFileSync(".env", "utf8");

@@ -1,6 +1,7 @@
 import { User } from "@app/entities/User";
 import { AppDataSource } from "@config/database";
 import bcrypt from "bcrypt";
+import { IsNull } from "typeorm";
 
 export const createUser = async (userData) => {
   const user = new User();
@@ -47,7 +48,7 @@ export const updateUser = async (newEncryptedPassword: string, id: string) => {
 export const getAllUsers = async () => {
   const userRepository = AppDataSource.getRepository(User);
 
-  return await userRepository.find({ where: { deleted_at: null } });
+  return await userRepository.find({ where: { deleted_at: IsNull() } });
 };
 
 export const deleteUser = async (id: string) => {

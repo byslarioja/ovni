@@ -7,6 +7,8 @@ export interface CustomRequest extends Request {
   token: string | JwtPayload;
 }
 
+const APP_KEY = process.env.APP_KEY!;
+
 export const auth = async (
   req: CustomRequest,
   res: Response,
@@ -19,7 +21,7 @@ export const auth = async (
       throw new Error();
     }
 
-    const decoded = jwt.verify(token, process.env.APP_KEY) as {
+    const decoded = jwt.verify(token, APP_KEY) as {
       id: string;
       email: string;
     };
