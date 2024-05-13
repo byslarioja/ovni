@@ -7,13 +7,12 @@ import {
 import * as VideoThumbnails from "expo-video-thumbnails";
 import { useEffect, useState } from "react";
 import { ThumbnailLoader } from "./ThumbnailLoader";
-import { ModalInfo } from "Components/Modal";
-import { Button } from "Components/Button";
-import { VideoInfo } from "./VideoInfo";
+import { PersistedAsset } from "Screens/Camera/services/types";
+import { StatusIndicator } from "./StatusIndicator";
 
-export function Thumbnail({ asset }) {
+export function Thumbnail({ asset }: { asset: PersistedAsset }) {
   const { width, height } = useWindowDimensions();
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -37,31 +36,30 @@ export function Thumbnail({ asset }) {
   }
 
   return (
-    <>
-      <ModalInfo
-        isVisible={modalVisible}
-        handleVisibility={setModalVisible}
-        customStyles={{ alignItems: "center" }}
+    <TouchableOpacity onPress={() => setModalVisible(true)}>
+      <Image
+        style={{
+          width: thumbnailWidth,
+          height: thumbnailWidth * 0.75,
+          borderRadius: 5,
+          position: "relative",
+        }}
+        source={{
+          uri: image,
+        }}
+      />
+
+      <View
+        style={{
+          position: "absolute",
+          bottom: -2,
+          right: -2,
+          width: 24,
+          height: 24,
+        }}
       >
-        <VideoInfo asset={asset} />
-
-        <View style={{ width: "75%", marginTop: 20 }}>
-          <Button onPress={() => setModalVisible(false)} text="Cerrar" />
-        </View>
-      </ModalInfo>
-
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Image
-          style={{
-            width: thumbnailWidth,
-            height: thumbnailWidth * 0.75,
-            borderRadius: 5,
-          }}
-          source={{
-            uri: image,
-          }}
-        />
-      </TouchableOpacity>
-    </>
+        <StatusIndicator status={asset.status} />
+      </View>
+    </TouchableOpacity>
   );
 }
