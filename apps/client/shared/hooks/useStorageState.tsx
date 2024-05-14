@@ -32,10 +32,11 @@ export function useStorageState<T = string>(key: string): UseStateHook<T> {
     (async () => {
       const item = await AsyncStorage.getItem(key);
       let value;
-      if (item && item !== "") {
-        value = typeof item === "string" ? item : JSON.parse(item);
-      } else {
-        value = null;
+      try {
+        if (!item) throw new Error();
+        value = JSON.parse(item);
+      } catch {
+        value = item;
       }
       setState(value);
     })();
@@ -47,7 +48,11 @@ export function useStorageState<T = string>(key: string): UseStateHook<T> {
       setState(value);
       setStorageItemAsync(
         key,
-        typeof value === "string" ? value : JSON.stringify(value)
+        value === null
+          ? null
+          : typeof value === "string"
+          ? value
+          : JSON.stringify(value)
       );
     },
     [key]
