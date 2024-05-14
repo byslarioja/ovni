@@ -28,7 +28,7 @@ export default function AppLayout() {
         headerTitleStyle: {
           fontWeight: "bold",
         },
-        contentStyle: { backgroundColor: Theme.color.neutral.background },
+        contentStyle: { backgroundColor: Theme.color.scheme.black["800"] },
       }}
     >
       <Stack.Screen
