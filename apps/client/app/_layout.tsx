@@ -7,6 +7,7 @@ import Theme from "Shared/theme";
 import { translation } from "Shared/translation";
 import { translate } from "Shared/utils/translate";
 import { Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Toast from "react-native-toast-message";
 
 const queryClient = new QueryClient();
@@ -30,19 +31,23 @@ export default function AppLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: Theme.color.scheme.black["900"] },
-            headerTintColor: Theme.color.text.light,
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-            contentStyle: { backgroundColor: Theme.color.scheme.black["900"] },
-            headerShown: false,
-            statusBarColor: Theme.color.scheme.black["900"],
-          }}
-        />
-        <Toast />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Stack
+            screenOptions={{
+              headerStyle: { backgroundColor: Theme.color.scheme.black["900"] },
+              headerTintColor: Theme.color.text.light,
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              contentStyle: {
+                backgroundColor: Theme.color.scheme.black["900"],
+              },
+              headerShown: false,
+              statusBarColor: Theme.color.scheme.black["900"],
+            }}
+          />
+          <Toast />
+        </GestureHandlerRootView>
       </SessionProvider>
     </QueryClientProvider>
   );

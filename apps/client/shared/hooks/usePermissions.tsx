@@ -1,13 +1,12 @@
-import { Camera } from "expo-camera";
+import { useCameraPermissions, useMicrophonePermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 
 export function usePermissions() {
   const [mediaLibraryStatus, mediaLibraryRequest] =
     MediaLibrary.usePermissions();
-  const [cameraStatus, cameraRequest] = Camera.useCameraPermissions();
-  const [microphoneStatus, microphoneRequest] =
-    Camera.useMicrophonePermissions();
+  const [cameraStatus, cameraRequest] = useCameraPermissions();
+  const [microphoneStatus, microphoneRequest] = useMicrophonePermissions();
   const [locationStatus, locationRequest] = Location.useForegroundPermissions();
 
   const isPending =

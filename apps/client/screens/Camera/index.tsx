@@ -1,5 +1,4 @@
-import { Camera as ExpoCamera } from "expo-camera";
-import Slider from "@react-native-community/slider";
+import { CameraView } from "expo-camera";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import BottomBar from "./components/BottomBar";
 import TopBar from "./components/TopBar";
@@ -15,16 +14,22 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader } from "Components/Loader";
 import { useClock } from "./hooks/useClock";
 import { zoomAtom } from "./sensors/useZoom";
+import { Slider } from "react-native-awesome-slider";
+import { useSharedValue } from "react-native-reanimated";
 
 const lang = translate(translation);
 
 export default function Camera() {
+  const [zoom, setZoom] = useAtom(zoomAtom);
+  const progress = useSharedValue(zoom);
+  const min = useSharedValue(0);
+  const max = useSharedValue(1);
+
   const { x, y } = useDeviceRotation();
   const isRecording = useAtomValue(recordingAtom);
   const clock = useClock();
-  const [zoom, setZoom] = useAtom(zoomAtom);
 
-  const cameraRef = useRef<ExpoCamera | null>(null);
+  const cameraRef = useRef<CameraView | null>(null);
   const { handleRecord, isPending } = useRecording(cameraRef);
 
   if (isPending) {
@@ -34,19 +39,36 @@ export default function Camera() {
   }
 
   return (
-    <ExpoCamera style={styles.camera} zoom={zoom} ref={cameraRef}>
+    <CameraView
+      style={styles.camera}
+      zoom={zoom}
+      ref={cameraRef}
+      videoQuality={"720p"}
+      mode="video"
+    >
       <View style={styles.container}>
         <TopBar />
         <View style={styles.center}>
-          <Slider
-            style={styles.slider}
-            minimumValue={0}
-            maximumValue={1}
-            minimumTrackTintColor={Theme.color.text.light}
-            maximumTrackTintColor={Theme.color.text.light}
-            thumbTintColor={Theme.color.text.light}
-            onValueChange={setZoom}
-          />
+          <View
+            style={{
+              width: 200,
+            }}
+          >
+            <Slider
+              onValueChange={setZoom}
+              style={styles.slider}
+              progress={progress}
+              minimumValue={min}
+              maximumValue={max}
+              renderBubble={() => <></>}
+              theme={{
+                disableMinTrackTintColor: "#fff",
+                maximumTrackTintColor: Theme.color.scheme.black[300],
+                minimumTrackTintColor: Theme.color.scheme.black[100],
+                cacheTrackTintColor: Theme.color.text.dark,
+              }}
+            />
+          </View>
           <View style={styles.rightSide}>
             <View>
               <Text style={styles.text}>{clock}</Text>
@@ -78,6 +100,6 @@ export default function Camera() {
         </View>
         <BottomBar />
       </View>
-    </ExpoCamera>
+    </CameraView>
   );
 }

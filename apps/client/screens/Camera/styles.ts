@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
   },
   slider: {
     width: 200,
-    height: 200,
     marginLeft: -50,
     marginTop: "auto",
     marginBottom: "auto",
