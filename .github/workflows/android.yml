@@ -13,14 +13,8 @@ jobs:
             exit 1
           fi
 
-      - name: Set yarn version
-        run: corepack enable && yarn set version berry
-
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set yarn 4.1
-        run: corepack enable && yarn set version berry
 
       - name: Setup Node
         uses: actions/setup-node@v4
