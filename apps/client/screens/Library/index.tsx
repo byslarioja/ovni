@@ -8,10 +8,16 @@ import { Thumbnail } from "./components/Thumbnail";
 import { FloatingActionButton } from "./components/FloatingActionButton";
 import { useAssetVideoList } from "./useVideoList";
 import { Loader } from "Components/Loader";
+import { useAtom } from "jotai";
+import { showAssetAtom } from "./useShowAsset";
+import { VideoInfo } from "./components/VideoInfo";
+import { Drawer } from "Components/Drawer";
 
 export default function Library() {
   const { width, height } = useWindowDimensions();
   const { assets, isLoading } = useAssetVideoList();
+
+  const [showableAsset, setShowableAsset] = useAtom(showAssetAtom);
 
   return (
     <View
@@ -40,7 +46,14 @@ export default function Library() {
           <Loader />
         )}
       </SafeAreaView>
-      <FloatingActionButton />
+
+      {showableAsset ? (
+        <Drawer onClose={() => setShowableAsset(null)}>
+          <VideoInfo asset={showableAsset} />
+        </Drawer>
+      ) : (
+        <FloatingActionButton />
+      )}
     </View>
   );
 }

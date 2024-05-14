@@ -3,26 +3,46 @@ import Theme from "Shared/theme";
 import { translate } from "Shared/utils/translate";
 import { translation } from "../translation";
 import { formatDate } from "Shared/utils/time";
-import { PersistedAsset } from "Screens/Camera/services/types";
+import { AssetStatus, PersistedAsset } from "Screens/Camera/services/types";
+import { View } from "react-native";
+import { useMemo } from "react";
 
 export function VideoInfo({ asset }: { asset: PersistedAsset }) {
   const lang = translate(translation);
 
-  return (
-    <>
-      <Title customStyle={{ color: Theme.color.text.dark }}>Información</Title>
+  const statusStr = useMemo(() => {
+    if (asset.status === AssetStatus.Pending)
+      return lang.t("VIDEO_INFO.VALUE.PENDING");
+    if (asset.status === AssetStatus.Uploaded)
+      return lang.t("VIDEO_INFO.VALUE.UPLOADED");
 
-      <Attribute label={lang.t("VIDEO_INFO.FILENAME")} value={asset.filename} />
-      <Attribute label={lang.t("VIDEO_INFO.DURATION")} value={asset.duration} />
+    return lang.t("VIDEO_INFO.VALUE.REJECTED");
+  }, [asset.status]);
+
+  return (
+    <View>
+      <Title customStyle={{ color: Theme.color.scheme.white[500] }}>
+        Información
+      </Title>
+
       <Attribute
-        label={lang.t("VIDEO_INFO.CREATION_TIME")}
+        label={lang.t("VIDEO_INFO.LABEL.FILENAME")}
+        value={asset.filename}
+      />
+      <Attribute label={lang.t("VIDEO_INFO.LABEL.STATE")} value={statusStr} />
+      <Attribute
+        label={lang.t("VIDEO_INFO.LABEL.DURATION")}
+        value={`${asset.duration}s`}
+      />
+      <Attribute
+        label={lang.t("VIDEO_INFO.LABEL.CREATION_TIME")}
         value={formatDate(asset.creationTime)}
       />
       <Attribute
-        label={lang.t("VIDEO_INFO.MODIFICATION_TIME")}
+        label={lang.t("VIDEO_INFO.LABEL.MODIFICATION_TIME")}
         value={formatDate(asset.modificationTime)}
       />
-    </>
+    </View>
   );
 }
 
@@ -33,7 +53,7 @@ const Attribute = ({
   label: string;
   value: string | number;
 }) => {
-  const textColor = Theme.color.text.dark;
+  const textColor = Theme.color.scheme.white[500];
 
   return (
     <>
@@ -41,15 +61,12 @@ const Attribute = ({
         transform="capitalize"
         customStyle={{
           color: textColor,
-          textAlign: "center",
           fontWeight: "bold",
         }}
       >
         {label}:
       </Label>
-      <Hint customStyle={{ color: textColor, textAlign: "center" }}>
-        {value}
-      </Hint>
+      <Hint customStyle={{ color: textColor }}>{value}</Hint>
     </>
   );
 };

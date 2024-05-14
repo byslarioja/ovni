@@ -9,13 +9,14 @@ import { useEffect, useState } from "react";
 import { ThumbnailLoader } from "./ThumbnailLoader";
 import { PersistedAsset } from "Screens/Camera/services/types";
 import { StatusIndicator } from "./StatusIndicator";
+import { useSetAtom } from "jotai";
+import { showAssetAtom } from "../useShowAsset";
 
 export function Thumbnail({ asset }: { asset: PersistedAsset }) {
   const { width, height } = useWindowDimensions();
   const [image, setImage] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const setShowableAsset = useSetAtom(showAssetAtom);
   const col_number = width > height ? 5 : 3;
   const thumbnailWidth = width / col_number - 20;
 
@@ -36,30 +37,32 @@ export function Thumbnail({ asset }: { asset: PersistedAsset }) {
   }
 
   return (
-    <TouchableOpacity onPress={() => setModalVisible(true)}>
-      <Image
-        style={{
-          width: thumbnailWidth,
-          height: thumbnailWidth * 0.75,
-          borderRadius: 5,
-          position: "relative",
-        }}
-        source={{
-          uri: image,
-        }}
-      />
+    <>
+      <TouchableOpacity onPress={() => setShowableAsset(asset)}>
+        <Image
+          style={{
+            width: thumbnailWidth,
+            height: thumbnailWidth * 0.75,
+            borderRadius: 5,
+            position: "relative",
+          }}
+          source={{
+            uri: image,
+          }}
+        />
 
-      <View
-        style={{
-          position: "absolute",
-          bottom: -2,
-          right: -2,
-          width: 24,
-          height: 24,
-        }}
-      >
-        <StatusIndicator status={asset.status} />
-      </View>
-    </TouchableOpacity>
+        <View
+          style={{
+            position: "absolute",
+            bottom: -2,
+            right: -2,
+            width: 24,
+            height: 24,
+          }}
+        >
+          <StatusIndicator status={asset.status} />
+        </View>
+      </TouchableOpacity>
+    </>
   );
 }
