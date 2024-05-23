@@ -215,6 +215,310 @@ export const Route = createFileRoute("/eula")({
             Argentina y las leyes de la provincia de La Rioja.
           </p>
         </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Cumplimiento de Leyes</h2>
+          <p>
+            Acepta usar el Software y la Documentación en cumplimiento de todas
+            las leyes aplicables, incluidas las leyes locales del país o región
+            en que resida y en cumplimiento de todas las leyes y reglamentos de
+            exportación aplicables. No usará el Software ni la Documentación
+            para ningún fin prohibido por la ley aplicable.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">
+            Derechos de Propiedad Intelectual
+          </h2>
+          <p>
+            Acepta que el Software y la Documentación son de nuestra propiedad y
+            que retenemos todo derecho, titularidad e interés con respecto al
+            Software y la Documentación y a todos los copyrights, secretos
+            comerciales, patentes, marcas comerciales y cualquier otra propiedad
+            intelectual e industrial y derechos de propiedad, incluidos
+            registros, solicitudes, renovaciones y ampliaciones de dichos
+            derechos. No puede eliminar ningún título, marca comercial o nombre
+            comercial, aviso de copyright, leyenda u otras marcas de propiedad
+            del Software o la Documentación. No se le otorga ningún derecho,
+            licencia o interés en ninguna de nuestras marcas comerciales o
+            marcas de servicio. No podrá modificar el Software ni crear trabajos
+            derivados basados en el Software o la Documentación.
+          </p>
+          <p>
+            El contenido del material audiovisual grabado mediante nuestra
+            aplicación de software es de exclusiva responsabilidad de quien haya
+            realizado dicha grabación. Nuestra política de control del material
+            subido mediante nuestra aplicación de software filtrará aquellos que
+            no cumpla con el cometido esencial de nuestro producto. Dicho
+            material una vez subido y autorizado en nuestra plataforma podrá ser
+            utilizado para su monetización sin derecho a compensar al creador
+            del material audiovisual de percibir ninguna compensación.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">
+            Software y Tecnologías de Terceros
+          </h2>
+          <p>
+            Este software podría incluir varios componentes de software o
+            servicios de software de terceros ("Software de terceros"), que se
+            proporcionan bajo condiciones de licencia separadas (las
+            "Condiciones de terceros").
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Contenido</h2>
+          <p>
+            Posee y es responsable de datos, información, materiales u otro
+            contenido, incluidos mapas, contactos y archivos, que cree como
+            resultado del uso de nuestro Software o que almacene dentro del
+            Software ("Contenido"). Será exclusivamente responsable de la
+            exactitud, calidad, integridad, legalidad, fiabilidad, pertinencia y
+            propiedad o derecho de propiedad intelectual de su Contenido. Acepta
+            que toda pérdida o daño de cualquier clase que se produzca como
+            resultado del uso de cualquier Contenido que cree o haya creado,
+            cargado, publicado, compartido, transmitido, mostrado o puesto a
+            disposición a través de su uso del Software es exclusivamente su
+            responsabilidad y que nos indemnizará de toda reclamación de
+            terceros relativa al Contenido conforme a la sección Indemnización.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Actualizaciones</h2>
+          <p>
+            Es posible que, en ocasiones, descarguemos e instalemos
+            actualizaciones, correcciones de errores, mejoras de funciones o
+            mejoras del Software ("Actualizaciones") en los dispositivos bajo su
+            control o posesión, a menos que rechace esas Actualizaciones por
+            adelantado. Si no desea recibir Actualizaciones, deberá notificarnos
+            al respecto y, siempre que lo permita el Software, desactivar la
+            función que permite las Actualizaciones automáticas. De lo
+            contrario, acepta recibir dichas Actualizaciones de nosotros como
+            parte de su uso del Software. Si no se instalan las Actualizaciones,
+            podría no disfrutar de todas las ventajas del Software o este podría
+            no funcionar correctamente. No estamos obligados a facilitarle
+            asistencia para el Software si no se han instalado esas
+            Actualizaciones. Tampoco tenemos ninguna obligación de crear
+            Actualizaciones siguiendo ninguna programación y las Actualizaciones
+            estarán disponibles a nuestra sola discreción. Si una Actualización
+            es necesaria para cumplir las leyes aplicables, para solucionar una
+            amenaza de seguridad real o posible en el Software bajo licencia,
+            para reemplazar tecnologías que podrían infringir los derechos de
+            propiedad intelectual de terceros o por cualquier otro motivo de
+            importancia similar para nosotros ("Actualizaciones obligatorias"),
+            le proporcionaremos tal Actualización obligatoria junto con un aviso
+            que especifique que se trata de una Actualización obligatoria.
+            Deberá instalar las Actualizaciones obligatorias sin demora y, en
+            todo caso, nunca más tarde de diez (10) días laborales tras su
+            recepción. Si no instalase las Actualizaciones obligatorias a
+            tiempo, podría producirse la cancelación o suspensión de sus
+            licencias para el Software correspondiente.
+          </p>
+          <p>
+            También podríamos, en ocasiones, realizar el mantenimiento
+            programado de la infraestructura y la programación utilizadas para
+            proporcionar el Software, tiempo durante el que podría experimentar
+            alguna interrupción para ese Software o el acceso a las cuentas y
+            servicios asociados. Siempre que sea razonablemente posible, le
+            avisaremos con antelación del mantenimiento. Acepta que, en
+            ocasiones, podríamos necesitar llevar a cabo un mantenimiento de
+            emergencia sin avisarle con antelación, tiempo durante el que
+            podríamos suspender su acceso y uso del Software y de cualquier
+            cuenta y servicio asociado.
+          </p>
+        </section>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">
+            Cumplimiento de Licencias
+          </h2>
+          <p>
+            Comprende y acepta que podríamos, a través de una función de envío
+            de informes del Software, supervisar remotamente el funcionamiento y
+            uso del Software con fines técnicos, operativos, comerciales y
+            legales, incluida la verificación del cumplimiento de las
+            condiciones aquí incluidas ("Verificación"). Acepta facilitar tal
+            Verificación, incluido realizar las acciones necesarias para
+            garantizar que estén abiertos los puertos de firewall (según
+            corresponda) y notificarnos si existe algún problema operativo que
+            podría impedir la realización de la Verificación. Garantiza que ha
+            obtenido todos los consentimientos y licencias necesarios para dicha
+            Verificación, incluidos todos los consentimientos y licencias para
+            el uso de datos e información relacionados con su uso del Software.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Derecho de Usar Datos</h2>
+          <p>
+            Acepta que podríamos recopilar datos e información relacionada,
+            incluida aunque no limitada a información técnica de su dispositivo,
+            sistema y software de aplicaciones y periféricos relacionados con su
+            uso del Software, y que podríamos usar esta información para
+            proporcionarle servicios y manejar, proporcionar, mejorar y
+            desarrollar nuestros productos, servicios y tecnologías, para
+            impedir o investigar el uso fraudulento o inapropiado de nuestros
+            productos, servicios y tecnologías, para investigación y desarrollo,
+            con fines antipiratería, para verificar un registro válido, para
+            identificar si están disponibles nuevas Actualizaciones del Software
+            para su dispositivo antes de enviarle un aviso para que instale una
+            nueva actualización del Software y para cualquier otro fin descrito
+            en este EULA. La información personal recopilada bajo este EULA
+            estará sujeta a nuestra Política de privacidad.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Opiniones</h2>
+          <p>
+            No tiene ninguna obligación de proporcionarnos ideas, comentarios,
+            información, conceptos, revisiones, conocimientos, técnicas,
+            sugerencias, documentaciones, propuestas ni cualquier otro material
+            ("Opiniones"). Sin embargo, si nos facilita Opiniones, si bien
+            conserva la titularidad de dichas Opiniones, por el presente
+            documento nos otorga una licencia no exclusiva, gratuita, perpetua,
+            irrevocable, transmisible e ilimitada de uso y explotación de sus
+            Opiniones con cualquier finalidad en todo el mundo. Asimismo, acepta
+            no aplicar ningún "derecho moral" en las Opiniones ni sobre ellas,
+            en la medida que lo permita la legislación aplicable. Además, si
+            aporta sus Opiniones, manifiesta y garantiza que (i) esas Opiniones
+            no contienen información confidencial o propiedad de terceros; (ii)
+            no estamos obligados a mantener la confidencialidad, expresa o
+            implícita, en relación con sus Opiniones; (iii) podríamos tener ya
+            en cuenta o en desarrollo algo similar a sus Opiniones; y (iv) no
+            tiene derecho a indemnización o reembolso alguno de nuestra parte
+            por sus Opiniones bajo ninguna circunstancia.
+          </p>
+        </section>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">
+            Prevalencia del Contrato
+          </h2>
+          <p>
+            El presente EULA constituye la totalidad del contrato entre usted y
+            nosotros y sustituye a todas las demás comunicaciones y anuncios
+            relativos al Software y a la Documentación. El Software o cualquier
+            funcionalidad o parte de él podrían no estar disponibles en todos
+            los idiomas o países. Si le hemos facilitado una traducción de la
+            versión en inglés del presente EULA, usted acepta que dicha
+            traducción se le facilita únicamente para su conveniencia y que la
+            versión en inglés (no la traducción) del presente EULA será
+            legalmente vinculante para usted. En caso de conflicto entre la
+            versión en inglés del presente EULA y una de sus traducciones,
+            prevalecerá la versión en inglés y no la traducción.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">
+            Divisibilidad de las Disposiciones
+          </h2>
+          <p>
+            Si alguna condición o disposición del EULA es inválida, ilegal o no
+            ejecutable en alguna jurisdicción: (i) la validez, legalidad y
+            ejecutabilidad de las disposiciones restantes seguirán teniendo
+            total vigencia y efecto, (ii) dicha invalidez, ilegalidad o no
+            ejecutabilidad no se extenderán a ninguna otra jurisdicción y (iii)
+            dicha invalidez, ilegalidad o no ejecutabilidad no afectarán a
+            ninguna otra condición o disposición del EULA ni invalidarán o
+            dejarán como no ejecutable tal condición o disposición en ninguna
+            otra jurisdicción.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Encabezados</h2>
+          <p>
+            Los encabezados del EULA se incluyen únicamente para facilitar la
+            lectura y no afectarán a la interpretación del EULA.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">
+            Renuncia y Rectificación/Modificación
+          </h2>
+          <p>
+            Si una de las partes no ejerce o aplica alguno de sus derechos bajo
+            este EULA, no constituirá una renuncia a tales derechos. Este EULA
+            solo se puede modificar conforme a la sección titulada "Cambios".
+          </p>
+        </section>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Compatibilidad</h2>
+          <p>
+            Algunas versiones del Software podrían no ser compatibles con
+            diversos sistemas operativos y podríamos no publicar Actualizaciones
+            para establecer la compatibilidad. El Software podría no ser
+            compatible con sistemas operativos que adquiera ahora o en el
+            futuro. Usted acepta que el Software podría tener incorporaciones y
+            que el propio Software podría incorporarse a software y otras
+            tecnologías que están bajo control o son propiedad de terceros. El
+            presente EULA permanecerá vigente con dicha incorporación. Todo
+            software o tecnología de terceros que pueda distribuirse junto con
+            el Software como paquete de software de terceros puede estar sujeto
+            a que usted acepte explícitamente un contrato de licencia con dicho
+            tercero.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Software de Evaluación</h2>
+          <p>
+            Si el software se identifica como versión de demostración,
+            evaluación o prueba en la Documentación aplicable, podrá instalar y
+            acceder al Software solo con fines de evaluación o demostración.
+            Salvo que cuente con nuestra autorización, no podrá utilizar nuestro
+            Software para análisis competitivos ni para fines de carácter
+            comercial, profesional o lucrativo de ningún otro tipo. Usted acepta
+            que, al finalizar el período de evaluación, deberá dejar de utilizar
+            el Software o bien adquirir una licencia para seguir utilizándolo.
+            Si no la adquiere, al finalizar el período de evaluación, ya no
+            estará autorizado a utilizar el Software y deberá dejar de utilizar
+            inmediatamente el Software y eliminar y destruir todas las copias
+            electrónicas del Software, lo que incluye, sin que sirva de
+            limitación, toda la Documentación del usuario que pueda haberse
+            facilitado como parte de la evaluación que se encuentre en su equipo
+            informático o en cualquier otro dispositivo informático donde haya
+            instalado el Software. Cualquier intento de evitar la tecnología de
+            fecha de caducidad supondrá un incumplimiento del presente EULA y
+            producirá la cancelación inmediata y automática de su licencia para
+            utilizar el Software.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Derechos de Licencia</h2>
+          <p>
+            Bajo la concesión de derecho anterior recibe usted un derecho de uso
+            (licencia) del Software, pero no le transmitimos su titularidad. El
+            Software podrá incluir imágenes digitales, fotografías de catálogo,
+            imágenes prediseñadas, fuentes, sonidos u otras obras protegidas por
+            derechos de autor ("Materiales artísticos"). Las responsabilidades y
+            restricciones relativas al Software se aplican igualmente a los
+            Materiales artísticos. Nos reservamos todos los derechos que no le
+            sean expresamente otorgados a usted en este EULA.
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">
+            Restricciones de la Licencia
+          </h2>
+          <p>
+            El Software podrá incluir tecnología de activación de productos y
+            otras tecnologías diseñadas para evitar usos y copias no
+            autorizados. No podrá incluir, integrar ni combinar el Software ni
+            ningún ejecutable del Software (como .EXE, .MSI, .ISO o .DMG o
+            ejecutable similar conocido ahora o desarrollado posteriormente) con
+            ningún complemento de software u oferta de terceros, excepto cuando
+            se trate de un contrato escrito expreso separado y plenamente
+            formalizado con nosotros.
+          </p>
+        </section>
       </main>
     </article>
   ),
