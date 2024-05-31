@@ -1,0 +1,12 @@
+{
+  "eula": "EULA",
+  "deleteAccount": {
+    "title": "Delete account",
+    "why": "Confirm your identity by entering your email address, we will send you a link so you can confirm your identity and we can delete your account.",
+    "sideeffects": "Deleting your account will remove all your personal information from our database. This action is irreversible.",
+    "label": "Email",
+    "placeholder": "email@example.com",
+    "description": "Enter your email to receive the confirmation link.",
+    "submit": "Send confirmation link"
+  }
+}

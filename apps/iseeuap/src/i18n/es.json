@@ -1,0 +1,12 @@
+{
+  "eula": "EULA",
+  "deleteAccount": {
+    "title": "Eliminar cuenta",
+    "why": "Confirma tu identidad ingresando tu correo electrónico, te enviaremos un enlace para que puedas confirmar tu identidad y podamos eliminar tu cuenta.",
+    "sideeffects": "Eliminar tu cuenta removerá toda tu información personal de nuestra base de datos. Esta acción es irreversible.",
+    "label": "Correo electrónico",
+    "placeholder": "email@ejemplo.com",
+    "description": "Ingresa tu correo electrónico para recibir el enlace de confirmación.",
+    "submit": "Enviar enlace de confirmación"
+  }
+}
