@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as VideosImport } from './routes/videos'
+import { Route as EulaImport } from './routes/eula'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as UsersUserIdImport } from './routes/users/$userId'
@@ -20,6 +21,11 @@ import { Route as UsersUserIdImport } from './routes/users/$userId'
 
 const VideosRoute = VideosImport.update({
   path: '/videos',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const EulaRoute = EulaImport.update({
+  path: '/eula',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -47,6 +53,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/eula': {
+      id: '/eula'
+      path: '/eula'
+      fullPath: '/eula'
+      preLoaderRoute: typeof EulaImport
       parentRoute: typeof rootRoute
     }
     '/videos': {
@@ -77,6 +90,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  EulaRoute,
   VideosRoute,
   UsersUserIdRoute,
   UsersIndexRoute,
