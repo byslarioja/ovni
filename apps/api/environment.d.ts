@@ -16,6 +16,11 @@ declare global {
       FIREBASE_MESSAGING_SENDER_ID: string;
       FIREBASE_APP_ID: string;
       NODE_ENV: "development" | "production";
+      MAILER_USER: string;
+      MAILER_PASSWORD: string;
+      MAILER_HOST: string;
+      MAILER_PORT: string;
+      LANDING_URL: string;
     }
   }
 }
