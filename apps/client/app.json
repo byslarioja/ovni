@@ -3,7 +3,7 @@
     "name": "iseeyou",
     "slug": "iseeyou",
     "scheme": "iseeyou-scheme",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "userInterfaceStyle": "dark",
     "splash": {
       "resizeMode": "contain",
@@ -27,6 +27,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
+      "blockedPermissions": ["android.permission.ACTIVITY_RECOGNITION"],
       "package": "com.iseeyou.ovni"
     },
     "plugins": [
