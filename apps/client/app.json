@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "iseeyou",
+    "name": "iseeuap",
     "slug": "iseeyou",
     "scheme": "iseeyou-scheme",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "userInterfaceStyle": "dark",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "icon": "./assets/Logo_Icon.png",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
